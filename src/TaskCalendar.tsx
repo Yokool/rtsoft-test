@@ -1,9 +1,9 @@
-import React, { Reducer, useReducer, useState } from "react";
+import React, { useReducer, useState } from "react";
 import "./TaskCalendar.css";
 import { Task } from './TaskTypes/Task.tsx';
 import { TaskAdd } from "./TaskAdd.tsx";
 import { TaskDateList } from "./TaskDateList/TaskDateList.tsx";
-import { TaskFulfillment, TaskFulfillmentDispatchContext, taskFulfillmentReducer } from "./TaskFulfillment/TaskFulfillment.tsx";
+import { TaskFulfillmentContext, TaskFulfillmentDispatchContext, taskFulfillmentReducer } from "./TaskFulfillment/TaskFulfillment.tsx";
 
 
 
@@ -14,17 +14,19 @@ export function TaskCalendar(): React.JSX.Element {
     console.log("FulfillmentList", taskFulfillmentList);
 
     return (
-        <TaskFulfillmentDispatchContext.Provider value={dispatchTaskFulfillmentAction}>
-            <div className="calendarOuterHolder">
-                <TaskAdd 
-                    taskList={taskList}
-                    setTaskList={setTaskList}
-                />
-                <TaskDateList
-                    taskList={taskList}
-                />
-            </div>
-        </TaskFulfillmentDispatchContext.Provider>
+        <TaskFulfillmentContext.Provider value={taskFulfillmentList}>
+            <TaskFulfillmentDispatchContext.Provider value={dispatchTaskFulfillmentAction}>
+                <div className="calendarOuterHolder">
+                    <TaskAdd 
+                        taskList={taskList}
+                        setTaskList={setTaskList}
+                    />
+                    <TaskDateList
+                        taskList={taskList}
+                    />
+                </div>
+            </TaskFulfillmentDispatchContext.Provider>
+        </TaskFulfillmentContext.Provider>
     );
 }
 

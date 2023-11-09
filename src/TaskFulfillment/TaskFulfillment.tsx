@@ -38,6 +38,23 @@ export const taskFulfillmentReducer = (oldTasks: TaskFulfillment[], action: Task
     }   
 }
 
+export const TaskFulfillmentContext = createContext<TaskFulfillment[]>([]);
+
 export const TaskFulfillmentDispatchContext = createContext<(action: TaskFulfillmentAction) => void>(
     () => {}
 )
+
+export function getAssociatedFulfillmentsToTask(task: Task, taskList: TaskFulfillment[])
+{
+    return taskList.filter((fulfillment) => {
+        return fulfillment.task.taskCode === task.taskCode;
+    })
+}
+
+export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, taskFulfillmentList: TaskFulfillment[])
+{
+    const taskFulfillments = getAssociatedFulfillmentsToTask(task, taskFulfillmentList);
+    return taskFulfillments.filter((task) => {
+        return task.startDate === date;
+    })
+}

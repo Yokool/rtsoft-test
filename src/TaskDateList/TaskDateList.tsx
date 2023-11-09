@@ -40,6 +40,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
     }, [dateShiftBackwards, dateShiftForwards])
 
     
+    
     const dateHeadersJSX = surroundingDates.map((date) => {
         
         const dateHeaderString = dateToTableText(date);

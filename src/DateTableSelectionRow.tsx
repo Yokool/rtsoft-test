@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { dateToTableText } from "./DateUtils/DateUtils.tsx";
 import { Task } from "./TaskTypes/Task.tsx";
 import { DateModalContext } from "./TaskDateList/TaskDateList.tsx";
+import { TaskFulfillmentContext, getAssociatedFulfillmentsToStartDate, getAssociatedFulfillmentsToTask } from "./TaskFulfillment/TaskFulfillment.tsx";
+import { FulfillmentRow } from "./TaskFulfillment/FulfillmentRow.tsx";
 
 
 type DateTableSelectionRowProps = {
@@ -44,6 +46,23 @@ function DateTableSelectionCell({
 }: DateTableSelectionCellProps): React.JSX.Element {
 
 
+    // Find all the fulfillments for this start date
+    const fulfillmentList = useContext(TaskFulfillmentContext)
+    const associatedTaskFulfillments = getAssociatedFulfillmentsToStartDate(task, date, fulfillmentList);
+
+    const associatedTasksJSX = associatedTaskFulfillments?.map((
+        taskFulfillment
+    ) => {
+        return (
+            <FulfillmentRow
+                key={taskFulfillment.task.taskCode + ' ' + taskFulfillment.startDate.toISOString()}
+                taskFulfillment={taskFulfillment}
+            />
+        );
+    })
+
+
+
     const {
         setModalTask,
         setModalStartingDate
@@ -59,6 +78,7 @@ function DateTableSelectionCell({
         <td
             onClick={handleCellClick}
         >
+            {associatedTasksJSX}
         </td>
     )
 
