@@ -9,7 +9,7 @@ type AddTaskModalProps = {
 }
 
 export type ModalBaseProps = {
-    children: JSX.Element[]
+    children?: JSX.Element[]
 }
 
 export function ModalBase({children}: ModalBaseProps): React.JSX.Element {
@@ -58,32 +58,28 @@ export function AddTaskModal({
     }
     
     return (
-        <div className="modalDarkBackground">
-            <div className="center">
-                <div className="modalContainer">
-                    <h1>Kód zakázky</h1>
-                    <input
-                        className="modalText"
-                        type="text"
-                        value={taskCode}
-                        onChange={handleTaskCodeChange}
-                    />
-                    <h1>Název zakázky</h1>
-                    <input
-                        className="modalText"
-                        type="text"
-                        value={taskName}
-                        onChange={handleTaskNameChange}
-                    />
-                    <button
-                        className="modalSubmit"
-                        onClick={handleTaskSubmit}
-                    >
-                        Přidat
-                    </button>
-                </div>
-            </div>
-        </div>
+        <ModalBase>
+            <h1>Kód zakázky</h1>
+            <input
+                className="modalText"
+                type="text"
+                value={taskCode}
+                onChange={handleTaskCodeChange}
+            />
+            <h1>Název zakázky</h1>
+            <input
+                className="modalText"
+                type="text"
+                value={taskName}
+                onChange={handleTaskNameChange}
+            />
+            <button
+                className="modalSubmit"
+                onClick={handleTaskSubmit}
+            >
+                Přidat
+            </button>
+        </ModalBase>
     );
 }
 
