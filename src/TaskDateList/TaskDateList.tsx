@@ -9,6 +9,13 @@ type TaskDateListProps = {
     taskList: Task[]
 }
 
+
+export type DateModalContextValue = {
+    modalTask: Task | undefined
+    setModalTask: (task: Task) => void
+    setModalStartingDate: (date: Date) => void
+}
+
 export const DateAddTaskContext = createContext<Task | undefined>(undefined);
 export const DateAddTaskSetContext = createContext<(task: Task) => void>(() => {});
 
@@ -19,8 +26,9 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
     const [surroundingDates, setSurroundingDates] = useState<Date[]>([]);
     
+    // Date add modal
     const [dateAddTask, setDateAddTask] = useState<Task | undefined>(undefined);
-
+    const [modalStartingDate, setModalStartingDate] = useState<Date>(new Date());
 
     useEffect(() => {
         const surroundingDatesComputed = getSurroundingDatesToday(dateShiftBackwards, dateShiftForwards);
@@ -60,7 +68,13 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
     return (
         <DateAddTaskContext.Provider value={dateAddTask}>
             <DateAddTaskSetContext.Provider value={setDateAddTask}>
-                {dateAddTask !== undefined && <AddTaskDateModal shownTask={dateAddTask} />}
+                {dateAddTask !== undefined &&
+                    <AddTaskDateModal
+                        shownTask={dateAddTask}
+                        startingDate={modalStartingDate}
+                        setStartingDate={setModalStartingDate}
+                    />
+                }
                 <table className="taskTable" cellSpacing={0}>
                     <tbody>
                         <tr>

@@ -5,7 +5,8 @@ import { ModalHeaderDate, ModalSubmit } from "../ModalElements.tsx";
 
 type AddTaskModalProps = {
     shownTask: Task
-    //setShowingModal: (showModal: boolean) => void;
+    startingDate: Date // starting date is controlled from the parent
+    setStartingDate: (newDate: Date) => void
 }
 
 
