@@ -12,7 +12,8 @@
     border-style: solid;
     border-color: rgb(197, 197, 197);
     border-width: 1px;
-    height: 48px;
+    height: 64px;
+    white-space: pre;
 }
 
 .taskTable th {

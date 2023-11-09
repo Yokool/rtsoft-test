@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Task } from "../TaskTypes/Task.tsx";
 import './TaskDateList.css';
-import { getSurroundingDatesToday } from "../DateUtils/DateUtils.tsx";
+import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils.tsx";
 
 type TaskDateListProps = {
     taskList: Task[]
@@ -22,9 +22,11 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
     
     const dateHeadersJSX = surroundingDates.map((date) => {
+        
+        const dateHeaderString = dateToTableText(date);
         return (
-            <th>
-                {date.getDay()}
+            <th key={dateHeaderString}>
+                {dateHeaderString}
             </th>
         );
     })

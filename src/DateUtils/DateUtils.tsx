@@ -50,5 +50,25 @@ export function getSurroundingDatesToday(datesLeftCount: number, datesRightCount
 }
 
 export function dateToTableText(date: Date) {
- 
+    // hard-coded to czech locale for now
+    const locale = 'cs-CZ';
+    
+    let localeWeekDay = date.toLocaleDateString(locale, {
+        weekday: 'short',
+    });
+
+    let dateNum = date.toLocaleString(locale, {
+        day: '2-digit',
+        month: '2-digit',
+    })
+
+    if(localeWeekDay.length < 2)
+    {
+        throw new Error(`Expected string ${localeWeekDay} to be of size 2. Only cs-CZ locale is supported as of now.`);
+    }
+
+    localeWeekDay = localeWeekDay[0].toUpperCase() + localeWeekDay[1];
+
+    const result = localeWeekDay + "\n" + dateNum;
+    return result;
 }
