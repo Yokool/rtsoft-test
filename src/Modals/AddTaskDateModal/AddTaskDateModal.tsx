@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Task } from "../../TaskTypes/Task.tsx";
 import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements.tsx";
-import { TaskFulfillmentDispatchContext, TaskFulfillmentValuesDisplay } from "../../TaskFulfillment/TaskFulfillment.tsx";
+import { TaskFulfillmentDispatchContext, TaskFulfillmentStatus, TaskFulfillmentValuesDisplay } from "../../TaskFulfillment/TaskFulfillment.tsx";
 import { ErrorModalBase } from "../ErrorModal/ErrorModal.tsx";
 
 type AddTaskModalProps = {
@@ -24,6 +24,8 @@ export function AddTaskDateModal({
 
     const [shownErrorMessage, setShownErrorMessage] = useState<string | undefined>(undefined);
     
+    const [status, setStatus] = useState<TaskFulfillmentStatus>('waiting');
+
     const noStartDateErrorMessage = "Prosím vyplňte datum počátku zakázky.";
     const noEndDateErrorMessage = "Prosím vyplňte datum ukončení zakázky.";
     
@@ -48,7 +50,7 @@ export function AddTaskDateModal({
                 task: shownTask,
                 startDate: startingDate,
                 endDate: endDate,
-                status: 'waiting' // TODO: ADD STATUS
+                status: status // TODO: ADD STATUS
             }
         });
 
@@ -58,6 +60,8 @@ export function AddTaskDateModal({
 
 
     }
+
+    const statusValues = Object.values(TaskFulfillmentValuesDisplay);
 
     return (
         <ErrorModalBase
@@ -78,7 +82,21 @@ export function AddTaskDateModal({
             />
             <ModalHeaderSelect
                 headerText="Status"
-                options={Object.values(TaskFulfillmentValuesDisplay)}
+                options={statusValues}
+                onChange={(newValue) => {
+                    // Exhaustive check -> this really
+                    // shouldn't happen unless we passed
+                    // something different to options={}
+                    if(!statusValues.includes(newValue))
+                    {
+                        throw new Error(`${newValue} is not contained within the keys of ${statusValues}.`);
+                    }
+
+                    // this is ok thanks to the check
+                    const newValueStatus = newValue as TaskFulfillmentStatus;
+                    setStatus(newValueStatus);
+
+                }}
             />
             <ModalSubmit
                 submitText="Přidat plnění zakázky"

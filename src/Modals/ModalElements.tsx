@@ -83,12 +83,14 @@ export function ModalHeaderDate(
 export type ModalHeaderSelectProps = {
     headerText: string
     options: string[]
+    onChange: (newValue: string) => void
 }
 
 export function ModalHeaderSelect(
     {
         headerText,
-        options
+        options,
+        onChange
     }: ModalHeaderSelectProps
 ): JSX.Element {
 
@@ -103,7 +105,10 @@ export function ModalHeaderSelect(
     return (
         <>
             <h1>{headerText}</h1>
-            <select className="modalMultiSelect">
+            <select onChange={(event) => {
+                const value = event.currentTarget.value;
+                onChange(value);
+            }} className="modalMultiSelect">
                 {optionsJSX}
             </select>
         </>
