@@ -19,6 +19,7 @@ export function DateTableSelectionRow({
             <DateTableSelectionCell
                 key={key}
                 date={date}
+                task={task}
             />
         )
     });
@@ -33,9 +34,13 @@ export function DateTableSelectionRow({
 
 type DateTableSelectionCellProps = {
     date: Date
+    task: Task
 }
 
-function DateTableSelectionCell({date}: DateTableSelectionCellProps): React.JSX.Element {
+function DateTableSelectionCell({
+    date,
+    task
+}: DateTableSelectionCellProps): React.JSX.Element {
 
 
     function handleCellClick() {

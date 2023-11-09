@@ -8,6 +8,24 @@ type AddTaskModalProps = {
     setShowingModal: (showModal: boolean) => void;
 }
 
+export type ModalBaseProps = {
+    children: JSX.Element[]
+}
+
+export function ModalBase({children}: ModalBaseProps): React.JSX.Element {
+
+    return (
+        <div className="modalDarkBackground">
+            <div className="center">
+                <div className="modalContainer">
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+
+}
+
 export function AddTaskModal({
     taskList,
     setTaskList,
