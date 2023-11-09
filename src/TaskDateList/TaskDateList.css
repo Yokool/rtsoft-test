@@ -1,0 +1,20 @@
+
+
+.cellSpacer {
+    width: 32px;
+}
+
+.taskTable {
+    border-collapse: collapse;
+}
+
+.taskTable td, .taskTable th {
+    border-style: solid;
+    border-color: rgb(197, 197, 197);
+    border-width: 1px;
+    height: 32px;
+}
+
+.taskTable .codeCell {
+    width: 128px;
+}
