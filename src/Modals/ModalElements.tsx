@@ -49,7 +49,7 @@ export function ModalSubmit({
 export type ModalHeaderDateProps = {
     headerText: string
     date: Date | undefined,
-    setDate: (newDate: Date) => void
+    setDate: (newDate: Date | undefined) => void
 }
 
 export function ModalHeaderDate(
@@ -73,13 +73,7 @@ export function ModalHeaderDate(
                 value={dateValue || ''}
                 onChange={(event) => {
                     const date = event.currentTarget.valueAsDate;
-                    
-                    if(date === null)
-                    {
-                        throw new Error("")
-                    }
-
-                    setDate(date);
+                    setDate(date === null ? undefined : date);
                 }}
             />
         </>

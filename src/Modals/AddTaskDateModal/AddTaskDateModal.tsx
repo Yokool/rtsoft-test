@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Task } from "../../TaskTypes/Task.tsx";
-import { ModalBase } from "../ModalBase.tsx";
 import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements.tsx";
-import { TaskFulfillmentDispatchContext, TaskFulfillmentValues, TaskFulfillmentValuesDisplay } from "../../TaskFulfillment/TaskFulfillment.tsx";
+import { TaskFulfillmentDispatchContext, TaskFulfillmentValuesDisplay } from "../../TaskFulfillment/TaskFulfillment.tsx";
+import { ErrorModalBase } from "../ErrorModal/ErrorModal.tsx";
 
 type AddTaskModalProps = {
     shownTask: Task
     setShownTask: (newValue: Task | undefined) => void
-    startingDate: Date // starting date is controlled from the parent
-    setStartingDate: (newDate: Date) => void
+    startingDate: Date | undefined // starting date is controlled from the parent
+    setStartingDate: (newDate: Date | undefined) => void
 }
 
 
@@ -22,14 +22,24 @@ export function AddTaskDateModal({
     const [endDate, setEndDate] = useState<Date | undefined>(undefined);
     const dispatchTaskFulfillment = useContext(TaskFulfillmentDispatchContext);
 
+    const [shownErrorMessage, setShownErrorMessage] = useState<string | undefined>(undefined);
+    
+    const noStartDateErrorMessage = "Prosím vyplňte datum počátku zakázky.";
+    const noEndDateErrorMessage = "Prosím vyplňte datum ukončení zakázky.";
+    
     function handleTaskSubmit() {
 
-        // This should be handled by a modal
-        // that stops the submitting from even
-        // happening.
+        if(startingDate === undefined)
+        {
+            setShownErrorMessage(noStartDateErrorMessage);
+            return;
+        }
+
         if(endDate === undefined)
         {
-            throw new Error("This code block should not be reached. endDate was undefined. This should be handled by the modal.");
+            // show error modal on unfilled date
+            setShownErrorMessage(noEndDateErrorMessage);
+            return;
         }
 
         dispatchTaskFulfillment({
@@ -50,7 +60,10 @@ export function AddTaskDateModal({
     }
 
     return (
-        <ModalBase>
+        <ErrorModalBase
+            errorMessage={shownErrorMessage}
+            setErrorMessage={setShownErrorMessage}
+        >
             <h1>Přidávám nové plnění zakázky</h1>
             <h2>{shownTask.taskCode + ' ' + shownTask.taskName}</h2>
             <ModalHeaderDate
@@ -71,7 +84,7 @@ export function AddTaskDateModal({
                 submitText="Přidat plnění zakázky"
                 onSubmit={handleTaskSubmit}
             />
-        </ModalBase>
+        </ErrorModalBase>
     );
 }
 

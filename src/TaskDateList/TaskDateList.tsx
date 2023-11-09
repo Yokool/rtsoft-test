@@ -31,7 +31,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
     
     // Date add modal
     const [dateAddTask, setDateAddTask] = useState<Task | undefined>(undefined);
-    const [modalStartingDate, setModalStartingDate] = useState<Date>(new Date());
+    const [modalStartingDate, setModalStartingDate] = useState<Date | undefined>(undefined);
 
     useEffect(() => {
         const surroundingDatesComputed = getSurroundingDatesToday(dateShiftBackwards, dateShiftForwards);
