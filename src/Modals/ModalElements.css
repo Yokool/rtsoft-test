@@ -1,0 +1,14 @@
+
+
+.modalText {
+    flex-basis: 100%;    
+
+    
+    font-size: 32px;
+    border-radius: 8px;
+}
+
+.modalSubmit {
+    margin-top: 32px;
+    font-size: 32px;
+}

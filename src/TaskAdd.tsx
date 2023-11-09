@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AddTaskModal } from "./AddTaskModal/AddTaskModal.tsx";
 import { Task } from "./TaskTypes/Task.tsx";
+import { AddTaskModal } from "./Modals/AddTaskModal/AddTaskModal.tsx";
 
 type TaskAddProps = {
     taskList: Task[]
