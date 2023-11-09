@@ -1,9 +1,17 @@
 import { createContext } from "react";
 import { Task } from "../TaskTypes/Task.tsx";
 
-export type TaskFulfillmentStatus = 
-    'done' |
-    'waiting';
+export const TaskFulfillmentValues = {
+    'done': undefined,
+    'waiting': undefined
+}
+
+export const TaskFulfillmentValuesDisplay: Record<TaskFulfillmentStatus, string> = {
+    waiting: 'Nedokončeno',
+    done: 'Hotovo'
+}
+
+export type TaskFulfillmentStatus = keyof typeof TaskFulfillmentValues;
 
 export type TaskFulfillment = {
     task: Task

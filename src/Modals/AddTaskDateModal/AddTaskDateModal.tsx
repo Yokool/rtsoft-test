@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Task } from "../../TaskTypes/Task.tsx";
 import { ModalBase } from "../ModalBase.tsx";
-import { ModalHeaderDate, ModalSubmit } from "../ModalElements.tsx";
-import { TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment.tsx";
+import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements.tsx";
+import { TaskFulfillmentDispatchContext, TaskFulfillmentValues, TaskFulfillmentValuesDisplay } from "../../TaskFulfillment/TaskFulfillment.tsx";
 
 type AddTaskModalProps = {
     shownTask: Task
+    setShownTask: (newValue: Task | undefined) => void
     startingDate: Date // starting date is controlled from the parent
     setStartingDate: (newDate: Date) => void
 }
@@ -13,11 +14,12 @@ type AddTaskModalProps = {
 
 export function AddTaskDateModal({
     shownTask,
+    setShownTask,
     startingDate,
     setStartingDate
 }: AddTaskModalProps): React.JSX.Element {
     
-    const [endDate, setEndDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | undefined>(undefined);
     const dispatchTaskFulfillment = useContext(TaskFulfillmentDispatchContext);
 
     function handleTaskSubmit() {
@@ -38,7 +40,13 @@ export function AddTaskDateModal({
                 endDate: endDate,
                 status: 'waiting' // TODO: ADD STATUS
             }
-        })
+        });
+
+        // Hide the modal by unassigning
+        // the shown task.
+        setShownTask(undefined);
+
+
     }
 
     return (
@@ -54,6 +62,10 @@ export function AddTaskDateModal({
                 headerText="Konečné datum"
                 date={endDate}
                 setDate={setEndDate}
+            />
+            <ModalHeaderSelect
+                headerText="Status"
+                options={Object.values(TaskFulfillmentValuesDisplay)}
             />
             <ModalSubmit
                 submitText="Přidat plnění zakázky"

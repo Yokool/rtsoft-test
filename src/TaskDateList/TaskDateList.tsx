@@ -77,6 +77,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
             {dateAddTask !== undefined &&
                 <AddTaskDateModal
                     shownTask={dateAddTask}
+                    setShownTask={setDateAddTask}
                     startingDate={modalStartingDate}
                     setStartingDate={setModalStartingDate}
                 />

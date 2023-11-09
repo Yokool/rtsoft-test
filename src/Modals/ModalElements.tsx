@@ -70,7 +70,7 @@ export function ModalHeaderDate(
             <input
                 className="modalDate"
                 type="date"
-                value={dateValue}
+                value={dateValue || ''}
                 onChange={(event) => {
                     const date = event.currentTarget.valueAsDate;
                     
@@ -82,6 +82,36 @@ export function ModalHeaderDate(
                     setDate(date);
                 }}
             />
+        </>
+    )
+}
+
+export type ModalHeaderSelectProps = {
+    headerText: string
+    options: string[]
+}
+
+export function ModalHeaderSelect(
+    {
+        headerText,
+        options
+    }: ModalHeaderSelectProps
+): JSX.Element {
+
+    const optionsJSX = options.map((option) => {
+        return (
+            <option key={option}>
+                {option}
+            </option>
+        );
+    });
+
+    return (
+        <>
+            <h1>{headerText}</h1>
+            <select className="modalMultiSelect">
+                {optionsJSX}
+            </select>
         </>
     )
 }
