@@ -12,9 +12,18 @@
     border-style: solid;
     border-color: rgb(197, 197, 197);
     border-width: 1px;
-    height: 32px;
+    height: 48px;
+}
+
+.taskTable th {
+    border-bottom-width: 3px;
+    border-bottom-color: rgb(0, 0, 0);
 }
 
 .taskTable .codeCell {
-    width: 128px;
+    width: 64px;
+}
+
+.taskTable .nameCell {
+    width: 256px;
 }
