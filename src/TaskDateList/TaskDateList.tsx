@@ -41,7 +41,10 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
                     <td className="cellSpacer"></td>
                     <td className="codeCell">{task.taskCode}</td>
                     <td className="nameCell">{task.taskName}</td>
-                    <DateTableSelectionRow completeDateList={surroundingDates} />
+                    <DateTableSelectionRow
+                        completeDateList={surroundingDates}
+                        task={task}
+                    />
                 </tr>
             );
         }

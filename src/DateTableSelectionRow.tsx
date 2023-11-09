@@ -1,31 +1,53 @@
 import React from "react";
+import { dateToTableText } from "./DateUtils/DateUtils.tsx";
+import { Task } from "./TaskTypes/Task.tsx";
 
 
 type DateTableSelectionRowProps = {
     completeDateList: Date[]
+    task: Task
 }
 
 export function DateTableSelectionRow({
-    completeDateList
+    completeDateList,
+    task
 }: DateTableSelectionRowProps): React.JSX.Element {
 
-
     const completeDateListJSX = completeDateList.map((date) => {
+        const key = dateToTableText(date);
         return (
-            <td>
-                FILLER
-            </td>
+            <DateTableSelectionCell
+                key={key}
+                date={date}
+            />
         )
     });
-
-    console.log("ay");
-
-    console.log(completeDateListJSX);
 
     return (
         <>
             {completeDateListJSX}
         </>
     );
+
+}
+
+type DateTableSelectionCellProps = {
+    date: Date
+}
+
+function DateTableSelectionCell({date}: DateTableSelectionCellProps): React.JSX.Element {
+
+
+    function handleCellClick() {
+        
+    }
+
+
+    return (
+        <td
+            onClick={handleCellClick}
+        >
+        </td>
+    )
 
 }
