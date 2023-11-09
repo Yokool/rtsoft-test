@@ -45,3 +45,23 @@ export function ModalSubmit({
     );
     
 }
+
+export type ModalHeaderDateProps = {
+    headerText: string
+}
+
+export function ModalHeaderDate(
+    {headerText}: ModalHeaderDateProps
+): React.JSX.Element {
+    return (
+        <>
+            <h1>
+                {headerText}
+            </h1>
+            <input
+                className="modalDate"
+                type="date"
+            />
+        </>
+    )
+}
