@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import "./TaskCalendar.css";
-
-interface Task {
-    taskCode: string,
-    taskName: string,
-}
+import { AddTaskModal } from "./AddTaskModal/AddTaskModal.tsx";
+import { Task } from './TaskTypes/Task.tsx';
 
 export function TaskCalendar(): React.JSX.Element {
     const [taskList, setTaskList] = useState<Task[]>([]);
@@ -24,12 +21,14 @@ export function TaskCalendar(): React.JSX.Element {
 
 type TaskAddProps = {
     taskList: Task[]
-    setTaskList: (setTaskList: Task[]) => void
+    setTaskList: (taskList: Task[]) => void
 }
 
 function TaskAdd({taskList, setTaskList} : TaskAddProps): React.JSX.Element {
     
     function handleTaskAdd() {
+        setShowingModal(true);
+        /*
         setTaskList([
             ...taskList,
             {
@@ -37,13 +36,19 @@ function TaskAdd({taskList, setTaskList} : TaskAddProps): React.JSX.Element {
                 taskName: 'BBB',
             }
         ])
+        */
     }
+
+    const [showingModal, setShowingModal] = useState(false);
 
     
     return (
-        <button onClick={handleTaskAdd}>
-            Přidat novou zakázku
-        </button>
+        <>
+            {showingModal && <AddTaskModal setTaskList={setTaskList} />}
+            <button onClick={handleTaskAdd}>
+                Přidat novou zakázku
+            </button>
+        </>
     )
 }
 

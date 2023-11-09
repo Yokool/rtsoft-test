@@ -1,0 +1,41 @@
+
+.modalDarkBackground {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modalContainer {
+    background-color: rgb(255, 255, 255);
+    padding: 32px;
+    padding-top: 0px;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.modalText {
+    flex-basis: 100%;    
+
+    
+    font-size: 32px;
+    border-radius: 8px;
+}
+
+.modalSubmit {
+    margin-top: 32px;
+    font-size: 32px;
+}
