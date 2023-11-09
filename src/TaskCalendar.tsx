@@ -44,7 +44,11 @@ function TaskAdd({taskList, setTaskList} : TaskAddProps): React.JSX.Element {
     
     return (
         <>
-            {showingModal && <AddTaskModal setTaskList={setTaskList} />}
+            {showingModal && <AddTaskModal
+                setTaskList={setTaskList}
+                taskList={taskList}
+                setShowingModal={setShowingModal}
+            />}
             <button onClick={handleTaskAdd}>
                 Přidat novou zakázku
             </button>

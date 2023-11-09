@@ -3,10 +3,16 @@ import './AddTaskModal.css';
 import { Task } from "../TaskTypes/Task.tsx";
 
 type AddTaskModalProps = {
+    taskList: Task[]
     setTaskList: (taskList: Task[]) => void;
+    setShowingModal: (showModal: boolean) => void;
 }
 
-export function AddTaskModal({setTaskList}: AddTaskModalProps): React.JSX.Element {
+export function AddTaskModal({
+    taskList,
+    setTaskList,
+    setShowingModal
+}: AddTaskModalProps): React.JSX.Element {
     
     
     const [taskCode, setTaskCode] = useState('');
@@ -20,6 +26,17 @@ export function AddTaskModal({setTaskList}: AddTaskModalProps): React.JSX.Elemen
     function handleTaskNameChange(event: React.FormEvent<HTMLInputElement>) {
         const newTaskName = event.currentTarget.value;
         setTaskName(newTaskName);
+    }
+
+    function handleTaskSubmit() {
+        setTaskList([
+            ...taskList,
+            {
+                taskCode: taskCode,
+                taskName: taskName
+            }
+        ])
+        setShowingModal(false);
     }
     
     return (
@@ -40,7 +57,10 @@ export function AddTaskModal({setTaskList}: AddTaskModalProps): React.JSX.Elemen
                         value={taskName}
                         onChange={handleTaskNameChange}
                     />
-                    <button className="modalSubmit">
+                    <button
+                        className="modalSubmit"
+                        onClick={handleTaskSubmit}
+                    >
                         Přidat
                     </button>
                 </div>
