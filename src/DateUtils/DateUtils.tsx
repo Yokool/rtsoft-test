@@ -34,10 +34,15 @@ export function getSurroundingDatesSingleDirArray(
     const result: Date[] = [];
     for(let x = 1; x <= shiftNumber; x++)
     {
-        const shiftValue = shiftDirection === "backward" ? -x : x;
+        const shiftValue = shiftDirection === 'backward' ? -x : x;
         let newDate = new Date();
         newDate.setDate(date.getDate() + shiftValue);
         result.push(newDate);
+    }
+
+    if(shiftDirection === 'backward')
+    {
+        result.reverse();
     }
 
     return result;

@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Task } from "../TaskTypes/Task.tsx";
 import './TaskDateList.css';
 import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils.tsx";
+import { DateTableSelectionRow } from "../DateTableSelectionRow.tsx";
 
 type TaskDateListProps = {
     taskList: Task[]
 }
+
 
 export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
@@ -31,6 +33,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         );
     })
 
+
     const taskListJSX = taskList.map(
         (task) => {
             return (
@@ -38,6 +41,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
                     <td className="cellSpacer"></td>
                     <td className="codeCell">{task.taskCode}</td>
                     <td className="nameCell">{task.taskName}</td>
+                    <DateTableSelectionRow completeDateList={surroundingDates} />
                 </tr>
             );
         }
