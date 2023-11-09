@@ -48,11 +48,20 @@ export function ModalSubmit({
 
 export type ModalHeaderDateProps = {
     headerText: string
+    date: Date | undefined,
+    setDate: (newDate: Date) => void
 }
 
 export function ModalHeaderDate(
-    {headerText}: ModalHeaderDateProps
+    {
+        headerText,
+        date,
+        setDate
+    }: ModalHeaderDateProps
 ): React.JSX.Element {
+
+    const dateValue = date?.toISOString().split("T")[0];
+
     return (
         <>
             <h1>
@@ -61,6 +70,17 @@ export function ModalHeaderDate(
             <input
                 className="modalDate"
                 type="date"
+                value={dateValue}
+                onChange={(event) => {
+                    const date = event.currentTarget.valueAsDate;
+                    
+                    if(date === null)
+                    {
+                        throw new Error("")
+                    }
+
+                    setDate(date);
+                }}
             />
         </>
     )

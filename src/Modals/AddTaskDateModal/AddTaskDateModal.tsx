@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Task } from "../../TaskTypes/Task.tsx";
 import { ModalBase } from "../ModalBase.tsx";
 import { ModalHeaderDate, ModalSubmit } from "../ModalElements.tsx";
@@ -11,9 +11,12 @@ type AddTaskModalProps = {
 
 
 export function AddTaskDateModal({
-    shownTask
+    shownTask,
+    startingDate,
+    setStartingDate
 }: AddTaskModalProps): React.JSX.Element {
     
+    const [endDate, setEndDate] = useState<Date>();
     
     function handleTaskSubmit() {
 
@@ -25,9 +28,13 @@ export function AddTaskDateModal({
             <h2>{shownTask.taskCode + ' ' + shownTask.taskName}</h2>
             <ModalHeaderDate
                 headerText="Počáteční datum"
+                date={startingDate}
+                setDate={setStartingDate}
             />
             <ModalHeaderDate
                 headerText="Konečné datum"
+                date={endDate}
+                setDate={setEndDate}
             />
             <ModalSubmit
                 submitText="Přidat plnění zakázky"

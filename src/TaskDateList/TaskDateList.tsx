@@ -16,8 +16,11 @@ export type DateModalContextValue = {
     setModalStartingDate: (date: Date) => void
 }
 
-export const DateAddTaskContext = createContext<Task | undefined>(undefined);
-export const DateAddTaskSetContext = createContext<(task: Task) => void>(() => {});
+export const DateModalContext = createContext<DateModalContextValue>({
+    modalTask: undefined,
+    setModalTask() {},
+    setModalStartingDate() {},
+});
 
 export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
@@ -66,27 +69,29 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
 
     return (
-        <DateAddTaskContext.Provider value={dateAddTask}>
-            <DateAddTaskSetContext.Provider value={setDateAddTask}>
-                {dateAddTask !== undefined &&
-                    <AddTaskDateModal
-                        shownTask={dateAddTask}
-                        startingDate={modalStartingDate}
-                        setStartingDate={setModalStartingDate}
-                    />
-                }
-                <table className="taskTable" cellSpacing={0}>
-                    <tbody>
-                        <tr>
-                            <th className="cellSpacer"></th>
-                            <th className="codeCell">Kód</th>
-                            <th className="nameCell">Položka</th>
-                            {dateHeadersJSX}
-                        </tr>
-                        {taskListJSX}
-                    </tbody>
-                </table>
-            </DateAddTaskSetContext.Provider>
-        </DateAddTaskContext.Provider>
+        <DateModalContext.Provider value={{
+            modalTask: dateAddTask,
+            setModalTask: setDateAddTask,
+            setModalStartingDate: setModalStartingDate
+        }}>
+            {dateAddTask !== undefined &&
+                <AddTaskDateModal
+                    shownTask={dateAddTask}
+                    startingDate={modalStartingDate}
+                    setStartingDate={setModalStartingDate}
+                />
+            }
+            <table className="taskTable" cellSpacing={0}>
+                <tbody>
+                    <tr>
+                        <th className="cellSpacer"></th>
+                        <th className="codeCell">Kód</th>
+                        <th className="nameCell">Položka</th>
+                        {dateHeadersJSX}
+                    </tr>
+                    {taskListJSX}
+                </tbody>
+            </table>
+        </DateModalContext.Provider>
     )
 }

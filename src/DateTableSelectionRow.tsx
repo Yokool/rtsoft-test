@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { dateToTableText } from "./DateUtils/DateUtils.tsx";
 import { Task } from "./TaskTypes/Task.tsx";
-import { AddTaskDateModal } from "./Modals/AddTaskDateModal/AddTaskDateModal.tsx";
-import { DateAddTaskContext, DateAddTaskSetContext } from "./TaskDateList/TaskDateList.tsx";
+import { DateModalContext } from "./TaskDateList/TaskDateList.tsx";
 
 
 type DateTableSelectionRowProps = {
@@ -45,10 +44,14 @@ function DateTableSelectionCell({
 }: DateTableSelectionCellProps): React.JSX.Element {
 
 
-    const setAddDateTask = useContext(DateAddTaskSetContext)
+    const {
+        setModalTask,
+        setModalStartingDate
+    } = useContext(DateModalContext)
 
     function handleCellClick() {
-        setAddDateTask(task);
+        setModalTask(task);
+        setModalStartingDate(date);
     }
 
 
