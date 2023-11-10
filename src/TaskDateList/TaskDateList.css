@@ -6,6 +6,8 @@
 
 .taskTable {
     border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
 }
 
 .taskTable td, .taskTable th {

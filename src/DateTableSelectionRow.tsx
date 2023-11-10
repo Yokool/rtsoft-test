@@ -79,8 +79,10 @@ function DateTableSelectionCell({
             return;
         }
 
-        const cellWidth = cellRef.current.offsetWidth;
-        const cellHeight = cellRef.current.offsetHeight;
+        const boundingRect = cellRef.current.getBoundingClientRect();
+        const cellWidth = boundingRect.width;
+        
+        const cellHeight = boundingRect.height;
         setCellDimensions({
             width: cellWidth,
             height: cellHeight
@@ -112,7 +114,6 @@ function DateTableSelectionCell({
 
     function handleCellClick() {
         setModalTask(task);
-        console.log(date);
         setModalStartingDate(date);
     }
 

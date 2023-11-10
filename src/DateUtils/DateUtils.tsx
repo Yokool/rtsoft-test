@@ -96,6 +96,7 @@ export function dateUnitDayDifference(date1: Date, date2: Date)
     const diff = Math.abs(date2Normalized.getTime() - date1Normalized.getTime());
     
     // rounding is not 100% necessary if we are normalizing to 00:00:00.00
+    // but it's useful to keep
     const diffDays = Math.floor(diff / (1000 * 3600 * 24));
     
     return diffDays;
