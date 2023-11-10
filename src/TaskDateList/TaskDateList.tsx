@@ -24,6 +24,7 @@ export const DateModalContext = createContext<DateModalContextValue>({
 
 export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
+    // Counted from the example
     const dateShiftBackwards = 8;
     const dateShiftForwards = 19;
 

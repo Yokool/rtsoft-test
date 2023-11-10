@@ -31,6 +31,7 @@ export function getSurroundingDatesSingleDirArray(
     shiftDirection: SurroundingDatesShift
 ) {
 
+
     const result: Date[] = [];
     for(let x = 1; x <= shiftNumber; x++)
     {
@@ -76,4 +77,11 @@ export function dateToTableText(date: Date) {
 
     const result = localeWeekDay + "\n" + dateNum;
     return result;
+}
+
+export function dateDayDifference(date1: Date, date2: Date)
+{
+    const diff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    return diffDays;
 }
