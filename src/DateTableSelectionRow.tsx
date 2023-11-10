@@ -5,6 +5,7 @@ import { DateModalContext } from "./TaskDateList/TaskDateList.tsx";
 import { TaskFulfillmentContext, getAssociatedFulfillmentsToStartDate, getAssociatedFulfillmentsToTask } from "./TaskFulfillment/TaskFulfillment.tsx";
 import { FulfillmentRow } from "./TaskFulfillment/FulfillmentRow.tsx";
 import { ElementDimensions } from "./GeneralTypes.tsx";
+import './DateTableSelectionRow.css';
 
 type DateTableSelectionRowProps = {
     completeDateList: Date[]
@@ -120,6 +121,7 @@ function DateTableSelectionCell({
 
     return (
         <td
+            className="dateCell"
             ref={cellRef}
             onClick={handleCellClick}
         >
