@@ -52,7 +52,8 @@ export function getSurroundingDatesSingleDirArray(
 
 export function getSurroundingDatesToday(datesLeftCount: number, datesRightCount: number)
 {
-    return getSurroundingDates(getToday(), datesLeftCount, datesRightCount);
+    const todayStart = getToday();
+    return getSurroundingDates(todayStart, datesLeftCount, datesRightCount);
 }
 
 export function dateToTableText(date: Date) {
@@ -79,9 +80,23 @@ export function dateToTableText(date: Date) {
     return result;
 }
 
-export function dateDayDifference(date1: Date, date2: Date)
+export function dateUnitDayDifference(date1: Date, date2: Date)
 {
-    const diff = Math.abs(date2.getTime() - date1.getTime());
-    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    // avoid mutations
+    const date1Normalized = new Date(date1);
+    const date2Normalized = new Date(date2);
+    
+    // We don't want to worry about hours affecting our
+    // result -> so lets equalize the hours and only worry about dates
+    // wihtou e.g. when computing the day difference between today (10.11. 14:00) and
+    // tomorrow (11.11. 13:00) would get a diff of 0
+    date1Normalized.setHours(0, 0, 0, 0);
+    date2Normalized.setHours(0, 0, 0, 0);
+
+    const diff = Math.abs(date2Normalized.getTime() - date1Normalized.getTime());
+    
+    // rounding is not 100% necessary if we are normalizing to 00:00:00.00
+    const diffDays = Math.floor(diff / (1000 * 3600 * 24));
+    
     return diffDays;
 }

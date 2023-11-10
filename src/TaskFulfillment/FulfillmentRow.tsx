@@ -1,6 +1,6 @@
 import React from "react";
 import { TaskFulfillment } from "./TaskFulfillment.tsx";
-import { dateDayDifference } from "../DateUtils/DateUtils.tsx";
+import { dateUnitDayDifference } from "../DateUtils/DateUtils.tsx";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes.tsx";
 
@@ -13,15 +13,20 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
     
     
     const {startDate, endDate} = taskFulfillment;
-    const dateDifference = dateDayDifference(startDate, endDate);
+
+    // add 1 since we need to show the
+    // fulfillment row even when the task goes from today (0:00) to today (23:59)
+    const dateDifference = dateUnitDayDifference(startDate, endDate) + 1;
     
     const parentCellWidth = parentCellDimensions.width;
     const parentCellHeight = parentCellDimensions.height;
 
+    const fulfillmentRowWidth = parentCellWidth * dateDifference;
+    console.log(dateDifference);
     return (
         <div className="fulfillmentRowContainer">
             <div className="fulfillmentRowOuter" style={{
-                width: parentCellWidth,
+                width: fulfillmentRowWidth,
                 height: parentCellHeight,
                 bottom: parentCellHeight / 2
             }}>
