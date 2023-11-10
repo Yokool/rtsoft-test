@@ -84,7 +84,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
                     setStartingDate={setModalStartingDate}
                 />
             }
-            <table className="taskTable" cellSpacing={0}>
+            <table className="taskTable" cellSpacing={0} cellPadding={0}>
                 <tbody>
                     <tr>
                         <th className="cellSpacer"></th>

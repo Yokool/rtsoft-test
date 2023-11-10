@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { dateToTableText } from "./DateUtils/DateUtils.tsx";
 import { Task } from "./TaskTypes/Task.tsx";
 import { DateModalContext } from "./TaskDateList/TaskDateList.tsx";
 import { TaskFulfillmentContext, getAssociatedFulfillmentsToStartDate, getAssociatedFulfillmentsToTask } from "./TaskFulfillment/TaskFulfillment.tsx";
 import { FulfillmentRow } from "./TaskFulfillment/FulfillmentRow.tsx";
-
+import { ElementDimensions } from "./GeneralTypes.tsx";
 
 type DateTableSelectionRowProps = {
     completeDateList: Date[]
@@ -50,6 +50,47 @@ function DateTableSelectionCell({
     const fulfillmentList = useContext(TaskFulfillmentContext)
     const associatedTaskFulfillments = getAssociatedFulfillmentsToStartDate(task, date, fulfillmentList);
 
+    const cellRef = useRef<HTMLTableCellElement>(null);
+    const [cellDimensions, setCellDimensions] = useState<ElementDimensions>({
+        width: 0,
+        height: 0
+    })
+
+    useEffect(() => {
+        if(cellRef.current === null)
+        {
+            return;
+        }
+        
+        const resizeObserver = new ResizeObserver(() => {
+            updateCellSizeForChildren();
+        });
+
+        resizeObserver.observe(cellRef.current);
+        return () => {
+            resizeObserver.disconnect();
+        }
+    }, [])
+
+    function updateCellSizeForChildren()
+    {
+        if(cellRef.current === null)
+        {
+            return;
+        }
+
+        const cellWidth = cellRef.current.clientWidth;
+        const cellHeight = cellRef.current.clientHeight;
+        setCellDimensions({
+            width: cellWidth,
+            height: cellHeight
+        });
+    }
+
+    useLayoutEffect(() => {
+        updateCellSizeForChildren();
+    }, [])
+
     const associatedTasksJSX = associatedTaskFulfillments?.map((
         taskFulfillment
     ) => {
@@ -57,6 +98,7 @@ function DateTableSelectionCell({
             <FulfillmentRow
                 key={taskFulfillment.task.taskCode + ' ' + taskFulfillment.startDate.toISOString()}
                 taskFulfillment={taskFulfillment}
+                parentCellDimensions={cellDimensions}
             />
         );
     })
@@ -76,6 +118,7 @@ function DateTableSelectionCell({
 
     return (
         <td
+            ref={cellRef}
             onClick={handleCellClick}
         >
             {associatedTasksJSX}
