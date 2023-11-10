@@ -25,14 +25,21 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
 
     const fulfillmentRowWidth = parentCellWidth * dateDifference;
     
+    function handleClick(event: React.MouseEvent<HTMLDivElement>) {
+        
+        // since the fulfillment row is contained within the cell
+        // normally the event would propagate back up to the parent
+        // and this would be registered as adding another task fulfillment
+        event.stopPropagation();
+    }
+
     return (
-        <div className="fulfillmentRowContainer">
+        <div className="fulfillmentRowContainer" onClick={handleClick}>
             <div className="fulfillmentRowOuter" style={{
                 width: fulfillmentRowWidth,
                 // leave some space under the task to be able to add another on
                 // the same date
                 height: parentCellHeight - FulfillmentRowHeightOffset,
-                bottom: parentCellHeight / 2
             }}>
                 A
             </div>

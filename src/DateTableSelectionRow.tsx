@@ -121,11 +121,12 @@ function DateTableSelectionCell({
 
     return (
         <td
-            className="dateCell"
             ref={cellRef}
             onClick={handleCellClick}
         >
             {associatedTasksJSX}
+
+            <div className="dateCellInner" />
         </td>
     )
 
