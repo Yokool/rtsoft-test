@@ -22,7 +22,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
     const parentCellHeight = parentCellDimensions.height;
 
     const fulfillmentRowWidth = parentCellWidth * dateDifference;
-    console.log(dateDifference);
+    
     return (
         <div className="fulfillmentRowContainer">
             <div className="fulfillmentRowOuter" style={{
