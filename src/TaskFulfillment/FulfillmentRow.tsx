@@ -9,6 +9,8 @@ export type FulfillmentRowProps = {
     parentCellDimensions: ElementDimensions
 }
 
+export const FulfillmentRowHeightOffset = 12;
+
 export function FulfillmentRow({taskFulfillment, parentCellDimensions} : FulfillmentRowProps): React.JSX.Element {
     
     
@@ -27,7 +29,9 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
         <div className="fulfillmentRowContainer">
             <div className="fulfillmentRowOuter" style={{
                 width: fulfillmentRowWidth,
-                height: parentCellHeight,
+                // leave some space under the task to be able to add another on
+                // the same date
+                height: parentCellHeight - FulfillmentRowHeightOffset,
                 bottom: parentCellHeight / 2
             }}>
                 A
