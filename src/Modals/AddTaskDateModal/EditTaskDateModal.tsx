@@ -1,38 +1,41 @@
 
 import React, { useContext } from "react";
-import { Task } from "../../TaskTypes/Task";
-import { TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
+import { TaskFulfillment, TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
 import { TaskDateModalValues, TaskDateModalBase } from "./TaskDateModalBase";
+import { GeneralModalData } from "../../TaskDateList/TaskDateList";
 
-/*
+
 type EditTaskDateModalProps = {
-    shownTask: Task
-    setShownTask: (newValue: Task | undefined) => void
-    startingDate: Date | undefined
+    generalModalData: GeneralModalData,
+    setGeneralModalData: (newData: GeneralModalData | undefined) => void
+    taskFulfillment: TaskFulfillment
 }
 
 
 export function EditTaskDateModal(props: EditTaskDateModalProps): React.JSX.Element {
-    const {shownTask} = props;
 
-    // Get the task fulfillment context, so we can add a new
+    // Get the task fulfillment context, so we can add edit a
     // task fulfillment
     const dispatchTaskFulfillment = useContext(TaskFulfillmentDispatchContext);
 
-    // Adding a new task
+    // Editing an existing task
     function handleModalBaseSubmitSuccess(modalValues: TaskDateModalValues) {
         dispatchTaskFulfillment({
             type: 'edit',
+            originalFulfillment: props.taskFulfillment,
+            newFulfillmentValues: {
+                startDate: modalValues.startDate,
+                endDate: modalValues.endDate,
+                status: modalValues.status
+            }
         });
 
     }
     
     return (<TaskDateModalBase
-            onModalSucessfulSubmit={handleModalBaseSubmitSuccess}
-            startDateValue={props.startingDate}
-            shownTask={shownTask}
-            setShownTask={props.setShownTask}
+                onModalSucessfulSubmit={handleModalBaseSubmitSuccess}
+                generalModalData={props.generalModalData}
+                setGeneralModalData={props.setGeneralModalData}
             />
         );
 }
-*/

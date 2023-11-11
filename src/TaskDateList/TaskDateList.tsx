@@ -5,6 +5,7 @@ import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtil
 import { DateTableSelectionRow } from "../DateTableSelectionRow";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment } from "../TaskFulfillment/TaskFulfillment";
+import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
 
 type TaskDateListProps = {
     taskList: Task[]
@@ -27,6 +28,7 @@ export type GeneralModalData = {
      * Holds the data at which the modal shall start - set by a child cell on which we click
      */
     modalStartingDate: Date,
+    editedTaskFulfillment?: TaskFulfillment
 }
 
 export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
@@ -76,17 +78,31 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
     );
 
 
+    const modalJSX = (modalData !== undefined && (
+        (modalData.editedTaskFulfillment !== undefined)
+        ?
+        (
+            <EditTaskDateModal
+                generalModalData={modalData}
+                setGeneralModalData={setModalData}
+                taskFulfillment={modalData.editedTaskFulfillment}
+            />
+        )
+        :
+        (
+            <AddTaskDateModal
+                generalModalData={modalData}
+                setGeneralModalData={setModalData}
+            />
+        )
+    ))
+
     return (
         <DateModalContext.Provider value={{
             generalModalData: modalData,
             setGeneralModalData: setModalData
         }}>
-            {modalData !== undefined &&
-                <AddTaskDateModal
-                    generalModalData={modalData}
-                    setGeneralModalData={setModalData}
-                />
-            }
+            {modalJSX}
             <table className="taskTable" cellSpacing={0} cellPadding={0}>
                 <tbody>
                     <tr>

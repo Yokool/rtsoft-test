@@ -47,18 +47,27 @@ export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfil
 export type TaskFulfillmentStatus = keyof typeof TaskFulfillmentValues;
 
 export type TaskFulfillment = {
+    uuid: string,
     task: Task
     startDate: Date
     endDate: Date
     status: TaskFulfillmentStatus
 }
 
+/**
+ * This type represents a complete object containing
+ * all the fields of TaskFulfillment we can edit.
+ * We can't edit the uuid or the associated task.
+ */ 
+export type TaskFulfillmentEditable = Pick<TaskFulfillment, 'startDate' | 'endDate' | 'status'>
+
 export type TaskFulfillmentAction = {
     type: 'add',
     addedTask: TaskFulfillment
 } | {
     type: 'edit',
-    editedTask: TaskFulfillment
+    originalFulfillment: TaskFulfillment,
+    newFulfillmentValues: TaskFulfillmentEditable
 }
 
 export const taskFulfillmentReducer = (oldTasks: TaskFulfillment[], action: TaskFulfillmentAction): TaskFulfillment[] => {
@@ -74,10 +83,13 @@ export const taskFulfillmentReducer = (oldTasks: TaskFulfillment[], action: Task
         case 'edit': {
             return oldTasks.map((taskFulfillment) => {
                 // Edit the task
-                if(taskFulfillment.task.taskCode === action.editedTask.task.taskCode)
+                if(taskFulfillment.uuid === action.originalFulfillment.uuid)
                 {
-                    // TODO: ADD EDIT LOGIC
-                    throw new Error("You've forgotten to implement this.");
+                    return {
+                        uuid: taskFulfillment.uuid, // keep the original uuid
+                        task: taskFulfillment.task, // and task
+                        ...action.newFulfillmentValues,
+                    }
                 }
 
                 // Non-edit tasks stay - no need to create

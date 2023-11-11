@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { TaskFulfillment, TaskFulfillmentIntoStyles } from "./TaskFulfillment";
 import { dateUnitDayDifference } from "../DateUtils/DateUtils";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes";
 import styled from "styled-components";
+import { DateModalContext } from "../TaskDateList/TaskDateList";
 
 export type FulfillmentRowProps = {
     taskFulfillment: TaskFulfillment
@@ -68,6 +69,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
 
     const associatedStyle = TaskFulfillmentIntoStyles[taskFulfillment.status];
 
+    const modalContext = useContext(DateModalContext);
 
     // add 1 since we need to show the
     // fulfillment row even when the task goes from today (0:00) to today (23:59)
@@ -80,6 +82,13 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
     
     function handleClick(event: React.MouseEvent<HTMLDivElement>) {
         
+        // Todo: this can be cleaned up a bit with taking
+        // the starting 
+        modalContext.setGeneralModalData({
+            dateAddTask: taskFulfillment.task,
+            editedTaskFulfillment: taskFulfillment,
+            modalStartingDate: taskFulfillment.startDate
+        });
         // since the fulfillment row is contained within the cell
         // normally the event would propagate back up to the parent
         // and this would be registered as adding another task fulfillment
@@ -88,7 +97,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
 
     const fulfillmentRowOuterWidth = fulfillmentRowWidth;
     const fulfillmentRowOuterHeight = parentCellHeight - FulfillmentRowHeightOffset;
-    console.log(taskName);
+    
     return (
         <div className="fulfillmentRowContainer" onClick={handleClick}>
             <FulfillmentRowOuter

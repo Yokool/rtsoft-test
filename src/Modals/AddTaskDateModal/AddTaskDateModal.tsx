@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Task } from "../../TaskTypes/Task";
 import { TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
 import { TaskDateModalValues, TaskDateModalBase } from "./TaskDateModalBase";
 import { GeneralModalData } from "../../TaskDateList/TaskDateList";
@@ -29,6 +28,7 @@ export function AddTaskDateModal(props: AddTaskModalProps): React.JSX.Element {
         dispatchTaskFulfillment({
             type: 'add',
             addedTask: {
+                uuid: crypto.randomUUID(),
                 task: generalModalData.dateAddTask,
                 startDate: modalValues.startDate,
                 endDate: modalValues.endDate,
@@ -40,8 +40,7 @@ export function AddTaskDateModal(props: AddTaskModalProps): React.JSX.Element {
     
     return (<TaskDateModalBase
             onModalSucessfulSubmit={handleModalBaseSubmitSuccess}
-            startDateValue={generalModalData.modalStartingDate}
-            shownTask={generalModalData.dateAddTask}
+            generalModalData={props.generalModalData}
             setGeneralModalData={props.setGeneralModalData}
             />
         );

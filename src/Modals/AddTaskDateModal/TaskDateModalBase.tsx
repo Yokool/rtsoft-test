@@ -6,12 +6,7 @@ import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElement
 import { GeneralModalData } from "../../TaskDateList/TaskDateList"
 
 export type TaskDateModalBaseProps = {
-    /**
-     * The value at which the start date input component
-     * will start.
-     */
-    startDateValue?: Date,
-    shownTask: Task
+    generalModalData: GeneralModalData,
     setGeneralModalData: (newValue: GeneralModalData | undefined) => void
     onModalSucessfulSubmit: (modalValues: TaskDateModalValues) => void
 }
@@ -23,14 +18,13 @@ export type TaskDateModalValues = {
 }
 
 export function TaskDateModalBase({
-    startDateValue,
-    shownTask,
+    generalModalData,
     setGeneralModalData,
     onModalSucessfulSubmit
 }: TaskDateModalBaseProps): React.JSX.Element {
     
     // The form values for the modal
-    const [startDate, setStartDate] = useState<Date | undefined>(startDateValue);
+    const [startDate, setStartDate] = useState<Date | undefined>(generalModalData.modalStartingDate);
     const [endDate, setEndDate] = useState<Date | undefined>(undefined);
     const [status, setStatus] = useState<TaskFulfillmentStatus>('waiting');
 
@@ -78,13 +72,15 @@ export function TaskDateModalBase({
     // so we can fill the selection element with these options.
     const statusValues = Object.values(TaskFulfillmentValuesDisplay);
 
+    const {taskName, taskCode} = generalModalData.dateAddTask;
+
     return (
         <ErrorModalBase
             errorMessage={shownErrorMessage}
             setErrorMessage={setShownErrorMessage}
         >
             <h1>Přidávám nové plnění zakázky</h1>
-            <h2>{shownTask.taskCode + ' ' + shownTask.taskName}</h2>
+            <h2>{taskName + ' ' + taskCode}</h2>
             <ModalHeaderDate
                 headerText="Počáteční datum"
                 date={startDate}
