@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Task } from "../../TaskTypes/Task.tsx";
 import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements.tsx";
-import { TaskFulfillmentDispatchContext, TaskFulfillmentStatus, TaskFulfillmentValuesDisplay } from "../../TaskFulfillment/TaskFulfillment.tsx";
+import { TaskFulfillmentDispatchContext, TaskFulfillmentStatus, TaskFulfillmentValuesDisplay, turnTaskFulfillmentDisplayIntoKey } from "../../TaskFulfillment/TaskFulfillment.tsx";
 import { ErrorModalBase } from "../ErrorModal/ErrorModal.tsx";
+import { getKeyForValue } from "../../GeneralUtils/GeneralUtils.tsx";
 
 type AddTaskModalProps = {
     shownTask: Task
@@ -92,8 +93,11 @@ export function AddTaskDateModal({
                         throw new Error(`${newValue} is not contained within the keys of ${statusValues}.`);
                     }
 
+                    const displayValueIntoStatusKey = turnTaskFulfillmentDisplayIntoKey(newValue);
+                    
+
                     // this is ok thanks to the check
-                    const newValueStatus = newValue as TaskFulfillmentStatus;
+                    const newValueStatus = displayValueIntoStatusKey as TaskFulfillmentStatus;
                     setStatus(newValueStatus);
 
                 }}

@@ -1,5 +1,5 @@
 import React from "react";
-import { TaskFulfillment } from "./TaskFulfillment.tsx";
+import { TaskFulfillment, TaskFulfillmentIntoStyles } from "./TaskFulfillment.tsx";
 import { dateUnitDayDifference } from "../DateUtils/DateUtils.tsx";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes.tsx";
@@ -9,12 +9,15 @@ export type FulfillmentRowProps = {
     parentCellDimensions: ElementDimensions
 }
 
-export const FulfillmentRowHeightOffset = 12;
+export const FulfillmentRowHeightOffset = 12; 
 
 export function FulfillmentRow({taskFulfillment, parentCellDimensions} : FulfillmentRowProps): React.JSX.Element {
     
     
-    const {startDate, endDate} = taskFulfillment;
+    const {task, startDate, endDate} = taskFulfillment;
+    const {taskName} = task;
+
+    const associatedStyle = TaskFulfillmentIntoStyles[taskFulfillment.status];
 
     // add 1 since we need to show the
     // fulfillment row even when the task goes from today (0:00) to today (23:59)
@@ -40,8 +43,11 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
                 // leave some space under the task to be able to add another on
                 // the same date
                 height: parentCellHeight - FulfillmentRowHeightOffset,
+                backgroundColor: associatedStyle.fulfillmentColor
             }}>
-                A
+                <p className="fulfillmentName">
+                    {taskName}
+                </p>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { Task } from "../TaskTypes/Task.tsx";
+import { getKeyForValueDefined } from "../GeneralUtils/GeneralUtils.tsx";
 
 export const TaskFulfillmentValues = {
     'done': undefined,
@@ -9,6 +10,23 @@ export const TaskFulfillmentValues = {
 export const TaskFulfillmentValuesDisplay: Record<TaskFulfillmentStatus, string> = {
     waiting: 'Nedokončeno',
     done: 'Hotovo'
+}
+
+export function turnTaskFulfillmentDisplayIntoKey(displayValue: string) {
+    return getKeyForValueDefined(TaskFulfillmentValuesDisplay, displayValue);
+}
+
+export type TaskFulfillmentStyles = {
+    fulfillmentColor: string
+}
+
+export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfillmentStyles> = {
+    done: {
+        fulfillmentColor: '#2ea956'
+    },
+    waiting: {
+        fulfillmentColor: '#fbbabd'
+    }
 }
 
 export type TaskFulfillmentStatus = keyof typeof TaskFulfillmentValues;

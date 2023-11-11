@@ -8,5 +8,12 @@
 
 .fulfillmentRowOuter {
     position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     background-color: red;
+}
+
+.fulfillmentRowOuter .fulfillmentName {
+    margin-left: 16px;
 }
