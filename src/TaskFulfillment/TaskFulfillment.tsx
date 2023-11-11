@@ -21,20 +21,23 @@ export function turnTaskFulfillmentDisplayIntoKey(displayValue: string) {
 
 export type TaskFulfillmentStyles = {
     fulfillmentBgColor: string,
+    fulfillmentBgHoverColor: string,
     fulfillmentForegroundColor: string,
-    fulfillmentIcon: JSX.Element
+    fulfillmentForegroundHoverColor: string,
 }
 
 export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfillmentStyles> = {
     done: {
         fulfillmentBgColor: '#2ea956',
+        fulfillmentBgHoverColor: '#1d1e2c',
         fulfillmentForegroundColor: '#ffffff',
-        fulfillmentIcon: <DoneIcon />
+        fulfillmentForegroundHoverColor: '#2ea956',
     },
     waiting: {
         fulfillmentBgColor: '#fbbabd',
+        fulfillmentBgHoverColor: '#1d1e2c',
         fulfillmentForegroundColor: '#e9414b',
-        fulfillmentIcon: <HourglassIcon />
+        fulfillmentForegroundHoverColor: '#e9414b',
     }
 }
 

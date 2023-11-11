@@ -5,15 +5,7 @@
     z-index: 1;
 }
 
-
-.fulfillmentRowOuter {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.fulfillmentRowOuter .fulfillmentName {
+.fulfillmentName {
     margin-left: 8px;
     height: 24px;
     margin-top: 0px;
