@@ -106,16 +106,15 @@ function DateTableSelectionCell({
         );
     })
 
-
-
     const {
-        setModalTask,
-        setModalStartingDate
-    } = useContext(DateModalContext)
+        setGeneralModalData
+    } = useContext(DateModalContext);
 
     function handleCellClick() {
-        setModalTask(task);
-        setModalStartingDate(date);
+        setGeneralModalData({
+            dateAddTask: task,
+            modalStartingDate: date
+        });
     }
 
 

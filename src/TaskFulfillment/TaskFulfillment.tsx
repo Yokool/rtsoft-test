@@ -56,6 +56,9 @@ export type TaskFulfillment = {
 export type TaskFulfillmentAction = {
     type: 'add',
     addedTask: TaskFulfillment
+} | {
+    type: 'edit',
+    editedTask: TaskFulfillment
 }
 
 export const taskFulfillmentReducer = (oldTasks: TaskFulfillment[], action: TaskFulfillmentAction): TaskFulfillment[] => {
@@ -67,6 +70,20 @@ export const taskFulfillmentReducer = (oldTasks: TaskFulfillment[], action: Task
                     ...action.addedTask
                 }
             ];
+        }
+        case 'edit': {
+            return oldTasks.map((taskFulfillment) => {
+                // Edit the task
+                if(taskFulfillment.task.taskCode === action.editedTask.task.taskCode)
+                {
+                    // TODO: ADD EDIT LOGIC
+                    throw new Error("You've forgotten to implement this.");
+                }
+
+                // Non-edit tasks stay - no need to create
+                // a copy since no mutations are being done
+                return taskFulfillment;
+            })
         }
     }   
 }

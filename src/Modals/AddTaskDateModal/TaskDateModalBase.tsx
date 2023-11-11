@@ -3,6 +3,7 @@ import { TaskFulfillmentStatus, TaskFulfillmentValuesDisplay, turnTaskFulfillmen
 import { Task } from "../../TaskTypes/Task"
 import { ErrorModalBase } from "../ErrorModal/ErrorModal"
 import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements"
+import { GeneralModalData } from "../../TaskDateList/TaskDateList"
 
 export type TaskDateModalBaseProps = {
     /**
@@ -11,7 +12,7 @@ export type TaskDateModalBaseProps = {
      */
     startDateValue?: Date,
     shownTask: Task
-    setShownTask: (newValue: Task | undefined) => void
+    setGeneralModalData: (newValue: GeneralModalData | undefined) => void
     onModalSucessfulSubmit: (modalValues: TaskDateModalValues) => void
 }
 
@@ -24,7 +25,7 @@ export type TaskDateModalValues = {
 export function TaskDateModalBase({
     startDateValue,
     shownTask,
-    setShownTask,
+    setGeneralModalData,
     onModalSucessfulSubmit
 }: TaskDateModalBaseProps): React.JSX.Element {
     
@@ -68,8 +69,8 @@ export function TaskDateModalBase({
         });
 
         // Hide the modal by unassigning
-        // the shown task.
-        setShownTask(undefined);
+        // the shown data.
+        setGeneralModalData(undefined);
 
     }
 

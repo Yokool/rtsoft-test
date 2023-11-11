@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Task } from "../../TaskTypes/Task";
 import { TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
 import { TaskDateModalValues, TaskDateModalBase } from "./TaskDateModalBase";
+import { GeneralModalData } from "../../TaskDateList/TaskDateList";
 
 type AddTaskModalProps = {
     /**
@@ -10,19 +11,14 @@ type AddTaskModalProps = {
      * -> we are adding a new fulfillment to this particular task through
      * the modal.)
      */
-    shownTask: Task
-    setShownTask: (newValue: Task | undefined) => void
+    generalModalData: GeneralModalData
+    setGeneralModalData: (newValue: GeneralModalData | undefined) => void
     
-    /**
-     * The initial value for the modal in the startDate field.
-     * This is taken out of the date of the cell we click on.
-     */
-    startingDate: Date | undefined
 }
 
 
 export function AddTaskDateModal(props: AddTaskModalProps): React.JSX.Element {
-    const {shownTask} = props;
+    const {generalModalData} = props;
 
     // Get the task fulfillment context, so we can add a new
     // task fulfillment
@@ -33,7 +29,7 @@ export function AddTaskDateModal(props: AddTaskModalProps): React.JSX.Element {
         dispatchTaskFulfillment({
             type: 'add',
             addedTask: {
-                task: shownTask,
+                task: generalModalData.dateAddTask,
                 startDate: modalValues.startDate,
                 endDate: modalValues.endDate,
                 status: modalValues.status
@@ -44,9 +40,9 @@ export function AddTaskDateModal(props: AddTaskModalProps): React.JSX.Element {
     
     return (<TaskDateModalBase
             onModalSucessfulSubmit={handleModalBaseSubmitSuccess}
-            startDateValue={props.startingDate}
-            shownTask={shownTask}
-            setShownTask={props.setShownTask}
+            startDateValue={generalModalData.modalStartingDate}
+            shownTask={generalModalData.dateAddTask}
+            setGeneralModalData={props.setGeneralModalData}
             />
         );
 }
