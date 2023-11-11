@@ -1,11 +1,9 @@
 import React from "react";
-import { TaskFulfillment, TaskFulfillmentIntoStyles, TaskFulfillmentStatus } from "./TaskFulfillment.tsx";
+import { TaskFulfillment, TaskFulfillmentIntoStyles } from "./TaskFulfillment.tsx";
 import { dateUnitDayDifference } from "../DateUtils/DateUtils.tsx";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes.tsx";
-import { DoneIcon } from "../Icons/DoneIcon.tsx";
 import styled from "styled-components";
-import { HourglassIcon } from "../Icons/HourglassIcon.tsx";
 
 export type FulfillmentRowProps = {
     taskFulfillment: TaskFulfillment
@@ -35,9 +33,31 @@ const FulfillmentRowOuter = styled.div< {
     &:hover {
         background-color: ${props => props.$hoverBgColor};
         color: ${props => props.$foregroundHoverColor};
-        fill: black;
+    }
+
+    div svg {
+        stroke: ${props => props.$foregroundColor}
+    }
+
+    &:hover div svg {
+        stroke: ${props => props.$foregroundHoverColor};
+    }
+
+    &:hover p {
+        color: ${props => props.$foregroundHoverColor};
     }
     
+`;
+
+const FulfillmentText = styled.p< {
+    $color: string
+} > `
+    color: ${props => props.$color};
+    margin-left: 8px;
+    height: 24px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
 `;
 
 export function FulfillmentRow({taskFulfillment, parentCellDimensions} : FulfillmentRowProps): React.JSX.Element {
@@ -48,11 +68,6 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
 
     const associatedStyle = TaskFulfillmentIntoStyles[taskFulfillment.status];
 
-
-    const fulfillmentIconMap: Record<TaskFulfillmentStatus, JSX.Element> = {
-        done: <DoneIcon iconColor={associatedStyle.fulfillmentForegroundColor} />,
-        waiting: <HourglassIcon iconColor={associatedStyle.fulfillmentForegroundColor} />
-    }
 
     // add 1 since we need to show the
     // fulfillment row even when the task goes from today (0:00) to today (23:59)
@@ -73,9 +88,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
 
     const fulfillmentRowOuterWidth = fulfillmentRowWidth;
     const fulfillmentRowOuterHeight = parentCellHeight - FulfillmentRowHeightOffset;
-
-    const fulfillmentIcon = fulfillmentIconMap[taskFulfillment.status];
-    
+    console.log(taskName);
     return (
         <div className="fulfillmentRowContainer" onClick={handleClick}>
             <FulfillmentRowOuter
@@ -87,12 +100,12 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
                 $foregroundHoverColor={associatedStyle.fulfillmentForegroundHoverColor}
                 >
                 <div className="fulfillmentIconHolder">
-                    {fulfillmentIcon}
+                    {associatedStyle.fulfillmentIcon}
                 </div>
                 
-                <p className="fulfillmentName">
+                <FulfillmentText $color={associatedStyle.fulfillmentForegroundColor}>
                     {taskName}
-                </p>
+                </FulfillmentText>
 
             </FulfillmentRowOuter>
         </div>

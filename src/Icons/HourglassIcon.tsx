@@ -1,10 +1,6 @@
 import * as React from "react"
 
-export type HourglassIconProps = {
-    iconColor: string
-}
-
-export const HourglassIcon = ({iconColor}: HourglassIconProps) => (
+export const HourglassIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
@@ -13,7 +9,6 @@ export const HourglassIcon = ({iconColor}: HourglassIconProps) => (
     viewBox="0 0 24 24"
   >
     <path
-      stroke={iconColor}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}

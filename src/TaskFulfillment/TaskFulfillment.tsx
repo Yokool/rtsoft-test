@@ -24,6 +24,7 @@ export type TaskFulfillmentStyles = {
     fulfillmentBgHoverColor: string,
     fulfillmentForegroundColor: string,
     fulfillmentForegroundHoverColor: string,
+    fulfillmentIcon: JSX.Element,
 }
 
 export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfillmentStyles> = {
@@ -32,12 +33,14 @@ export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfil
         fulfillmentBgHoverColor: '#1d1e2c',
         fulfillmentForegroundColor: '#ffffff',
         fulfillmentForegroundHoverColor: '#2ea956',
+        fulfillmentIcon: <DoneIcon />
     },
     waiting: {
         fulfillmentBgColor: '#fbbabd',
         fulfillmentBgHoverColor: '#1d1e2c',
         fulfillmentForegroundColor: '#e9414b',
         fulfillmentForegroundHoverColor: '#e9414b',
+        fulfillmentIcon: <HourglassIcon />
     }
 }
 
