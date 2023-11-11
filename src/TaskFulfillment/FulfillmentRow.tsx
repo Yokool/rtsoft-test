@@ -3,6 +3,7 @@ import { TaskFulfillment, TaskFulfillmentIntoStyles } from "./TaskFulfillment.ts
 import { dateUnitDayDifference } from "../DateUtils/DateUtils.tsx";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes.tsx";
+import { DoneIcon } from "../Icons/DoneIcon.tsx";
 
 export type FulfillmentRowProps = {
     taskFulfillment: TaskFulfillment
@@ -43,9 +44,15 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
                 // leave some space under the task to be able to add another on
                 // the same date
                 height: parentCellHeight - FulfillmentRowHeightOffset,
-                backgroundColor: associatedStyle.fulfillmentColor
+                backgroundColor: associatedStyle.fulfillmentBgColor
             }}>
-                <p className="fulfillmentName">
+                <div className="fulfillmentIconHolder">
+                    {associatedStyle.fulfillmentIcon}
+                </div>
+                
+                <p className="fulfillmentName" style={{
+                    color: associatedStyle.fulfillmentForegroundColor
+                }}>
                     {taskName}
                 </p>
             </div>

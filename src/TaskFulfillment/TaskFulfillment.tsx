@@ -1,6 +1,9 @@
 import { createContext } from "react";
 import { Task } from "../TaskTypes/Task.tsx";
 import { getKeyForValueDefined } from "../GeneralUtils/GeneralUtils.tsx";
+import { DoneIcon } from "../Icons/DoneIcon.tsx";
+import React from "react";
+import { HourglassIcon } from "../Icons/HourglassIcon.tsx";
 
 export const TaskFulfillmentValues = {
     'done': undefined,
@@ -17,15 +20,21 @@ export function turnTaskFulfillmentDisplayIntoKey(displayValue: string) {
 }
 
 export type TaskFulfillmentStyles = {
-    fulfillmentColor: string
+    fulfillmentBgColor: string,
+    fulfillmentForegroundColor: string,
+    fulfillmentIcon: JSX.Element
 }
 
 export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfillmentStyles> = {
     done: {
-        fulfillmentColor: '#2ea956'
+        fulfillmentBgColor: '#2ea956',
+        fulfillmentForegroundColor: '#ffffff',
+        fulfillmentIcon: <DoneIcon />
     },
     waiting: {
-        fulfillmentColor: '#fbbabd'
+        fulfillmentBgColor: '#fbbabd',
+        fulfillmentForegroundColor: '#e9414b',
+        fulfillmentIcon: <HourglassIcon />
     }
 }
 
