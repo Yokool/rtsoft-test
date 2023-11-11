@@ -1,7 +1,8 @@
 
 export function getKeyForValue<ValueType>(object: Object, value: ValueType) {
     return Object.keys(object).find((key) => {
-        const objectValue = object[key];
+        const keyCast = key as keyof Object;
+        const objectValue = object[keyCast];
         return objectValue === value;
     });
 }

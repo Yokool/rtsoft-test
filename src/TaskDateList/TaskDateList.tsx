@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useRef, useState } from "react";
-import { Task } from "../TaskTypes/Task.tsx";
+import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
-import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils.tsx";
-import { DateTableSelectionRow } from "../DateTableSelectionRow.tsx";
-import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal.tsx";
+import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils";
+import { DateTableSelectionRow } from "../DateTableSelectionRow";
+import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 
 type TaskDateListProps = {
     taskList: Task[]

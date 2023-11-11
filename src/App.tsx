@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { TaskCalendar } from './TaskCalendar.tsx';
+import { TaskCalendar } from './TaskCalendar';
 
 export default function App() {
   return (

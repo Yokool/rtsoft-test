@@ -1,9 +1,9 @@
 import { createContext } from "react";
-import { Task } from "../TaskTypes/Task.tsx";
-import { getKeyForValueDefined } from "../GeneralUtils/GeneralUtils.tsx";
-import { DoneIcon } from "../Icons/DoneIcon.tsx";
+import { Task } from "../TaskTypes/Task";
+import { getKeyForValueDefined } from "../GeneralUtils/GeneralUtils";
+import { DoneIcon } from "../Icons/DoneIcon";
 import React from "react";
-import { HourglassIcon } from "../Icons/HourglassIcon.tsx";
+import { HourglassIcon } from "../Icons/HourglassIcon";
 
 export const TaskFulfillmentValues = {
     'done': undefined,

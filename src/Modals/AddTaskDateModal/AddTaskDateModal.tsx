@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Task } from "../../TaskTypes/Task.tsx";
-import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements.tsx";
-import { TaskFulfillmentDispatchContext, TaskFulfillmentStatus, TaskFulfillmentValuesDisplay, turnTaskFulfillmentDisplayIntoKey } from "../../TaskFulfillment/TaskFulfillment.tsx";
-import { ErrorModalBase } from "../ErrorModal/ErrorModal.tsx";
-import { getKeyForValue } from "../../GeneralUtils/GeneralUtils.tsx";
+import { Task } from "../../TaskTypes/Task";
+import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements";
+import { TaskFulfillmentDispatchContext, TaskFulfillmentStatus, TaskFulfillmentValuesDisplay, turnTaskFulfillmentDisplayIntoKey } from "../../TaskFulfillment/TaskFulfillment";
+import { ErrorModalBase } from "../ErrorModal/ErrorModal";
+import { getKeyForValue } from "../../GeneralUtils/GeneralUtils";
 
 type AddTaskModalProps = {
     shownTask: Task

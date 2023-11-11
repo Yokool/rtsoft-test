@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import './AddTaskModal.css';
-import { Task } from "../../TaskTypes/Task.tsx";
-import { ModalBase } from "../ModalBase.tsx";
-import { ModalHeaderInput, ModalSubmit } from "../ModalElements.tsx";
+import { Task } from "../../TaskTypes/Task";
+import { ModalBase } from "../ModalBase";
+import { ModalHeaderInput, ModalSubmit } from "../ModalElements";
 
 type AddTaskModalProps = {
     taskList: Task[]

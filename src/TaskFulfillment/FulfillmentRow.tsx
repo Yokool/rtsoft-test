@@ -1,8 +1,8 @@
 import React from "react";
-import { TaskFulfillment, TaskFulfillmentIntoStyles } from "./TaskFulfillment.tsx";
-import { dateUnitDayDifference } from "../DateUtils/DateUtils.tsx";
+import { TaskFulfillment, TaskFulfillmentIntoStyles } from "./TaskFulfillment";
+import { dateUnitDayDifference } from "../DateUtils/DateUtils";
 import './FulfillmentRow.css';
-import { ElementDimensions } from "../GeneralTypes.tsx";
+import { ElementDimensions } from "../GeneralTypes";
 import styled from "styled-components";
 
 export type FulfillmentRowProps = {
