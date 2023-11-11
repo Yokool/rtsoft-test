@@ -1,112 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Task } from "../../TaskTypes/Task";
-import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements";
-import { TaskFulfillmentDispatchContext, TaskFulfillmentStatus, TaskFulfillmentValuesDisplay, turnTaskFulfillmentDisplayIntoKey } from "../../TaskFulfillment/TaskFulfillment";
-import { ErrorModalBase } from "../ErrorModal/ErrorModal";
-import { getKeyForValue } from "../../GeneralUtils/GeneralUtils";
+import { TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
+import { TaskDateModalValues, TaskDateModalBase } from "./TaskDateModalBase";
 
 type AddTaskModalProps = {
+    /**
+     * The task associated with the modal (i.e. we click
+     * a date in the calendar - the date is in a row of a particular task
+     * -> we are adding a new fulfillment to this particular task through
+     * the modal.)
+     */
     shownTask: Task
     setShownTask: (newValue: Task | undefined) => void
-    startingDate: Date | undefined // starting date is controlled from the parent
-    setStartingDate: (newDate: Date | undefined) => void
+    
+    /**
+     * The initial value for the modal in the startDate field.
+     * This is taken out of the date of the cell we click on.
+     */
+    startingDate: Date | undefined
 }
 
 
-export function AddTaskDateModal({
-    shownTask,
-    setShownTask,
-    startingDate,
-    setStartingDate
-}: AddTaskModalProps): React.JSX.Element {
-    
-    const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+export function AddTaskDateModal(props: AddTaskModalProps): React.JSX.Element {
+    const {shownTask} = props;
+
+    // Get the task fulfillment context, so we can add a new
+    // task fulfillment
     const dispatchTaskFulfillment = useContext(TaskFulfillmentDispatchContext);
 
-    const [shownErrorMessage, setShownErrorMessage] = useState<string | undefined>(undefined);
-    
-    const [status, setStatus] = useState<TaskFulfillmentStatus>('waiting');
-
-    const noStartDateErrorMessage = "Prosím vyplňte datum počátku zakázky.";
-    const noEndDateErrorMessage = "Prosím vyplňte datum ukončení zakázky.";
-    
-    function handleTaskSubmit() {
-
-        if(startingDate === undefined)
-        {
-            setShownErrorMessage(noStartDateErrorMessage);
-            return;
-        }
-
-        if(endDate === undefined)
-        {
-            // show error modal on unfilled date
-            setShownErrorMessage(noEndDateErrorMessage);
-            return;
-        }
-
+    // Adding a new task
+    function handleModalBaseSubmitSuccess(modalValues: TaskDateModalValues) {
         dispatchTaskFulfillment({
             type: 'add',
             addedTask: {
                 task: shownTask,
-                startDate: startingDate,
-                endDate: endDate,
-                status: status // TODO: ADD STATUS
+                startDate: modalValues.startDate,
+                endDate: modalValues.endDate,
+                status: modalValues.status
             }
         });
 
-        // Hide the modal by unassigning
-        // the shown task.
-        setShownTask(undefined);
-
-
     }
-
-    const statusValues = Object.values(TaskFulfillmentValuesDisplay);
-
-    return (
-        <ErrorModalBase
-            errorMessage={shownErrorMessage}
-            setErrorMessage={setShownErrorMessage}
-        >
-            <h1>Přidávám nové plnění zakázky</h1>
-            <h2>{shownTask.taskCode + ' ' + shownTask.taskName}</h2>
-            <ModalHeaderDate
-                headerText="Počáteční datum"
-                date={startingDate}
-                setDate={setStartingDate}
+    
+    return (<TaskDateModalBase
+            onModalSucessfulSubmit={handleModalBaseSubmitSuccess}
+            startDateValue={props.startingDate}
+            shownTask={shownTask}
+            setShownTask={props.setShownTask}
             />
-            <ModalHeaderDate
-                headerText="Konečné datum"
-                date={endDate}
-                setDate={setEndDate}
-            />
-            <ModalHeaderSelect
-                headerText="Status"
-                options={statusValues}
-                onChange={(newValue) => {
-                    // Exhaustive check -> this really
-                    // shouldn't happen unless we passed
-                    // something different to options={}
-                    if(!statusValues.includes(newValue))
-                    {
-                        throw new Error(`${newValue} is not contained within the keys of ${statusValues}.`);
-                    }
-
-                    const displayValueIntoStatusKey = turnTaskFulfillmentDisplayIntoKey(newValue);
-                    
-
-                    // this is ok thanks to the check
-                    const newValueStatus = displayValueIntoStatusKey as TaskFulfillmentStatus;
-                    setStatus(newValueStatus);
-
-                }}
-            />
-            <ModalSubmit
-                submitText="Přidat plnění zakázky"
-                onSubmit={handleTaskSubmit}
-            />
-        </ErrorModalBase>
-    );
+        );
 }
-

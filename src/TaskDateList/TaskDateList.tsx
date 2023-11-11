@@ -30,8 +30,10 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
     const [surroundingDates, setSurroundingDates] = useState<Date[]>([]);
     
-    // Date add modal
+    // When this is defined, show a modal in which we are adding a task.
     const [dateAddTask, setDateAddTask] = useState<Task | undefined>(undefined);
+    
+    // Hold the data at which the modal shall start - set by a child cell on which we click
     const [modalStartingDate, setModalStartingDate] = useState<Date | undefined>(undefined);
 
     useEffect(() => {
@@ -81,7 +83,6 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
                     shownTask={dateAddTask}
                     setShownTask={setDateAddTask}
                     startingDate={modalStartingDate}
-                    setStartingDate={setModalStartingDate}
                 />
             }
             <table className="taskTable" cellSpacing={0} cellPadding={0}>
