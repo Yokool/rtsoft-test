@@ -44,7 +44,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
                 // leave some space under the task to be able to add another on
                 // the same date
                 height: parentCellHeight - FulfillmentRowHeightOffset,
-                backgroundColor: associatedStyle.fulfillmentBgColor
+                backgroundColor: associatedStyle.fulfillmentBgColor,
             }}>
                 <div className="fulfillmentIconHolder">
                     {associatedStyle.fulfillmentIcon}
