@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
-import { dateToTableText, getSurroundingDatesToday, isDateWeekday } from "../DateUtils/DateUtils";
+import { dateToTableText, getSurroundingDatesToday, isDateToday, isDateWeekday } from "../DateUtils/DateUtils";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
@@ -57,8 +57,10 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         
         const dateHeaderString = dateToTableText(date);
         const customColor = getWeekendColorOnWeekend(date);
+        const isCellToday = isDateToday(date);
+        
         return (
-            <TaskTableTH key={dateHeaderString} $customBgColor={customColor}>
+            <TaskTableTH key={dateHeaderString} $customBgColor={customColor} $isCellToday={isCellToday}>
                 {dateHeaderString}
             </TaskTableTH>
         );
@@ -66,11 +68,12 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
 
 
     const taskListJSX = taskList.map(
-        (task) => {
+        (task, index) => {
             return (
                 <CompleteTaskRow
                     task={task}
                     surroundingDates={surroundingDates}
+                    isLastRow={index === (taskList.length - 1)}
                 />
             );
         }

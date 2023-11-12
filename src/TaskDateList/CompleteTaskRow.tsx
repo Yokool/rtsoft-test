@@ -8,13 +8,14 @@ import { CellSpacerTD, DefaultCellHeight, TaskTableCodeCellTD, TaskTableNameCell
 export type CompleteTaskRowProps = {
     task: Task
     surroundingDates: Date[]
+    isLastRow: boolean
 }
 
 export type CommonTaskRowCellStyle = {
     height: number
 }
 
-export function CompleteTaskRow({task, surroundingDates}: CompleteTaskRowProps): JSX.Element
+export function CompleteTaskRow({task, surroundingDates, isLastRow}: CompleteTaskRowProps): JSX.Element
 {
 
     const taskFulfillmentList = useContext(TaskFulfillmentContext);
@@ -45,6 +46,7 @@ export function CompleteTaskRow({task, surroundingDates}: CompleteTaskRowProps):
             commonCellStyle={commonHeightStyle}
             parameterizedTaskFulfillmentList={taskfulfillmentsParameterized}
             subRowCount={subrowCount}
+            isLastRow={isLastRow}
         />
     </tr>)
 }

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { dateToTableText } from "../DateUtils/DateUtils";
+import { dateToTableText, isDateToday } from "../DateUtils/DateUtils";
 import { Task } from "../TaskTypes/Task";
 import { DateModalContext } from "./TaskDateList";
 import { TaskFulfillmentParametrized, getAssociatedFulfillmentsToStartDate, safeCastToParameterizedFulfillmentListVersion } from "../TaskFulfillment/TaskFulfillment";
@@ -15,6 +15,7 @@ type DateTableSelectionRowProps = {
     commonCellStyle: CommonTaskRowCellStyle
     parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
     subRowCount: number
+    isLastRow: boolean
 }
 
 export function DateTableSelectionRow({
@@ -22,12 +23,13 @@ export function DateTableSelectionRow({
     task,
     commonCellStyle,
     parameterizedTaskFulfillmentList,
-    subRowCount
+    subRowCount,
+    isLastRow
 }: DateTableSelectionRowProps): React.JSX.Element {
 
     // Take the date list and compute the cells
     // out of them.
-    const completeDateListJSX = completeDateList.map((date) => {
+    const completeDateListJSX = completeDateList.map((date, index) => {
         const key = dateToTableText(date);
         return (
             <DateTableSelectionCell
@@ -37,6 +39,7 @@ export function DateTableSelectionRow({
                 commonCellStyle={commonCellStyle}
                 parameterizedTaskFulfillmentList={parameterizedTaskFulfillmentList}
                 subRowCount={subRowCount}
+                isLastRow={isLastRow}
             />
         )
     });
@@ -55,6 +58,7 @@ type DateTableSelectionCellProps = {
     commonCellStyle: CommonTaskRowCellStyle
     parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
     subRowCount: number
+    isLastRow: boolean,
 }
 
 function DateTableSelectionCell({
@@ -62,7 +66,8 @@ function DateTableSelectionCell({
     task,
     commonCellStyle,
     parameterizedTaskFulfillmentList,
-    subRowCount
+    subRowCount,
+    isLastRow
 }: DateTableSelectionCellProps): React.JSX.Element {
 
     const associatedTaskFulfillmentsUncast = getAssociatedFulfillmentsToStartDate(task, date, parameterizedTaskFulfillmentList);
@@ -143,6 +148,7 @@ function DateTableSelectionCell({
 
 
     const customColor = getWeekendColorOnWeekend(date);
+    const isCellToday = isDateToday(date);
 
     return (
         <TaskTableTD
@@ -150,6 +156,8 @@ function DateTableSelectionCell({
             ref={cellRef}
             onClick={handleCellClick}
             $customBgColor={customColor}
+            $isCellToday={isCellToday}
+            $isLastRow={isLastRow}
         >
             {associatedTasksJSX}
 

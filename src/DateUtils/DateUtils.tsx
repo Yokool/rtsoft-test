@@ -164,3 +164,11 @@ export function isDateWeekday(date: Date)
     const day = date.getDay();
     return (day === 0) || (day === 6);
 }
+
+export function isDateToday(date: Date)
+{
+    const todayNormalized = normalizeDate(new Date());
+    const dateNormalized = normalizeDate(date);
+
+    return todayNormalized.getTime() === dateNormalized.getTime();
+}

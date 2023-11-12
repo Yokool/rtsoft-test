@@ -5,6 +5,8 @@ export const DefaultCellHeight = 64;
 
 export const WeekendColor = 'rgb(220, 220, 220)';
 
+export const TodayColor = 'rgb(255, 0, 0)';
+
 export function getWeekendColorOnWeekend(date: Date)
 {
     const isWeekday = isDateWeekday(date);
@@ -32,11 +34,19 @@ export const CellSpacerCommon = css`
     width: 32px;
 `
 
-export const TaskTableTH = styled.th< { $customBgColor?: string } >`
+export const TaskTableTH = styled.th< { $customBgColor?: string, $isCellToday?: boolean } >`
     ${BaseCellCSS}
     border-bottom-width: 3px;
     border-bottom-color: rgb(0, 0, 0);
     background-color: ${props => props.$customBgColor};
+
+
+    border-left-width: ${props => props.$isCellToday ? '2px' : undefined};
+    border-right-width: ${props => props.$isCellToday ? '2px' : undefined};
+    border-top-width: ${props => props.$isCellToday ? '2px' : undefined};
+    border-left-color: ${props => props.$isCellToday ? TodayColor : undefined};
+    border-right-color: ${props => props.$isCellToday ? TodayColor : undefined};
+    border-top-color: ${props => props.$isCellToday ? TodayColor : undefined};
 `;
 
 export const CellSpacerTH = styled(TaskTableTH)`
@@ -44,9 +54,18 @@ export const CellSpacerTH = styled(TaskTableTH)`
 `
 
 
-export const TaskTableTD = styled.td< { $customBgColor?: string } >`
-    ${BaseCellCSS}
+export const TaskTableTD = styled.td< { $customBgColor?: string, $isCellToday?: boolean, $isLastRow?: boolean} >`
     background-color: ${props => props.$customBgColor};
+
+    ${BaseCellCSS}
+    
+    border-left-width: ${props => props.$isCellToday ? '2px' : undefined};
+    border-right-width: ${props => props.$isCellToday ? '2px' : undefined};
+    border-bottom-width: ${props => props.$isCellToday && props.$isLastRow ? '2px' : undefined};
+    border-left-color: ${props => props.$isCellToday ? TodayColor : undefined};
+    border-right-color: ${props => props.$isCellToday ? TodayColor : undefined};
+    border-bottom-color: ${props => props.$isCellToday && props.$isLastRow ? TodayColor : undefined};
+
 `
 
 export const CellSpacerTD = styled(TaskTableTD)`
