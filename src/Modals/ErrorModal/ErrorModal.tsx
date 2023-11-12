@@ -1,6 +1,7 @@
 import { error } from "console";
 import React from "react";
 import { ModalSubmit } from "../ModalElements";
+import '../ModalBase.css';
 
 export type ErrorModalBaseProps = {
     children?: JSX.Element[],

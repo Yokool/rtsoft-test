@@ -5,7 +5,6 @@ import { ModalBase } from "../ModalBase";
 import { ModalHeaderInput, ModalSubmit } from "../ModalElements";
 import { taskListContainsCode } from "../../TaskCalendar";
 import { ErrorModalBase } from "../ErrorModal/ErrorModal";
-import '../ModalBase.css';
 
 type AddTaskModalProps = {
     taskList: Task[]
