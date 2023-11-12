@@ -133,6 +133,7 @@ export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, tas
     return associatedTask;
 }
 
+
 /**
  * Takes the fulfillments associated to a particular task and checks
  * if the fulfillment rows overlap - if there is an overlap - tells each
@@ -155,7 +156,10 @@ export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, tas
  * if he exhausts all of his options, he will get placed
  * in the third row
  */
-export function addRowParameterToEachFulfillment(fulfillmentsInTask: TaskFulfillment[]): TaskFulfillmentParametrized[]
+export function addRowParameterToEachFulfillment(fulfillmentsInTask: TaskFulfillment[]): {
+    taskfulfillmentsParameterized: TaskFulfillmentParametrized[],
+    subrowCount: number,
+}
 {
     // Stores an array of arrays, where each
     // array represents one subrow of task fulfillments
@@ -166,7 +170,7 @@ export function addRowParameterToEachFulfillment(fulfillmentsInTask: TaskFulfill
 
 
     // Take all the fulfillments
-    return fulfillmentsInTask.map((fulfillment) => {
+    const parameterizedFulfillments = fulfillmentsInTask.map((fulfillment) => {
 
         // Check them against the subrows from top to bottom
         for (let i = 0; i < fulfillmentSubrows.length; i++)
@@ -207,6 +211,11 @@ export function addRowParameterToEachFulfillment(fulfillmentsInTask: TaskFulfill
 
         return fulfillmentParametrized;
     })
+
+    return {
+        taskfulfillmentsParameterized: parameterizedFulfillments,
+        subrowCount: fulfillmentSubrows.length
+    };
 }
 
 export function taskFulfillmentsIntersect(fulfillment1: TaskFulfillment, fulfillment2: TaskFulfillment)

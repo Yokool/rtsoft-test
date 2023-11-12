@@ -3,6 +3,7 @@ import { DateTableSelectionRow } from "./DateTableSelectionRow";
 import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
 import { TaskFulfillmentContext, addRowParameterToEachFulfillment, getAssociatedFulfillmentsToTask } from "../TaskFulfillment/TaskFulfillment";
+import { CellSpacerTD, TaskTableCodeCellTD, TaskTableNameCellTD } from "./TaskDateListStyledComponents";
 
 export type CompleteTaskRowProps = {
     task: Task
@@ -15,13 +16,12 @@ export function CompleteTaskRow({task, surroundingDates}: CompleteTaskRowProps):
     const taskFulfillmentList = useContext(TaskFulfillmentContext);
     const fulfillmentsInThisRow = getAssociatedFulfillmentsToTask(task, taskFulfillmentList);
 
-    const parameterizedFulfillments = addRowParameterToEachFulfillment(fulfillmentsInThisRow);
-    console.log(parameterizedFulfillments);
+    const {taskfulfillmentsParameterized, subrowCount} = addRowParameterToEachFulfillment(fulfillmentsInThisRow);
 
     return (<tr key={task.taskCode}>
-        <td className="cellSpacer"></td>
-        <td className="codeCell">{task.taskCode}</td>
-        <td className="nameCell">{task.taskName}</td>
+        <CellSpacerTD></CellSpacerTD>
+        <TaskTableCodeCellTD>{task.taskCode}</TaskTableCodeCellTD>
+        <TaskTableNameCellTD>{task.taskName}</TaskTableNameCellTD>
         <DateTableSelectionRow
             completeDateList={surroundingDates}
             task={task}

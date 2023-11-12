@@ -6,6 +6,7 @@ import { TaskFulfillmentContext, getAssociatedFulfillmentsToStartDate, getAssoci
 import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
 import { ElementDimensions } from "../GeneralTypes";
 import './DateTableSelectionRow.css';
+import { TaskTableTD } from "./TaskDateListStyledComponents";
 
 type DateTableSelectionRowProps = {
     completeDateList: Date[]
@@ -17,6 +18,8 @@ export function DateTableSelectionRow({
     task
 }: DateTableSelectionRowProps): React.JSX.Element {
 
+    // Take the date list and compute the cells
+    // out of them.
     const completeDateListJSX = completeDateList.map((date) => {
         const key = dateToTableText(date);
         return (
@@ -111,6 +114,9 @@ function DateTableSelectionCell({
     } = useContext(DateModalContext);
 
     function handleCellClick() {
+        // When you click a cell, open up the modal
+        // to add new fulfillment for the task this cell
+        // belongs to starting on the date of this cell
         setGeneralModalData({
             dateAddTask: task,
             modalStartingDate: date
@@ -119,14 +125,14 @@ function DateTableSelectionCell({
 
 
     return (
-        <td
+        <TaskTableTD
             ref={cellRef}
             onClick={handleCellClick}
         >
             {associatedTasksJSX}
 
             <div className="dateCellInner" />
-        </td>
+        </TaskTableTD>
     )
 
 }

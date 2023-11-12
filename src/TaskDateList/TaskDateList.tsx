@@ -1,12 +1,12 @@
-import React, { createContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
 import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils";
-import { DateTableSelectionRow } from "./DateTableSelectionRow";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
 import { CompleteTaskRow } from "./CompleteTaskRow";
+import { CellSpacerTH, TaskTableCodeCellTD, TaskTableCodeCellTH, TaskTableNameCellTH, TaskTableTH } from "./TaskDateListStyledComponents";
 
 type TaskDateListProps = {
     taskList: Task[]
@@ -57,9 +57,9 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         
         const dateHeaderString = dateToTableText(date);
         return (
-            <th key={dateHeaderString}>
+            <TaskTableTH key={dateHeaderString}>
                 {dateHeaderString}
-            </th>
+            </TaskTableTH>
         );
     })
 
@@ -104,9 +104,9 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
             <table className="taskTable" cellSpacing={0} cellPadding={0}>
                 <tbody>
                     <tr>
-                        <th className="cellSpacer"></th>
-                        <th className="codeCell">Kód</th>
-                        <th className="nameCell">Položka</th>
+                        <CellSpacerTH></CellSpacerTH>
+                        <TaskTableCodeCellTH>Kód</TaskTableCodeCellTH>
+                        <TaskTableNameCellTH>Položka</TaskTableNameCellTH>
                         {dateHeadersJSX}
                     </tr>
                     {taskListJSX}
