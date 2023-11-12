@@ -113,16 +113,25 @@ export const TaskFulfillmentDispatchContext = createContext<(action: TaskFulfill
 
 export function getAssociatedFulfillmentsToTask(task: Task, taskList: TaskFulfillment[])
 {
-    return taskList.filter((fulfillment) => {
+    const foundElement = taskList.filter((fulfillment) => {
         return fulfillment.task.taskCode === task.taskCode;
     })
+
+    return foundElement;
 }
 
+/**
+ * Returns all the task fulfillments related to the parameter
+ * task and date from the complete taskFulfillmentList.
+ */
 export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, taskFulfillmentList: TaskFulfillment[])
 {
+    // Normalize the date to the start of the day
     const dateNormalized = normalizeDate(date);
-    
+
+    // Get the fulfillments associated to the parameter task
     const taskFulfillments = getAssociatedFulfillmentsToTask(task, taskFulfillmentList);
+
     const associatedTask = taskFulfillments.filter((task) => {
 
         const taskStartDateNormalized = normalizeDate(task.startDate);
@@ -133,6 +142,28 @@ export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, tas
     return associatedTask;
 }
 
+export function safeCastToParameterizedFulfillmentListVersion(taskFulfillmentList: TaskFulfillment[])
+{
+    // No elements succeeds automatically
+    if(taskFulfillmentList.length === 0)
+    {
+        return taskFulfillmentList as TaskFulfillmentParametrized[];
+    }
+
+    // Try to find at least one element
+    // that has .subRow undefined
+    const possiblyUndefinedParameterizedTask = taskFulfillmentList.find((task) => {
+        const taskCast = task as TaskFulfillmentParametrized;
+        return taskCast.subRow === undefined;
+    })
+
+    if(possiblyUndefinedParameterizedTask !== undefined)
+    {
+        throw new Error("Failed to cast a taskFulfillmentList into a parameterized list.");
+    }
+
+    return taskFulfillmentList as TaskFulfillmentParametrized[];
+}
 
 /**
  * Takes the fulfillments associated to a particular task and checks

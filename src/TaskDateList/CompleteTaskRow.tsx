@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DateTableSelectionRow } from "./DateTableSelectionRow";
 import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
-import { TaskFulfillmentContext, addRowParameterToEachFulfillment, getAssociatedFulfillmentsToTask } from "../TaskFulfillment/TaskFulfillment";
+import { TaskFulfillment, TaskFulfillmentContext, addRowParameterToEachFulfillment, getAssociatedFulfillmentsToTask } from "../TaskFulfillment/TaskFulfillment";
 import { CellSpacerTD, DefaultCellHeight, TaskTableCodeCellTD, TaskTableNameCellTD } from "./TaskDateListStyledComponents";
 
 export type CompleteTaskRowProps = {
@@ -21,7 +21,7 @@ export function CompleteTaskRow({task, surroundingDates}: CompleteTaskRowProps):
     const fulfillmentsInThisRow = getAssociatedFulfillmentsToTask(task, taskFulfillmentList);
 
     const {taskfulfillmentsParameterized, subrowCount} = addRowParameterToEachFulfillment(fulfillmentsInThisRow);
-
+    
     // Either use the default when no tasks have been added
     // or make enough space for all the tasks
     const commonHeight = subrowCount === 0 ? DefaultCellHeight : (subrowCount * DefaultCellHeight)
@@ -43,6 +43,7 @@ export function CompleteTaskRow({task, surroundingDates}: CompleteTaskRowProps):
             completeDateList={surroundingDates}
             task={task}
             commonCellStyle={commonHeightStyle}
+            parameterizedTaskFulfillmentList={taskfulfillmentsParameterized}
         />
     </tr>)
 }

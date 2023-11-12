@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { dateToTableText } from "../DateUtils/DateUtils";
 import { Task } from "../TaskTypes/Task";
 import { DateModalContext } from "./TaskDateList";
-import { TaskFulfillmentContext, getAssociatedFulfillmentsToStartDate, getAssociatedFulfillmentsToTask } from "../TaskFulfillment/TaskFulfillment";
+import { TaskFulfillmentParametrized, getAssociatedFulfillmentsToStartDate, safeCastToParameterizedFulfillmentListVersion } from "../TaskFulfillment/TaskFulfillment";
 import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
 import { ElementDimensions } from "../GeneralTypes";
 import './DateTableSelectionRow.css';
@@ -13,12 +13,14 @@ type DateTableSelectionRowProps = {
     completeDateList: Date[]
     task: Task
     commonCellStyle: CommonTaskRowCellStyle
+    parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
 }
 
 export function DateTableSelectionRow({
     completeDateList,
     task,
-    commonCellStyle
+    commonCellStyle,
+    parameterizedTaskFulfillmentList
 }: DateTableSelectionRowProps): React.JSX.Element {
 
     // Take the date list and compute the cells
@@ -31,6 +33,7 @@ export function DateTableSelectionRow({
                 date={date}
                 task={task}
                 commonCellStyle={commonCellStyle}
+                parameterizedTaskFulfillmentList={parameterizedTaskFulfillmentList}
             />
         )
     });
@@ -47,18 +50,21 @@ type DateTableSelectionCellProps = {
     date: Date
     task: Task
     commonCellStyle: CommonTaskRowCellStyle
+    parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
 }
 
 function DateTableSelectionCell({
     date,
     task,
-    commonCellStyle
+    commonCellStyle,
+    parameterizedTaskFulfillmentList
 }: DateTableSelectionCellProps): React.JSX.Element {
 
-
-    // Find all the fulfillments for this start date
-    const fulfillmentList = useContext(TaskFulfillmentContext)
-    const associatedTaskFulfillments = getAssociatedFulfillmentsToStartDate(task, date, fulfillmentList);
+    const associatedTaskFulfillmentsUncast = getAssociatedFulfillmentsToStartDate(task, date, parameterizedTaskFulfillmentList);
+    
+    // better to use an additional check even though we can safely
+    // say that this should never fail
+    const associatedTaskFulfillments = safeCastToParameterizedFulfillmentListVersion(associatedTaskFulfillmentsUncast);
 
     const cellRef = useRef<HTMLTableCellElement>(null);
     const [cellDimensions, setCellDimensions] = useState<ElementDimensions>({
