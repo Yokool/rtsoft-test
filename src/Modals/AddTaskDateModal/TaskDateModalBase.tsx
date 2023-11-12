@@ -1,16 +1,19 @@
 import { useState } from "react"
-import { TaskFulfillmentStatus, TaskFulfillmentValuesDisplay, turnTaskFulfillmentDisplayIntoKey } from "../../TaskFulfillment/TaskFulfillment"
-import { Task } from "../../TaskTypes/Task"
+import { TaskFulfillmentStatus, TaskFulfillmentValues, TaskFulfillmentValuesDisplay, turnTaskFulfillmentDisplayIntoKey } from "../../TaskFulfillment/TaskFulfillment"
 import { ErrorModalBase } from "../ErrorModal/ErrorModal"
-import { ModalHeaderDate, ModalHeaderSelect, ModalSubmit } from "../ModalElements"
+import { ModalHeaderDate, ModalHeaderSelect, ModalHeaderSelectOption, ModalSubmit } from "../ModalElements"
 import { GeneralModalData } from "../../TaskDateList/TaskDateList"
+import { getKeysTyped } from "../../GeneralUtils/GeneralUtils"
 
 export type TaskDateModalBaseProps = {
     generalModalData: GeneralModalData,
-    setGeneralModalData: (newValue: GeneralModalData | undefined) => void
-    onModalSucessfulSubmit: (modalValues: TaskDateModalValues) => void
+    setGeneralModalData: (newValue: GeneralModalData | undefined) => void,
+    onModalSucessfulSubmit: (modalValues: TaskDateModalValues) => void,
 }
 
+/**
+ * The return values from the form
+ */
 export type TaskDateModalValues = {
     startDate: Date,
     endDate: Date,
@@ -25,9 +28,10 @@ export function TaskDateModalBase({
     
     // The form values for the modal
     const [startDate, setStartDate] = useState<Date | undefined>(generalModalData.modalStartingDate);
-    const [endDate, setEndDate] = useState<Date | undefined>(undefined);
-    const [status, setStatus] = useState<TaskFulfillmentStatus>('waiting');
-
+    const [endDate, setEndDate] = useState<Date | undefined>(generalModalData.modalInitialEndDate);
+    
+    const [status, setStatus] = useState<TaskFulfillmentStatus>(generalModalData.modalInitialStatus || 'waiting');
+    
     // Error messages when either the start or end date of the
     // modal is not filled.
     const noStartDateErrorMessage = "Prosím vyplňte datum počátku zakázky.";
@@ -68,9 +72,20 @@ export function TaskDateModalBase({
 
     }
 
-    // Get all the possible values that a task can have
-    // so we can fill the selection element with these options.
-    const statusValues = Object.values(TaskFulfillmentValuesDisplay);
+    const possibleStatusValues = getKeysTyped(TaskFulfillmentValues);
+
+    // to be able to use it for checking against the options value
+    const possibleStatusValuesStringified = possibleStatusValues.map((val) => val.toString());
+
+    const modalOptions: ModalHeaderSelectOption[] = possibleStatusValues.map((taskFulfillmentStatusValue) => {
+        console.log(status);
+        return {
+            optionValue: taskFulfillmentStatusValue,
+            optionDisplayValue: TaskFulfillmentValuesDisplay[taskFulfillmentStatusValue],
+            selected: status === taskFulfillmentStatusValue
+        };
+
+    });
 
     const {taskName, taskCode} = generalModalData.dateAddTask;
 
@@ -93,21 +108,19 @@ export function TaskDateModalBase({
             />
             <ModalHeaderSelect
                 headerText="Status"
-                options={statusValues}
+                options={modalOptions}
                 onChange={(newValue) => {
                     // Exhaustive check -> this really
                     // shouldn't happen unless we passed
                     // something different to options={}
-                    if(!statusValues.includes(newValue))
+                    if(!possibleStatusValuesStringified.includes(newValue))
                     {
-                        throw new Error(`${newValue} is not contained within the keys of ${statusValues}.`);
+                        throw new Error(`${newValue} is not contained within the keys of ${possibleStatusValues}.`);
                     }
 
-                    const displayValueIntoStatusKey = turnTaskFulfillmentDisplayIntoKey(newValue);
-                    
 
                     // this is ok thanks to the check
-                    const newValueStatus = displayValueIntoStatusKey as TaskFulfillmentStatus;
+                    const newValueStatus = newValue as TaskFulfillmentStatus;
                     setStatus(newValueStatus);
 
                 }}

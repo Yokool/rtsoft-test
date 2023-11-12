@@ -19,3 +19,9 @@ export function getKeyForValueDefined<ValueType>(object: Object, value: ValueTyp
 
     return nonExhaustiveReturn;
 }
+
+export function getKeysTyped<ObjectType extends object>(object: ObjectType): (keyof ObjectType)[]
+{
+    const keys = Object.keys(object);
+    return keys as (keyof ObjectType)[];
+}

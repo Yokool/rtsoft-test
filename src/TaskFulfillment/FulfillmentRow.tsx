@@ -82,12 +82,12 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
     
     function handleClick(event: React.MouseEvent<HTMLDivElement>) {
         
-        // Todo: this can be cleaned up a bit with taking
-        // the starting 
         modalContext.setGeneralModalData({
             dateAddTask: taskFulfillment.task,
             editedTaskFulfillment: taskFulfillment,
-            modalStartingDate: taskFulfillment.startDate
+            modalStartingDate: taskFulfillment.startDate,
+            modalInitialEndDate: taskFulfillment.endDate,
+            modalInitialStatus: taskFulfillment.status,
         });
         // since the fulfillment row is contained within the cell
         // normally the event would propagate back up to the parent

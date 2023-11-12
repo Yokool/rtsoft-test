@@ -4,7 +4,7 @@ import './TaskDateList.css';
 import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils";
 import { DateTableSelectionRow } from "../DateTableSelectionRow";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
-import { TaskFulfillment } from "../TaskFulfillment/TaskFulfillment";
+import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
 
 type TaskDateListProps = {
@@ -27,7 +27,9 @@ export type GeneralModalData = {
     /**
      * Holds the data at which the modal shall start - set by a child cell on which we click
      */
-    modalStartingDate: Date,
+    modalStartingDate?: Date,
+    modalInitialEndDate?: Date,
+    modalInitialStatus?: TaskFulfillmentStatus,
     editedTaskFulfillment?: TaskFulfillment
 }
 

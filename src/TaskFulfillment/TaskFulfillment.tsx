@@ -6,8 +6,8 @@ import React from "react";
 import { HourglassIcon } from "../Icons/HourglassIcon";
 
 export const TaskFulfillmentValues = {
-    'done': undefined,
-    'waiting': undefined
+    'waiting': undefined,
+    'done': undefined
 }
 
 export const TaskFulfillmentValuesDisplay: Record<TaskFulfillmentStatus, string> = {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { OptionHTMLAttributes } from "react";
 import './ModalElements.css';
 
 export type ModalHeaderInputProps = {
@@ -82,8 +82,14 @@ export function ModalHeaderDate(
 
 export type ModalHeaderSelectProps = {
     headerText: string
-    options: string[]
+    options: ModalHeaderSelectOption[]
     onChange: (newValue: string) => void
+}
+
+export type ModalHeaderSelectOption = {
+    optionValue: string,
+    optionDisplayValue: string,
+    selected?: boolean
 }
 
 export function ModalHeaderSelect(
@@ -96,8 +102,12 @@ export function ModalHeaderSelect(
 
     const optionsJSX = options.map((option) => {
         return (
-            <option key={option}>
-                {option}
+            <option
+                key={option.optionValue}
+                value={option.optionValue}
+                selected={option.selected}
+                >
+                {option.optionDisplayValue}
             </option>
         );
     });
