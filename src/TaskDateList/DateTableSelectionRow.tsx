@@ -7,15 +7,18 @@ import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
 import { ElementDimensions } from "../GeneralTypes";
 import './DateTableSelectionRow.css';
 import { TaskTableTD } from "./TaskDateListStyledComponents";
+import { CommonTaskRowCellStyle } from "./CompleteTaskRow";
 
 type DateTableSelectionRowProps = {
     completeDateList: Date[]
     task: Task
+    commonCellStyle: CommonTaskRowCellStyle
 }
 
 export function DateTableSelectionRow({
     completeDateList,
-    task
+    task,
+    commonCellStyle
 }: DateTableSelectionRowProps): React.JSX.Element {
 
     // Take the date list and compute the cells
@@ -27,6 +30,7 @@ export function DateTableSelectionRow({
                 key={key}
                 date={date}
                 task={task}
+                commonCellStyle={commonCellStyle}
             />
         )
     });
@@ -42,11 +46,13 @@ export function DateTableSelectionRow({
 type DateTableSelectionCellProps = {
     date: Date
     task: Task
+    commonCellStyle: CommonTaskRowCellStyle
 }
 
 function DateTableSelectionCell({
     date,
     task,
+    commonCellStyle
 }: DateTableSelectionCellProps): React.JSX.Element {
 
 
@@ -126,6 +132,7 @@ function DateTableSelectionCell({
 
     return (
         <TaskTableTD
+            style={commonCellStyle}
             ref={cellRef}
             onClick={handleCellClick}
         >
