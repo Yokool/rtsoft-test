@@ -82,16 +82,11 @@ export function dateToTableText(date: Date) {
 
 export function dateUnitDayDifference(date1: Date, date2: Date)
 {
-    // avoid mutations
-    const date1Normalized = new Date(date1);
-    const date2Normalized = new Date(date2);
-    
     // We don't want to worry about hours affecting our
     // result -> so lets equalize the hours and only worry about dates
     // wihtou e.g. when computing the day difference between today (10.11. 14:00) and
     // tomorrow (11.11. 13:00) would get a diff of 0
-    date1Normalized.setHours(0, 0, 0, 0);
-    date2Normalized.setHours(0, 0, 0, 0);
+    const [date1Normalized, date2Normalized] = normalizeDates(date1, date2);
 
     const diff = Math.abs(date2Normalized.getTime() - date1Normalized.getTime());
     
@@ -100,4 +95,25 @@ export function dateUnitDayDifference(date1: Date, date2: Date)
     const diffDays = Math.floor(diff / (1000 * 3600 * 24));
     
     return diffDays;
+}
+
+export function normalizeDate(date: Date)
+{
+    const dateNormalized = new Date(date);
+    dateNormalized.setHours(0, 0, 0, 0);
+    return dateNormalized;
+}
+
+export function normalizeDates(...dates: Date[])
+{
+    return dates.map((date) => {
+        return normalizeDate(date);
+    });
+}
+
+export function isDate2LargerThanDate1ByDays(date1: Date, date2: Date)
+{
+    const [date1Normalized, date2Normalized] = normalizeDates(date1, date2);
+
+    return date2Normalized.getTime() >= date1Normalized.getTime();
 }

@@ -4,6 +4,7 @@ import { ErrorModalBase } from "../ErrorModal/ErrorModal"
 import { ModalHeaderDate, ModalHeaderSelect, ModalHeaderSelectOption, ModalSubmit } from "../ModalElements"
 import { GeneralModalData } from "../../TaskDateList/TaskDateList"
 import { getKeysTyped } from "../../GeneralUtils/GeneralUtils"
+import { isDate2LargerThanDate1ByDays } from "../../DateUtils/DateUtils"
 
 export type TaskDateModalBaseProps = {
     generalModalData: GeneralModalData,
@@ -36,6 +37,7 @@ export function TaskDateModalBase({
     // modal is not filled.
     const noStartDateErrorMessage = "Prosím vyplňte datum počátku zakázky.";
     const noEndDateErrorMessage = "Prosím vyplňte datum ukončení zakázky.";
+    const startDateLargerThanEndMessage = "Zakázka nemůže končit před tím, než začne.";
 
     // If this is defined, the modal will show an error message displaying
     // the content of this state.
@@ -59,6 +61,12 @@ export function TaskDateModalBase({
             return;
         }
 
+        if(!isDate2LargerThanDate1ByDays(startDate, endDate))
+        {
+            setShownErrorMessage(startDateLargerThanEndMessage);
+            return;
+        }
+
         // Check success
         onModalSucessfulSubmit({
             startDate,
@@ -78,11 +86,10 @@ export function TaskDateModalBase({
     const possibleStatusValuesStringified = possibleStatusValues.map((val) => val.toString());
 
     const modalOptions: ModalHeaderSelectOption[] = possibleStatusValues.map((taskFulfillmentStatusValue) => {
-        console.log(status);
+        
         return {
             optionValue: taskFulfillmentStatusValue,
             optionDisplayValue: TaskFulfillmentValuesDisplay[taskFulfillmentStatusValue],
-            selected: status === taskFulfillmentStatusValue
         };
 
     });
@@ -109,6 +116,7 @@ export function TaskDateModalBase({
             <ModalHeaderSelect
                 headerText="Status"
                 options={modalOptions}
+                defaultValue={status}
                 onChange={(newValue) => {
                     // Exhaustive check -> this really
                     // shouldn't happen unless we passed

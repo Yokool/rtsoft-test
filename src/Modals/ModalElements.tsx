@@ -83,20 +83,21 @@ export function ModalHeaderDate(
 export type ModalHeaderSelectProps = {
     headerText: string
     options: ModalHeaderSelectOption[]
+    defaultValue: string,
     onChange: (newValue: string) => void
 }
 
 export type ModalHeaderSelectOption = {
     optionValue: string,
     optionDisplayValue: string,
-    selected?: boolean
 }
 
 export function ModalHeaderSelect(
     {
         headerText,
         options,
-        onChange
+        onChange,
+        defaultValue
     }: ModalHeaderSelectProps
 ): JSX.Element {
 
@@ -105,7 +106,6 @@ export function ModalHeaderSelect(
             <option
                 key={option.optionValue}
                 value={option.optionValue}
-                selected={option.selected}
                 >
                 {option.optionDisplayValue}
             </option>
@@ -115,7 +115,7 @@ export function ModalHeaderSelect(
     return (
         <>
             <h1>{headerText}</h1>
-            <select onChange={(event) => {
+            <select defaultValue={defaultValue} onChange={(event) => {
                 const value = event.currentTarget.value;
                 onChange(value);
             }} className="modalMultiSelect">
