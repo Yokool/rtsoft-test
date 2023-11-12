@@ -6,6 +6,7 @@ import { DateTableSelectionRow } from "../DateTableSelectionRow";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
+import { CompleteTaskRow } from "./CompleteTaskRow";
 
 type TaskDateListProps = {
     taskList: Task[]
@@ -66,15 +67,10 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
     const taskListJSX = taskList.map(
         (task) => {
             return (
-                <tr key={task.taskCode}>
-                    <td className="cellSpacer"></td>
-                    <td className="codeCell">{task.taskCode}</td>
-                    <td className="nameCell">{task.taskName}</td>
-                    <DateTableSelectionRow
-                        completeDateList={surroundingDates}
-                        task={task}
-                    />
-                </tr>
+                <CompleteTaskRow
+                    task={task}
+                    surroundingDates={surroundingDates}
+                />
             );
         }
     );
