@@ -6,7 +6,7 @@ import { TaskFulfillmentParametrized, getAssociatedFulfillmentsToStartDate, safe
 import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
 import { ElementDimensions } from "../GeneralTypes";
 import './DateTableSelectionRow.css';
-import { TaskTableTD } from "./TaskDateListStyledComponents";
+import { TaskTableTD, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
 import { CommonTaskRowCellStyle } from "./CompleteTaskRow";
 
 type DateTableSelectionRowProps = {
@@ -142,11 +142,14 @@ function DateTableSelectionCell({
     }
 
 
+    const customColor = getWeekendColorOnWeekend(date);
+
     return (
         <TaskTableTD
             style={commonCellStyle}
             ref={cellRef}
             onClick={handleCellClick}
+            $customBgColor={customColor}
         >
             {associatedTasksJSX}
 

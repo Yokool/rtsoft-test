@@ -1,12 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
-import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils";
+import { dateToTableText, getSurroundingDatesToday, isDateWeekday } from "../DateUtils/DateUtils";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
 import { CompleteTaskRow } from "./CompleteTaskRow";
-import { CellSpacerTH, TaskTableCodeCellTD, TaskTableCodeCellTH, TaskTableNameCellTH, TaskTableTH } from "./TaskDateListStyledComponents";
+import { CellSpacerTH, TaskTableCodeCellTD, TaskTableCodeCellTH, TaskTableNameCellTH, TaskTableTH, WeekendColor, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
 
 type TaskDateListProps = {
     taskList: Task[]
@@ -56,8 +56,9 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
     const dateHeadersJSX = surroundingDates.map((date) => {
         
         const dateHeaderString = dateToTableText(date);
+        const customColor = getWeekendColorOnWeekend(date);
         return (
-            <TaskTableTH key={dateHeaderString}>
+            <TaskTableTH key={dateHeaderString} $customBgColor={customColor}>
                 {dateHeaderString}
             </TaskTableTH>
         );

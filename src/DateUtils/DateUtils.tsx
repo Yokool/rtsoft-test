@@ -158,3 +158,9 @@ export function dateIntervalsOverlapByDays(
         (date1EndNormalized.getTime() >= date2StartNormalized.getTime())
     );
 }
+
+export function isDateWeekday(date: Date)
+{
+    const day = date.getDay();
+    return (day === 0) || (day === 6);
+}
