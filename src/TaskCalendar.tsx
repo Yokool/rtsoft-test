@@ -1,7 +1,7 @@
 import React, { useReducer, useState } from "react";
 import "./TaskCalendar.css";
 import { Task } from './TaskTypes/Task';
-import { TaskAdd } from "./TaskAdd";
+import { TaskAddButton } from "./TaskAdd";
 import { TaskDateList } from "./TaskDateList/TaskDateList";
 import { TaskFulfillmentContext, TaskFulfillmentDispatchContext, taskFulfillmentReducer } from "./TaskFulfillment/TaskFulfillment";
 
@@ -17,7 +17,7 @@ export function TaskCalendar(): React.JSX.Element {
         <TaskFulfillmentContext.Provider value={taskFulfillmentList}>
             <TaskFulfillmentDispatchContext.Provider value={dispatchTaskFulfillmentAction}>
                 <div className="calendarOuterHolder">
-                    <TaskAdd 
+                    <TaskAddButton 
                         taskList={taskList}
                         setTaskList={setTaskList}
                     />
@@ -30,3 +30,8 @@ export function TaskCalendar(): React.JSX.Element {
     );
 }
 
+export function taskListContainsCode(taskList: Task[], taskCode: string)
+{
+    const foundTask = taskList.find((task) => task.taskCode === taskCode);
+    return foundTask !== undefined;
+}

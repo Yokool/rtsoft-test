@@ -7,7 +7,7 @@ type TaskAddProps = {
     setTaskList: (taskList: Task[]) => void
 }
 
-export function TaskAdd({taskList, setTaskList} : TaskAddProps): React.JSX.Element {
+export function TaskAddButton({taskList, setTaskList} : TaskAddProps): React.JSX.Element {
     
     function handleTaskAdd() {
         setShowingModal(true);

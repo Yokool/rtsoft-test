@@ -3,6 +3,9 @@ import './AddTaskModal.css';
 import { Task } from "../../TaskTypes/Task";
 import { ModalBase } from "../ModalBase";
 import { ModalHeaderInput, ModalSubmit } from "../ModalElements";
+import { taskListContainsCode } from "../../TaskCalendar";
+import { ErrorModalBase } from "../ErrorModal/ErrorModal";
+import '../ModalBase.css';
 
 type AddTaskModalProps = {
     taskList: Task[]
@@ -21,8 +24,19 @@ export function AddTaskModal({
     const [taskCode, setTaskCode] = useState('');
     const [taskName, setTaskName] = useState('');
 
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined)
+
 
     function handleTaskSubmit() {
+
+        // We can't add in new tasks, whose code matches an
+        // already existing task -> all task codes are unique
+        if(taskListContainsCode(taskList, taskCode))
+        {
+            setErrorMessage(`Zakázka s kódem \`${taskCode}\` již existuje. Všechny zakázky musí mít unikátní kód.`);
+            return;
+        }
+
         setTaskList([
             ...taskList,
             {
@@ -34,7 +48,10 @@ export function AddTaskModal({
     }
     
     return (
-        <ModalBase>
+        <ErrorModalBase
+            errorMessage={errorMessage}
+            setErrorMessage={setErrorMessage}
+            >
             <ModalHeaderInput
                 header="Kód zakázky"
                 inputValue={taskCode}
@@ -49,7 +66,7 @@ export function AddTaskModal({
                 submitText="Přidat"
                 onSubmit={handleTaskSubmit}
             />
-        </ModalBase>
+        </ErrorModalBase>
     );
 }
 
