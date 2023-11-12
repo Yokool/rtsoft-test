@@ -11,8 +11,7 @@ export function TaskCalendar(): React.JSX.Element {
     const [taskList, setTaskList] = useState<Task[]>([]);
 
     const [taskFulfillmentList, dispatchTaskFulfillmentAction] = useReducer(taskFulfillmentReducer, [])
-    console.log("FulfillmentList", taskFulfillmentList);
-
+    
     return (
         <TaskFulfillmentContext.Provider value={taskFulfillmentList}>
             <TaskFulfillmentDispatchContext.Provider value={dispatchTaskFulfillmentAction}>

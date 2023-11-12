@@ -53,6 +53,8 @@ export function getSurroundingDatesSingleDirArray(
 export function getSurroundingDatesToday(datesLeftCount: number, datesRightCount: number)
 {
     const todayStart = getToday();
+    todayStart.setHours(0, 0, 0, 0);
+
     return getSurroundingDates(todayStart, datesLeftCount, datesRightCount);
 }
 

@@ -4,6 +4,7 @@ import { getKeyForValueDefined } from "../GeneralUtils/GeneralUtils";
 import { DoneIcon } from "../Icons/DoneIcon";
 import React from "react";
 import { HourglassIcon } from "../Icons/HourglassIcon";
+import { normalizeDate } from "../DateUtils/DateUtils";
 
 export const TaskFulfillmentValues = {
     'waiting': undefined,
@@ -115,8 +116,15 @@ export function getAssociatedFulfillmentsToTask(task: Task, taskList: TaskFulfil
 
 export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, taskFulfillmentList: TaskFulfillment[])
 {
+    const dateNormalized = normalizeDate(date);
+    
     const taskFulfillments = getAssociatedFulfillmentsToTask(task, taskFulfillmentList);
-    return taskFulfillments.filter((task) => {
-        return task.startDate === date;
+    const associatedTask = taskFulfillments.filter((task) => {
+
+        const taskStartDateNormalized = normalizeDate(task.startDate);
+        
+        return taskStartDateNormalized.getTime() === dateNormalized.getTime();
     })
+
+    return associatedTask;
 }
