@@ -14,13 +14,15 @@ type DateTableSelectionRowProps = {
     task: Task
     commonCellStyle: CommonTaskRowCellStyle
     parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
+    subRowCount: number
 }
 
 export function DateTableSelectionRow({
     completeDateList,
     task,
     commonCellStyle,
-    parameterizedTaskFulfillmentList
+    parameterizedTaskFulfillmentList,
+    subRowCount
 }: DateTableSelectionRowProps): React.JSX.Element {
 
     // Take the date list and compute the cells
@@ -34,6 +36,7 @@ export function DateTableSelectionRow({
                 task={task}
                 commonCellStyle={commonCellStyle}
                 parameterizedTaskFulfillmentList={parameterizedTaskFulfillmentList}
+                subRowCount={subRowCount}
             />
         )
     });
@@ -51,13 +54,15 @@ type DateTableSelectionCellProps = {
     task: Task
     commonCellStyle: CommonTaskRowCellStyle
     parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
+    subRowCount: number
 }
 
 function DateTableSelectionCell({
     date,
     task,
     commonCellStyle,
-    parameterizedTaskFulfillmentList
+    parameterizedTaskFulfillmentList,
+    subRowCount
 }: DateTableSelectionCellProps): React.JSX.Element {
 
     const associatedTaskFulfillmentsUncast = getAssociatedFulfillmentsToStartDate(task, date, parameterizedTaskFulfillmentList);
@@ -117,6 +122,7 @@ function DateTableSelectionCell({
                 key={taskFulfillment.task.taskCode + ' ' + taskFulfillment.startDate.toISOString()}
                 taskFulfillment={taskFulfillment}
                 parentCellDimensions={cellDimensions}
+                subRowCount={subRowCount}
             />
         );
     })

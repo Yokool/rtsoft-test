@@ -9,6 +9,7 @@ import { DateModalContext } from "../TaskDateList/TaskDateList";
 export type FulfillmentRowProps = {
     taskFulfillment: TaskFulfillmentParametrized
     parentCellDimensions: ElementDimensions
+    subRowCount: number
 }
 
 export const FulfillmentRowHeightOffset = 12; 
@@ -20,9 +21,11 @@ const FulfillmentRowOuter = styled.div< {
     $height: number,
     $foregroundColor: string,
     $foregroundHoverColor: string,
+    $topOffset: number,
 } > `
     width: ${props => props.$width + "px"};
     height: ${props => props.$height + "px"};
+    top: ${props => props.$topOffset + "px"};
     position: relative;
     display: flex;
     flex-direction: row;
@@ -61,8 +64,10 @@ const FulfillmentText = styled.p< {
     font-weight: bold;
 `;
 
-export function FulfillmentRow({taskFulfillment, parentCellDimensions} : FulfillmentRowProps): React.JSX.Element {
+export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCount} : FulfillmentRowProps): React.JSX.Element {
     
+    
+    const subrowForFulfillment = taskFulfillment.subRow;
     
     const {task, startDate, endDate} = taskFulfillment;
     const {taskName} = task;
@@ -96,7 +101,9 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
     }
 
     const fulfillmentRowOuterWidth = fulfillmentRowWidth;
-    const fulfillmentRowOuterHeight = parentCellHeight - FulfillmentRowHeightOffset;
+
+    const fulfillmentRowOuterHeight = (parentCellHeight - FulfillmentRowHeightOffset) / subRowCount;
+    const topOffset = fulfillmentRowOuterHeight * taskFulfillment.subRow;
     
     return (
         <div className="fulfillmentRowContainer" onClick={handleClick}>
@@ -107,6 +114,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions} : Fulfill
                 $height={fulfillmentRowOuterHeight}
                 $foregroundColor={associatedStyle.fulfillmentForegroundColor}
                 $foregroundHoverColor={associatedStyle.fulfillmentForegroundHoverColor}
+                $topOffset={topOffset}
                 >
                 <div className="fulfillmentIconHolder">
                     {associatedStyle.fulfillmentIcon}

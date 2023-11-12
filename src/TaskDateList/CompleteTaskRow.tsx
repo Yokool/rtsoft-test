@@ -44,6 +44,7 @@ export function CompleteTaskRow({task, surroundingDates}: CompleteTaskRowProps):
             task={task}
             commonCellStyle={commonHeightStyle}
             parameterizedTaskFulfillmentList={taskfulfillmentsParameterized}
+            subRowCount={subrowCount}
         />
     </tr>)
 }
