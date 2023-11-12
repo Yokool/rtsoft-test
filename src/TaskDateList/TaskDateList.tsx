@@ -71,6 +71,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         (task, index) => {
             return (
                 <CompleteTaskRow
+                    key={task.taskCode}
                     task={task}
                     surroundingDates={surroundingDates}
                     isLastRow={index === (taskList.length - 1)}
