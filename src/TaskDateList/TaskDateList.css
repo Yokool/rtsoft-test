@@ -1,9 +1,5 @@
 
 
-.cellSpacer {
-    width: 32px;
-}
-
 .taskTable {
     border-collapse: collapse;
     table-layout: fixed;

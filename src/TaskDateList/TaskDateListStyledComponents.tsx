@@ -1,10 +1,12 @@
 import styled, { css } from "styled-components";
 
+export const DefaultCellHeight = 64;
+
 export const BaseCellCSS = css`
     border-style: solid;
     border-color: rgb(197, 197, 197);
     border-width: 1px;
-    height: 64px;
+    height: ${DefaultCellHeight + 'px'};
     white-space: pre;
 `;
 
@@ -17,16 +19,7 @@ export const NameCellCommon = css`
 `
 
 export const CellSpacerCommon = css`
-    ${BaseCellCSS}
     width: 32px;
-`
-
-export const CellSpacerTD = styled.td`
-    ${CellSpacerCommon}
-`
-
-export const CellSpacerTH = styled.th`
-     ${CellSpacerCommon}
 `
 
 export const TaskTableTH = styled.th`
@@ -35,13 +28,24 @@ export const TaskTableTH = styled.th`
     border-bottom-color: rgb(0, 0, 0);
 `;
 
-export const TaskTableCodeCellTH = styled(TaskTableTH)`
-    ${CodeCellCommon}
+export const CellSpacerTH = styled(TaskTableTH)`
+     ${CellSpacerCommon}
 `
+
 
 export const TaskTableTD = styled.td`
     ${BaseCellCSS}
 `
+
+export const CellSpacerTD = styled(TaskTableTD)`
+    ${CellSpacerCommon}
+`
+
+
+export const TaskTableCodeCellTH = styled(TaskTableTH)`
+    ${CodeCellCommon}
+`
+
 export const TaskTableCodeCellTD = styled(TaskTableTD)`
     ${CodeCellCommon}
 `
