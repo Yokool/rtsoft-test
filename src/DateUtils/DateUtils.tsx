@@ -119,3 +119,42 @@ export function isDate2LargerThanDate1ByDays(date1: Date, date2: Date)
 
     return date2Normalized.getTime() >= date1Normalized.getTime();
 }
+
+export type DateInterval = {
+    intervalStart: Date,
+    intervalEnd: Date
+}
+
+/**
+ * Checks whether two intervals created out of 4 dates overlap
+ * each other by days.
+ * ! parameters must mark intervals,
+ * i.e. start <= end
+ */
+export function dateIntervalsOverlapByDays(
+    date1Start: Date,
+    date1End: Date,
+    date2Start: Date,
+    date2End: Date)
+{
+
+    
+    const [
+        date1StartNormalized,
+        date1EndNormalized,
+        date2StartNormalized,
+        date2EndNormalized
+    ] = normalizeDates(
+        date1Start,
+        date1End,
+        date2Start,
+        date2End
+    );
+
+    
+    return (
+        (date1StartNormalized.getTime() <= date2EndNormalized.getTime())
+        &&
+        (date1EndNormalized.getTime() >= date2StartNormalized.getTime())
+    );
+}

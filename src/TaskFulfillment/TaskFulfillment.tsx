@@ -4,7 +4,7 @@ import { getKeyForValueDefined } from "../GeneralUtils/GeneralUtils";
 import { DoneIcon } from "../Icons/DoneIcon";
 import React from "react";
 import { HourglassIcon } from "../Icons/HourglassIcon";
-import { normalizeDate } from "../DateUtils/DateUtils";
+import { dateIntervalsOverlapByDays, normalizeDate } from "../DateUtils/DateUtils";
 
 export const TaskFulfillmentValues = {
     'waiting': undefined,
@@ -53,6 +53,10 @@ export type TaskFulfillment = {
     startDate: Date
     endDate: Date
     status: TaskFulfillmentStatus
+}
+
+export type TaskFulfillmentParametrized = TaskFulfillment & {
+    subRow: number
 }
 
 /**
@@ -127,4 +131,96 @@ export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, tas
     })
 
     return associatedTask;
+}
+
+/**
+ * Takes the fulfillments associated to a particular task and checks
+ * if the fulfillment rows overlap - if there is an overlap - tells each
+ * task in what subrow of the task row the fulfillment should be in order
+ * to avoid this.
+ * 
+ * 
+ * children will be placed as they appear in the list
+ * i.e. the first child will get the first row
+ * the second child will get the first row if he doesn't overlap
+ * with any of the elements in the first row
+ * 
+ * if he does overlap - he gets placed in the second row
+ * 
+ * the third child will go to the first row if he doesn't
+ * overlap with any of the items in the first row
+ * 
+ * otherwise he will try the second row
+ * 
+ * if he exhausts all of his options, he will get placed
+ * in the third row
+ */
+export function addRowParameterToEachFulfillment(fulfillmentsInTask: TaskFulfillment[]): TaskFulfillmentParametrized[]
+{
+    // Stores an array of arrays, where each
+    // array represents one subrow of task fulfillments
+    // every subrow can contain n children of TaskFulfillment (as long as they don't
+    // overlap)
+
+    const fulfillmentSubrows: TaskFulfillment[][] = [];
+
+
+    // Take all the fulfillments
+    return fulfillmentsInTask.map((fulfillment) => {
+
+        // Check them against the subrows from top to bottom
+        for (let i = 0; i < fulfillmentSubrows.length; i++)
+        {
+            // Take a subrow
+            const subrow = fulfillmentSubrows[i];
+
+            // Try to find at least one element where we overlap
+            const overlappingFulfillment = subrow.find((subrowFulfillment) => {
+                return taskFulfillmentsIntersect(subrowFulfillment, fulfillment);
+            });
+
+            // No overlapping element in this row
+            // -> we can insert the elemenent there without creating a
+            // new row.
+            if(overlappingFulfillment === undefined)
+            {
+                // add the fulfillment to this subrow
+                subrow.push(fulfillment);
+                // and map the parameterized version
+                return {
+                    ...fulfillment,
+                    subRow: i
+                }
+            }
+
+            // we overlap one of the elements, continue
+        }
+
+        // there wasn't any row we could insert ourselves into
+        // create a new row for our fulfillment
+        fulfillmentSubrows.push([fulfillment]);
+        // and map the parameterized result
+        const fulfillmentParametrized: TaskFulfillmentParametrized = {
+            ...fulfillment,
+            subRow: fulfillmentSubrows.length - 1,
+        }
+
+        return fulfillmentParametrized;
+    })
+}
+
+export function taskFulfillmentsIntersect(fulfillment1: TaskFulfillment, fulfillment2: TaskFulfillment)
+{
+    const start1 = fulfillment1.startDate;
+    const end1 = fulfillment1.endDate;
+
+    const start2 = fulfillment2.startDate;
+    const end2 = fulfillment2.endDate;
+
+    return dateIntervalsOverlapByDays(
+        start1,
+        end1,
+        start2,
+        end2
+    );
 }
