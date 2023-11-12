@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useRef, useState } from "react";
 import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
 import { dateToTableText, getSurroundingDatesToday } from "../DateUtils/DateUtils";
-import { DateTableSelectionRow } from "../DateTableSelectionRow";
+import { DateTableSelectionRow } from "./DateTableSelectionRow";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";

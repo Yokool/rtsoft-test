@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { dateToTableText } from "./DateUtils/DateUtils";
-import { Task } from "./TaskTypes/Task";
-import { DateModalContext } from "./TaskDateList/TaskDateList";
-import { TaskFulfillmentContext, getAssociatedFulfillmentsToStartDate, getAssociatedFulfillmentsToTask } from "./TaskFulfillment/TaskFulfillment";
-import { FulfillmentRow } from "./TaskFulfillment/FulfillmentRow";
-import { ElementDimensions } from "./GeneralTypes";
+import { dateToTableText } from "../DateUtils/DateUtils";
+import { Task } from "../TaskTypes/Task";
+import { DateModalContext } from "./TaskDateList";
+import { TaskFulfillmentContext, getAssociatedFulfillmentsToStartDate, getAssociatedFulfillmentsToTask } from "../TaskFulfillment/TaskFulfillment";
+import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
+import { ElementDimensions } from "../GeneralTypes";
 import './DateTableSelectionRow.css';
 
 type DateTableSelectionRowProps = {
