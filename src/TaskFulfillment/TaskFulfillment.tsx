@@ -4,7 +4,7 @@ import { getKeyForValueDefined } from "../GeneralUtils/GeneralUtils";
 import { DoneIcon } from "../Icons/DoneIcon";
 import React from "react";
 import { HourglassIcon } from "../Icons/HourglassIcon";
-import { dateIntervalsOverlapByDays, normalizeDate } from "../DateUtils/DateUtils";
+import { clampDate, dateIntervalsOverlapByDays, normalizeDate } from "../DateUtils/DateUtils";
 
 export const TaskFulfillmentValues = {
     'waiting': undefined,
@@ -57,6 +57,9 @@ export type TaskFulfillment = {
 
 export type TaskFulfillmentParametrized = TaskFulfillment & {
     subRow: number
+    // values used purely for rendering
+    clampedStartDate: Date
+    clampedEndDate: Date
 }
 
 /**
@@ -165,6 +168,27 @@ export function safeCastToParameterizedFulfillmentListVersion(taskFulfillmentLis
     return taskFulfillmentList as TaskFulfillmentParametrized[];
 }
 
+export function clampTaskfulfillmentsToDates(
+    taskfulfillmentList: TaskFulfillmentParametrized[],
+    intervalStart: Date,
+    intervalEnd: Date)
+{
+
+    return taskfulfillmentList.map((fulfillment) => {
+
+        const clampedStart = clampDate(fulfillment.startDate, intervalStart, intervalEnd);
+        const clampedEnd = clampDate(fulfillment.endDate, intervalStart, intervalEnd);
+
+        return {
+            ...fulfillment,
+            clampedStartDate: clampedStart,
+            clampedEndDate: clampedEnd
+        }
+
+    });
+
+}
+
 /**
  * Takes the fulfillments associated to a particular task and checks
  * if the fulfillment rows overlap - if there is an overlap - tells each
@@ -224,6 +248,8 @@ export function addRowParameterToEachFulfillment(fulfillmentsInTask: TaskFulfill
                 // and map the parameterized version
                 return {
                     ...fulfillment,
+                    clampedStartDate: fulfillment.startDate,
+                    clampedEndDate: fulfillment.endDate,
                     subRow: i
                 }
             }
@@ -238,6 +264,8 @@ export function addRowParameterToEachFulfillment(fulfillmentsInTask: TaskFulfill
         const fulfillmentParametrized: TaskFulfillmentParametrized = {
             ...fulfillment,
             subRow: fulfillmentSubrows.length - 1,
+            clampedStartDate: fulfillment.startDate,
+            clampedEndDate: fulfillment.endDate
         }
 
         return fulfillmentParametrized;

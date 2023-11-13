@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Task } from "../TaskTypes/Task";
 import './TaskDateList.css';
-import { dateToTableText, getSurroundingDates, getSurroundingDatesToday, getToday, isDateToday, isDateWeekday, normalizeDate } from "../DateUtils/DateUtils";
+import { dateToTableText, getSurroundingDates, getToday, isDateToday, isDateWeekday, normalizeDate } from "../DateUtils/DateUtils";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
@@ -55,7 +55,8 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         
     }, [dateListBaseDate, dateShiftBackwards, dateShiftForwards])
 
-    
+    const dateListLeftmostDate = surroundingDates[0];
+    const dateListRightmostDate = surroundingDates[surroundingDates.length - 1];
     
     const dateHeadersJSX = surroundingDates.map((date) => {
         
@@ -75,6 +76,8 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         (task, index) => {
             return (
                 <CompleteTaskRow
+                    dateListStart={dateListLeftmostDate}
+                    dateListEnd={dateListRightmostDate}
                     key={task.taskCode}
                     task={task}
                     surroundingDates={surroundingDates}

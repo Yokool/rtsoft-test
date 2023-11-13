@@ -11,7 +11,7 @@ const CustomSvg = styled.svg`
     &:hover {
         cursor: pointer;
     }
-`
+`;
 
 export const ArrowIcon = ({arrowDirection, onClick} : ArrowIconProps) => (
   <CustomSvg
