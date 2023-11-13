@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { TaskFulfillment, TaskFulfillmentIntoStyles, TaskFulfillmentParametrized } from "./TaskFulfillment";
 import { dateUnitDayDifference } from "../DateUtils/DateUtils";
 import './FulfillmentRow.css';
-import { ElementDimensions } from "../GeneralTypes";
+import { ElementDimensions } from "../GeneralTypes/GeneralTypes";
 import styled from "styled-components";
 import { DateModalContext } from "../TaskDateList/TaskDateList";
 

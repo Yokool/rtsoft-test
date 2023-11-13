@@ -4,7 +4,7 @@ import { Task } from "../TaskTypes/Task";
 import { DateModalContext } from "./TaskDateList";
 import { TaskFulfillmentParametrized, filterParamFulfillmentsByClampedStartDate, getAssociatedFulfillmentsToStartDate, safeCastToParameterizedFulfillmentListVersion } from "../TaskFulfillment/TaskFulfillment";
 import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
-import { ElementDimensions } from "../GeneralTypes";
+import { ElementDimensions } from "../GeneralTypes/GeneralTypes";
 import './DateTableSelectionRow.css';
 import { TaskTableTD, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
 import { CommonTaskRowCellStyle } from "./CompleteTaskRow";
