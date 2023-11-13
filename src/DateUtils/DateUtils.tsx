@@ -52,6 +52,7 @@ export function getShiftedDate(date: Date, shiftDirection: SurroundingDatesShift
 {
     const shiftValue = shiftDirection === 'backward' ? -shiftCount : shiftCount;
     const newDate = new Date(date);
+    newDate.setHours(1, 0, 0, 0);
     newDate.setDate(date.getDate() + shiftValue);
     return newDate;
 }
@@ -153,7 +154,7 @@ export function dateUnitDayDifference(date1: Date, date2: Date)
 export function normalizeDate(date: Date)
 {
     const dateNormalized = new Date(date);
-    dateNormalized.setHours(0, 0, 0, 0);
+    dateNormalized.setHours(1, 0, 0, 0);
     return dateNormalized;
 }
 

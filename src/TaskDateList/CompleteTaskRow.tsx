@@ -49,7 +49,7 @@ export function CompleteTaskRow({
             completeDateList={surroundingDates}
             task={task}
             commonCellStyle={commonHeightStyle}
-            parameterizedTaskFulfillmentList={taskfulfillmentsParameterizedClamped}
+            parameterizedFulfillmentsInThisRow={taskfulfillmentsParameterizedClamped}
             subRowCount={subrowCount}
             isLastRow={isLastRow}
         />

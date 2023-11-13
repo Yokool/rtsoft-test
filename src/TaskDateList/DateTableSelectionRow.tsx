@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 
 import { dateToTableText, isDateToday } from "../DateUtils/DateUtils";
 import { Task } from "../TaskTypes/Task";
 import { DateModalContext } from "./TaskDateList";
-import { TaskFulfillmentParametrized, getAssociatedFulfillmentsToStartDate, safeCastToParameterizedFulfillmentListVersion } from "../TaskFulfillment/TaskFulfillment";
+import { TaskFulfillmentParametrized, filterParamFulfillmentsByClampedStartDate, getAssociatedFulfillmentsToStartDate, safeCastToParameterizedFulfillmentListVersion } from "../TaskFulfillment/TaskFulfillment";
 import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
 import { ElementDimensions } from "../GeneralTypes";
 import './DateTableSelectionRow.css';
@@ -13,7 +13,7 @@ type DateTableSelectionRowProps = {
     completeDateList: Date[]
     task: Task
     commonCellStyle: CommonTaskRowCellStyle
-    parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
+    parameterizedFulfillmentsInThisRow: TaskFulfillmentParametrized[]
     subRowCount: number
     isLastRow: boolean
 }
@@ -22,7 +22,7 @@ export function DateTableSelectionRow({
     completeDateList,
     task,
     commonCellStyle,
-    parameterizedTaskFulfillmentList,
+    parameterizedFulfillmentsInThisRow: parameterizedTaskFulfillmentList,
     subRowCount,
     isLastRow
 }: DateTableSelectionRowProps): React.JSX.Element {
@@ -37,7 +37,7 @@ export function DateTableSelectionRow({
                 date={date}
                 task={task}
                 commonCellStyle={commonCellStyle}
-                parameterizedTaskFulfillmentList={parameterizedTaskFulfillmentList}
+                parameterizedTaskFulfillmentsInThisRow={parameterizedTaskFulfillmentList}
                 subRowCount={subRowCount}
                 isLastRow={isLastRow}
             />
@@ -56,7 +56,7 @@ type DateTableSelectionCellProps = {
     date: Date
     task: Task
     commonCellStyle: CommonTaskRowCellStyle
-    parameterizedTaskFulfillmentList: TaskFulfillmentParametrized[]
+    parameterizedTaskFulfillmentsInThisRow: TaskFulfillmentParametrized[]
     subRowCount: number
     isLastRow: boolean,
 }
@@ -65,16 +65,18 @@ function DateTableSelectionCell({
     date,
     task,
     commonCellStyle,
-    parameterizedTaskFulfillmentList,
+    parameterizedTaskFulfillmentsInThisRow,
     subRowCount,
     isLastRow
 }: DateTableSelectionCellProps): React.JSX.Element {
 
-    const associatedTaskFulfillmentsUncast = getAssociatedFulfillmentsToStartDate(task, date, parameterizedTaskFulfillmentList);
+    const associatedTaskFulfillmentsUncast = getAssociatedFulfillmentsToStartDate(task, date, parameterizedTaskFulfillmentsInThisRow);
     
     // better to use an additional check even though we can safely
     // say that this should never fail
     const associatedTaskFulfillments = safeCastToParameterizedFulfillmentListVersion(associatedTaskFulfillmentsUncast);
+    //const associatedTaskFulfillments = filterParamFulfillmentsByClampedStartDate(parameterizedTaskFulfillmentsInThisRow, date);
+    
 
     const cellRef = useRef<HTMLTableCellElement>(null);
     const [cellDimensions, setCellDimensions] = useState<ElementDimensions>({

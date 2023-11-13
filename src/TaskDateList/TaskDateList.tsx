@@ -42,6 +42,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
     const dateShiftForwards = 19;
 
     const todayNormalized = normalizeDate(getToday());
+    
     const [dateListBaseDate, setDateListBaseDate] = useState<Date>(todayNormalized);
 
     const [surroundingDates, setSurroundingDates] = useState<Date[]>([]);
@@ -55,8 +56,8 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         
     }, [dateListBaseDate, dateShiftBackwards, dateShiftForwards])
 
-    const dateListLeftmostDate = surroundingDates[0];
-    const dateListRightmostDate = surroundingDates[surroundingDates.length - 1];
+    const dateListLeftmostDate = surroundingDates[0] ?? new Date();
+    const dateListRightmostDate = surroundingDates[surroundingDates.length - 1] ?? new Date();
     
     const dateHeadersJSX = surroundingDates.map((date) => {
         
