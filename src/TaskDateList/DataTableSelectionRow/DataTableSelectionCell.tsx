@@ -1,58 +1,15 @@
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { dateToTableText, isDateToday } from "../DateUtils/DateUtils";
-import { Task } from "../TaskTypes/Task";
-import { DateModalContext } from "./TaskDateList";
-import { TaskFulfillmentParametrized, filterParamFulfillmentsByClampedStartDate, getAssociatedFulfillmentsToStartDate, safeCastToParameterizedFulfillmentListVersion } from "../TaskFulfillment/TaskFulfillment";
-import { FulfillmentRow } from "../TaskFulfillment/FulfillmentRow";
-import { ElementDimensions } from "../GeneralTypes/GeneralTypes";
+import { useRef, useState, useEffect, useLayoutEffect, useContext } from "react"
+import { isDateToday } from "../../DateUtils/DateUtils"
+import { ElementDimensions } from "../../GeneralTypes/GeneralTypes"
+import { FulfillmentRow } from "../../TaskFulfillment/FulfillmentRow"
+import { TaskFulfillmentParametrized, filterParamFulfillmentsByClampedStartDate } from "../../TaskFulfillment/TaskFulfillment"
+import { Task } from "../../TaskTypes/Task"
+import { CommonTaskRowCellStyle } from "../CompleteTaskRow/CompleteTaskRow"
+import { DateModalContext } from "../TaskDateList"
+import { getWeekendColorOnWeekend, TaskTableTD } from "../TaskDateListStyledComponents"
 import './DateTableSelectionRow.css';
-import { TaskTableTD, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
-import { CommonTaskRowCellStyle } from "./CompleteTaskRow";
 
-type DateTableSelectionRowProps = {
-    completeDateList: Date[]
-    task: Task
-    commonCellStyle: CommonTaskRowCellStyle
-    parameterizedFulfillmentsInThisRow: TaskFulfillmentParametrized[]
-    subRowCount: number
-    isLastRow: boolean
-}
-
-export function DateTableSelectionRow({
-    completeDateList,
-    task,
-    commonCellStyle,
-    parameterizedFulfillmentsInThisRow: parameterizedTaskFulfillmentList,
-    subRowCount,
-    isLastRow
-}: DateTableSelectionRowProps): React.JSX.Element {
-
-    // Take the date list and compute the cells
-    // out of them.
-    const completeDateListJSX = completeDateList.map((date, index) => {
-        const key = dateToTableText(date);
-        return (
-            <DateTableSelectionCell
-                key={key}
-                date={date}
-                task={task}
-                commonCellStyle={commonCellStyle}
-                parameterizedTaskFulfillmentsInThisRow={parameterizedTaskFulfillmentList}
-                subRowCount={subRowCount}
-                isLastRow={isLastRow}
-            />
-        )
-    });
-
-    return (
-        <>
-            {completeDateListJSX}
-        </>
-    );
-
-}
-
-type DateTableSelectionCellProps = {
+export type DateTableSelectionCellProps = {
     date: Date
     task: Task
     commonCellStyle: CommonTaskRowCellStyle
@@ -61,7 +18,7 @@ type DateTableSelectionCellProps = {
     isLastRow: boolean,
 }
 
-function DateTableSelectionCell({
+export function DateTableSelectionCell({
     date,
     task,
     commonCellStyle,

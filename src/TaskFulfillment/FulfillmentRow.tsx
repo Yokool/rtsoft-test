@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TaskFulfillment, TaskFulfillmentIntoStyles, TaskFulfillmentParametrized } from "./TaskFulfillment";
+import { TaskFulfillmentIntoStyles, TaskFulfillmentParametrized } from "./TaskFulfillment";
 import { dateUnitDayDifference } from "../DateUtils/DateUtils";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes/GeneralTypes";

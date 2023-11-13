@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
-import { DateTableSelectionRow } from "./DateTableSelectionRow";
-import { Task } from "../TaskTypes/Task";
-import './TaskDateList.css';
-import { TaskFulfillment, TaskFulfillmentContext, addRowParameterToEachFulfillment, clampTaskfulfillmentsToDates, getAssociatedFulfillmentsToTask } from "../TaskFulfillment/TaskFulfillment";
-import { CellSpacerTD, DefaultCellHeight, TaskTableCodeCellTD, TaskTableNameCellTD } from "./TaskDateListStyledComponents";
+import { useContext } from "react";
+import { DateTableSelectionRow } from "../DataTableSelectionRow/DateTableSelectionRow";
+import { Task } from "../../TaskTypes/Task";
+import { TaskFulfillmentContext, addRowParameterToEachFulfillment, clampTaskfulfillmentsToDates, getAssociatedFulfillmentsToTask } from "../../TaskFulfillment/TaskFulfillment";
+import { CellSpacerTD, DefaultCellHeight, TaskTableCodeCellTD, TaskTableNameCellTD } from "../TaskDateListStyledComponents";
 
 export type CompleteTaskRowProps = {
     task: Task

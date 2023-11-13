@@ -22,6 +22,12 @@ export const BaseCellCSS = css`
     white-space: pre;
 `;
 
+export const TaskTable = styled.table`
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+`
+
 export const CodeCellCommon = css`
     width: 64px;
 `

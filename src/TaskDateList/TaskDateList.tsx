@@ -1,12 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Task } from "../TaskTypes/Task";
-import './TaskDateList.css';
-import { dateToTableText, getSurroundingDates, getToday, isDateToday, isDateWeekday, normalizeDate } from "../DateUtils/DateUtils";
+import { dateToTableText, getSurroundingDates, getToday, isDateToday, normalizeDate } from "../DateUtils/DateUtils";
 import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
-import { CompleteTaskRow } from "./CompleteTaskRow";
-import { CellSpacerTH, TaskTableCodeCellTD, TaskTableCodeCellTH, TaskTableNameCellTH, TaskTableTH, WeekendColor, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
+import { CompleteTaskRow } from "./CompleteTaskRow/CompleteTaskRow";
+import { CellSpacerTH, TaskTable, TaskTableCodeCellTH, TaskTableNameCellTH, TaskTableTH, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
 import { TaskDateListSwitcher } from "./TaskDateListSwitcher";
 
 type TaskDateListProps = {
@@ -118,7 +117,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
                 date={dateListBaseDate}
                 setDate={setDateListBaseDate}
             />
-            <table className="taskTable" cellSpacing={0} cellPadding={0}>
+            <TaskTable className="taskTable" cellSpacing={0} cellPadding={0}>
                 <tbody>
                     <tr>
                         <CellSpacerTH></CellSpacerTH>
@@ -128,7 +127,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
                     </tr>
                     {taskListJSX}
                 </tbody>
-            </table>
+            </TaskTable>
         </DateModalContext.Provider>
     )
 }

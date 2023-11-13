@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useRef } from "react";
 import styled from "styled-components";
 import { DoubleArrowIcon } from "../Icons/DoubleArrow";
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { DropDownIcon } from "../Icons/DropDownIcon";
-import { HorizontalDirection } from "../GeneralUtils/DirectionUtils";
 import { SurroundingDatesShift, getImmediateNextDay, getImmediateNextMonth, turnDateToInputValue } from "../DateUtils/DateUtils";
 
 const SwitcherOuterHolder = styled.div`
