@@ -76,6 +76,9 @@ export type TaskFulfillmentAction = {
     type: 'edit',
     originalFulfillment: TaskFulfillment,
     newFulfillmentValues: TaskFulfillmentEditable
+} | {
+    type: 'delete',
+    fulfillment: TaskFulfillment
 }
 
 export const taskFulfillmentReducer = (oldTasks: TaskFulfillment[], action: TaskFulfillmentAction): TaskFulfillment[] => {
@@ -103,7 +106,12 @@ export const taskFulfillmentReducer = (oldTasks: TaskFulfillment[], action: Task
                 // Non-edit tasks stay - no need to create
                 // a copy since no mutations are being done
                 return taskFulfillment;
-            })
+            });
+        }
+        case 'delete': {
+            return oldTasks.filter((taskFulfillment) => {
+                return taskFulfillment.uuid !== action.fulfillment.uuid;
+            });
         }
     }   
 }

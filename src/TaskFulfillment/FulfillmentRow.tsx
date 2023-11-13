@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { TaskFulfillmentIntoStyles, TaskFulfillmentParametrized } from "./TaskFulfillment";
+import { TaskFulfillmentContext, TaskFulfillmentDispatchContext, TaskFulfillmentIntoStyles, TaskFulfillmentParametrized } from "./TaskFulfillment";
 import { dateUnitDayDifference } from "../DateUtils/DateUtils";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes/GeneralTypes";
 import styled from "styled-components";
 import { DateModalContext } from "../TaskCalendar/TaskDateList/TaskDateList";
+import { CrossIcon } from "../Icons/CrossIcon";
 
 export type FulfillmentRowProps = {
     taskFulfillment: TaskFulfillmentParametrized
@@ -41,7 +42,20 @@ const FulfillmentRowOuter = styled.div< {
     }
 
     div svg {
-        stroke: ${props => props.$foregroundColor}
+        stroke: ${props => props.$foregroundColor};
+    }
+
+    svg .crossIcon {
+        display: none;
+    }
+
+    &:hover svg .crossIcon {
+        display: block;
+        fill: #c80032;
+    }
+
+    &:hover svg:hover .crossIcon {
+        fill: #ff0000;
     }
 
     &:hover div svg {
@@ -63,6 +77,8 @@ const FulfillmentText = styled.p< {
     margin-top: 0px;
     margin-bottom: 0px;
     font-weight: bold;
+    flex: 1;
+    text-align: start;
 `;
 
 export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCount} : FulfillmentRowProps): React.JSX.Element {
@@ -75,6 +91,8 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCou
     const associatedStyle = TaskFulfillmentIntoStyles[taskFulfillment.status];
 
     const modalContext = useContext(DateModalContext);
+
+    const dispatchTaskfulfillment = useContext(TaskFulfillmentDispatchContext);
 
     // add 1 since we need to show the
     // fulfillment row even when the task goes from today (0:00) to today (23:59)
@@ -97,6 +115,18 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCou
         // since the fulfillment row is contained within the cell
         // normally the event would propagate back up to the parent
         // and this would be registered as adding another task fulfillment
+        event.stopPropagation();
+    }
+
+    function handleCrossIconClick(event: React.MouseEvent<SVGElement>)
+    {
+        dispatchTaskfulfillment({
+            type: 'delete',
+            fulfillment: taskFulfillment
+        })
+
+        // also stop the propagation to not accidentally click
+        // the modal we are about to delete
         event.stopPropagation();
     }
 
@@ -123,6 +153,12 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCou
                 <FulfillmentText $color={associatedStyle.fulfillmentForegroundColor}>
                     {taskName}
                 </FulfillmentText>
+
+                <CrossIcon
+                    onClick={handleCrossIconClick}
+                    style={{
+                        marginRight: 16
+                }} />
 
             </FulfillmentRowOuter>
         </div>
