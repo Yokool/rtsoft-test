@@ -25,6 +25,24 @@ export function getSurroundingDates(
 
 export type SurroundingDatesShift = 'backward' | 'forward';
 
+export function getImmediateNextDay(date: Date, shiftDirection: SurroundingDatesShift)
+{
+    return getShiftedDate(date, shiftDirection, 1);
+}
+
+export function turnDateToInputValue(date: Date | undefined)
+{
+    return date?.toISOString().split("T")[0];
+}
+
+export function getShiftedDate(date: Date, shiftDirection: SurroundingDatesShift, shiftCount: number)
+{
+    const shiftValue = shiftDirection === 'backward' ? -shiftCount : shiftCount;
+    const newDate = new Date();
+    newDate.setDate(date.getDate() + shiftValue);
+    return newDate;
+}
+
 export function getSurroundingDatesSingleDirArray(
     date: Date,
     shiftNumber: number,
@@ -35,9 +53,7 @@ export function getSurroundingDatesSingleDirArray(
     const result: Date[] = [];
     for(let x = 1; x <= shiftNumber; x++)
     {
-        const shiftValue = shiftDirection === 'backward' ? -x : x;
-        let newDate = new Date();
-        newDate.setDate(date.getDate() + shiftValue);
+        const newDate = getShiftedDate(date, shiftDirection, x);
         result.push(newDate);
     }
 

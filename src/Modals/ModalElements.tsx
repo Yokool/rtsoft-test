@@ -1,5 +1,6 @@
 import React, { OptionHTMLAttributes } from "react";
 import './ModalElements.css';
+import { turnDateToInputValue } from "../DateUtils/DateUtils";
 
 export type ModalHeaderInputProps = {
     header: string
@@ -60,7 +61,7 @@ export function ModalHeaderDate(
     }: ModalHeaderDateProps
 ): React.JSX.Element {
 
-    const dateValue = date?.toISOString().split("T")[0];
+    const dateValue = turnDateToInputValue(date);
 
     return (
         <>

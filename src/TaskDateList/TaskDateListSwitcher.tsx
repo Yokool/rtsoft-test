@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { DoubleArrowIcon } from "../Icons/DoubleArrow";
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { DropDownIcon } from "../Icons/DropDownIcon";
+import { HorizontalDirection } from "../GeneralUtils/DirectionUtils";
+import { SurroundingDatesShift, getImmediateNextDay, turnDateToInputValue } from "../DateUtils/DateUtils";
 
 const SwitcherOuterHolder = styled.div`
     display: flex;
@@ -84,15 +86,29 @@ export function TaskDateListSwitcher( {date, setDate} : TaskDateListSwitcherProp
 
     const displayText = getDisplayTextForCustomDate(date);
 
+    function handleSmallArrowClick(direction: SurroundingDatesShift)
+    {
+        const immediateDay = getImmediateNextDay(date, direction);
+        setDate(immediateDay);
+    }
+
+
+    const dateVal = turnDateToInputValue(date);
 
     return (
         <SwitcherOuterHolder>
             <DoubleArrowIcon arrowDirection="left" />
-            <ArrowIcon arrowDirection="left" />
+            <ArrowIcon onClick={() => handleSmallArrowClick('backward')} arrowDirection="left" />
 
             <DateInputOuter onClick={handleOuterClick}>
                 <DateInputWrapper>
-                    <DateInput onChange={handleDateInputChange} ref={dateInputRef} className="calendarInput" type="date" />
+                    <DateInput
+                        ref={dateInputRef}
+                        onChange={handleDateInputChange}
+                        value={dateVal}
+                        className="calendarInput"
+                        type="date"
+                    />
                 </DateInputWrapper>
                 
                 <DateInnerWrapper>
@@ -104,7 +120,7 @@ export function TaskDateListSwitcher( {date, setDate} : TaskDateListSwitcherProp
 
                 </DateInputOuter>
             
-            <ArrowIcon arrowDirection="right" />
+            <ArrowIcon onClick={() => handleSmallArrowClick('forward')} arrowDirection="right" />
             <DoubleArrowIcon arrowDirection="right" />
         </SwitcherOuterHolder>
     )

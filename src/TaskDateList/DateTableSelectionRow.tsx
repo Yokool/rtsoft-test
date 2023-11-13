@@ -124,7 +124,7 @@ function DateTableSelectionCell({
     ) => {
         return (
             <FulfillmentRow
-                key={taskFulfillment.task.taskCode + ' ' + taskFulfillment.startDate.toISOString()}
+                key={taskFulfillment.uuid}
                 taskFulfillment={taskFulfillment}
                 parentCellDimensions={cellDimensions}
                 subRowCount={subRowCount}
