@@ -33,7 +33,7 @@ export function TaskDateModalBase({
     const [startDate, setStartDate] = useState<Date | undefined>(generalModalData.modalStartingDate);
     const [endDate, setEndDate] = useState<Date | undefined>(generalModalData.modalInitialEndDate);
     
-    const [status, setStatus] = useState<TaskFulfillmentStatus>(generalModalData.modalInitialStatus || 'waiting');
+    const [status, setStatus] = useState<TaskFulfillmentStatus>(generalModalData.modalInitialStatus || 'new');
     
     // Error messages when either the start or end date of the
     // modal is not filled.

@@ -5,13 +5,16 @@ import { DoneIcon } from "../Icons/DoneIcon";
 import React from "react";
 import { HourglassIcon } from "../Icons/HourglassIcon";
 import { clampDate, dateIntervalsOverlapByDays, normalizeDate } from "../DateUtils/DateUtils";
+import { StarIcon } from "../Icons/StarIcon";
 
 export const TaskFulfillmentValues = {
+    'new': undefined,
     'waiting': undefined,
     'done': undefined
 }
 
 export const TaskFulfillmentValuesDisplay: Record<TaskFulfillmentStatus, string> = {
+    new: 'Nový',
     waiting: 'Nedokončeno',
     done: 'Hotovo'
 }
@@ -29,6 +32,13 @@ export type TaskFulfillmentStyles = {
 }
 
 export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfillmentStyles> = {
+    new: {
+        fulfillmentBgColor: '#6622CC',
+        fulfillmentBgHoverColor: '#1d1e2c',
+        fulfillmentForegroundColor: '#ffffff',
+        fulfillmentForegroundHoverColor: '#F8F32B',
+        fulfillmentIcon: <StarIcon />
+    },
     done: {
         fulfillmentBgColor: '#2ea956',
         fulfillmentBgHoverColor: '#1d1e2c',
@@ -40,7 +50,7 @@ export const TaskFulfillmentIntoStyles: Record<TaskFulfillmentStatus, TaskFulfil
         fulfillmentBgColor: '#fbbabd',
         fulfillmentBgHoverColor: '#1d1e2c',
         fulfillmentForegroundColor: '#e9414b',
-        fulfillmentForegroundHoverColor: '#e9414b',
+        fulfillmentForegroundHoverColor: '#d90429',
         fulfillmentIcon: <HourglassIcon />
     }
 }
