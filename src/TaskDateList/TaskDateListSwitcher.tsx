@@ -4,7 +4,7 @@ import { DoubleArrowIcon } from "../Icons/DoubleArrow";
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { DropDownIcon } from "../Icons/DropDownIcon";
 import { HorizontalDirection } from "../GeneralUtils/DirectionUtils";
-import { SurroundingDatesShift, getImmediateNextDay, turnDateToInputValue } from "../DateUtils/DateUtils";
+import { SurroundingDatesShift, getImmediateNextDay, getImmediateNextMonth, turnDateToInputValue } from "../DateUtils/DateUtils";
 
 const SwitcherOuterHolder = styled.div`
     display: flex;
@@ -88,8 +88,14 @@ export function TaskDateListSwitcher( {date, setDate} : TaskDateListSwitcherProp
 
     function handleSmallArrowClick(direction: SurroundingDatesShift)
     {
-        const immediateDay = getImmediateNextDay(date, direction);
-        setDate(immediateDay);
+        const immediateDayDate = getImmediateNextDay(date, direction);
+        setDate(immediateDayDate);
+    }
+
+    function handleLargeArrowClick(direction: SurroundingDatesShift)
+    {
+        const immediateMonthDate = getImmediateNextMonth(date, direction);
+        setDate(immediateMonthDate);
     }
 
 
@@ -97,7 +103,7 @@ export function TaskDateListSwitcher( {date, setDate} : TaskDateListSwitcherProp
 
     return (
         <SwitcherOuterHolder>
-            <DoubleArrowIcon arrowDirection="left" />
+            <DoubleArrowIcon onClick={() => handleLargeArrowClick('backward')} arrowDirection="left" />
             <ArrowIcon onClick={() => handleSmallArrowClick('backward')} arrowDirection="left" />
 
             <DateInputOuter onClick={handleOuterClick}>
@@ -121,7 +127,7 @@ export function TaskDateListSwitcher( {date, setDate} : TaskDateListSwitcherProp
                 </DateInputOuter>
             
             <ArrowIcon onClick={() => handleSmallArrowClick('forward')} arrowDirection="right" />
-            <DoubleArrowIcon arrowDirection="right" />
+            <DoubleArrowIcon onClick={() => handleLargeArrowClick('forward')} arrowDirection="right" />
         </SwitcherOuterHolder>
     )
 }

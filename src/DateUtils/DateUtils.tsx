@@ -30,6 +30,21 @@ export function getImmediateNextDay(date: Date, shiftDirection: SurroundingDates
     return getShiftedDate(date, shiftDirection, 1);
 }
 
+export function getImmediateNextMonth(date: Date, shiftDirection: SurroundingDatesShift)
+{
+    return getShiftedDateByMonth(date, shiftDirection, 1);
+}
+
+export function getShiftedDateByMonth(date: Date, shiftDirection: SurroundingDatesShift, shiftCount: number)
+{
+    const shiftValue = shiftDirection === 'backward' ? -shiftCount : shiftCount;
+    const newDate = new Date();
+    newDate.setDate(1);
+    newDate.setMonth(date.getMonth() + shiftValue);
+    console.log(date, newDate);
+    return newDate;
+}
+
 export function turnDateToInputValue(date: Date | undefined)
 {
     return date?.toISOString().split("T")[0];
