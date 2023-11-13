@@ -184,6 +184,18 @@ export function clampTaskfulfillmentsToDates(
         const clampedStart = clampDate(fulfillment.startDate, intervalStart, intervalEnd);
         const clampedEnd = clampDate(fulfillment.endDate, intervalStart, intervalEnd);
 
+        // This means that the fulfillment is completely
+        // out of the interval we are displaying.
+        // We can then simply return the original objects
+        // that doesn't alter the clamped variables and makes it
+        // so the fulfillment is not rendered.
+        if(fulfillment.endDate < intervalStart || fulfillment.startDate > intervalEnd)
+        {
+            return {
+                ...fulfillment
+            };
+        }
+
         return {
             ...fulfillment,
             clampedStartDate: clampedStart,
