@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { TaskFulfillment, TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
 import { TaskDateModalValues, TaskDateModalBase } from "./TaskDateModalBase";
 import { GeneralModalData } from "../../TaskCalendar/TaskDateList/TaskDateList";
+import { normalizeDate } from "../../DateUtils/DateUtils";
 
 
 type EditTaskDateModalProps = {
@@ -24,8 +25,8 @@ export function EditTaskDateModal(props: EditTaskDateModalProps): React.JSX.Elem
             type: 'edit',
             originalFulfillment: props.taskFulfillment,
             newFulfillmentValues: {
-                startDate: modalValues.startDate,
-                endDate: modalValues.endDate,
+                startDate: normalizeDate(modalValues.startDate),
+                endDate: normalizeDate(modalValues.endDate),
                 status: modalValues.status
             }
         });
