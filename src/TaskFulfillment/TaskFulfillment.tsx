@@ -195,7 +195,7 @@ export function clampTaskfulfillmentsToDates(
                 ...fulfillment
             };
         }
-
+        
         return {
             ...fulfillment,
             clampedStartDate: clampedStart,

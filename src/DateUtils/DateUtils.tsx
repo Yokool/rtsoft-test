@@ -45,15 +45,17 @@ export function getShiftedDateByMonth(date: Date, shiftDirection: SurroundingDat
 
 export function turnDateToInputValue(date: Date | undefined)
 {
-    return date?.toISOString().split("T")[0];
+    const result = date?.toISOString().split("T")[0];
+    return result;
 }
 
 export function getShiftedDate(date: Date, shiftDirection: SurroundingDatesShift, shiftCount: number)
 {
     const shiftValue = shiftDirection === 'backward' ? -shiftCount : shiftCount;
-    const newDate = new Date(date);
-    newDate.setHours(1, 0, 0, 0);
+    const newDate = normalizeDate(new Date(date));
+    
     newDate.setDate(date.getDate() + shiftValue);
+    
     return newDate;
 }
 
@@ -154,7 +156,7 @@ export function dateUnitDayDifference(date1: Date, date2: Date)
 export function normalizeDate(date: Date)
 {
     const dateNormalized = new Date(date);
-    dateNormalized.setHours(1, 0, 0, 0);
+    dateNormalized.setHours(12, 0, 0, 0);
     return dateNormalized;
 }
 

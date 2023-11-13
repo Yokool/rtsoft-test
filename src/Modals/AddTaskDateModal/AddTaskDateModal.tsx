@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
 import { TaskDateModalValues, TaskDateModalBase } from "./TaskDateModalBase";
 import { GeneralModalData } from "../../TaskDateList/TaskDateList";
+import { normalizeDate } from "../../DateUtils/DateUtils";
 
 type AddTaskModalProps = {
     /**
@@ -30,8 +31,8 @@ export function AddTaskDateModal(props: AddTaskModalProps): React.JSX.Element {
             addedTask: {
                 uuid: crypto.randomUUID(),
                 task: generalModalData.dateAddTask,
-                startDate: modalValues.startDate,
-                endDate: modalValues.endDate,
+                startDate: normalizeDate(modalValues.startDate),
+                endDate: normalizeDate(modalValues.endDate),
                 status: modalValues.status
             }
         });
