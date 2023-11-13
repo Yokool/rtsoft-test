@@ -70,12 +70,12 @@ function DateTableSelectionCell({
     isLastRow
 }: DateTableSelectionCellProps): React.JSX.Element {
 
-    const associatedTaskFulfillmentsUncast = getAssociatedFulfillmentsToStartDate(task, date, parameterizedTaskFulfillmentsInThisRow);
+    //const associatedTaskFulfillmentsUncast = getAssociatedFulfillmentsToStartDate(task, date, parameterizedTaskFulfillmentsInThisRow);
     
     // better to use an additional check even though we can safely
     // say that this should never fail
-    const associatedTaskFulfillments = safeCastToParameterizedFulfillmentListVersion(associatedTaskFulfillmentsUncast);
-    //const associatedTaskFulfillments = filterParamFulfillmentsByClampedStartDate(parameterizedTaskFulfillmentsInThisRow, date);
+    //const associatedTaskFulfillments = safeCastToParameterizedFulfillmentListVersion(associatedTaskFulfillmentsUncast);
+    const associatedTaskFulfillments = filterParamFulfillmentsByClampedStartDate(parameterizedTaskFulfillmentsInThisRow, date);
     
 
     const cellRef = useRef<HTMLTableCellElement>(null);

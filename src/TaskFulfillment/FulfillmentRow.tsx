@@ -69,7 +69,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCou
     
     
     
-    const {task, startDate, endDate} = taskFulfillment;
+    const {task, clampedStartDate, clampedEndDate} = taskFulfillment;
     const {taskName} = task;
 
     const associatedStyle = TaskFulfillmentIntoStyles[taskFulfillment.status];
@@ -78,7 +78,7 @@ export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCou
 
     // add 1 since we need to show the
     // fulfillment row even when the task goes from today (0:00) to today (23:59)
-    const dateDifference = dateUnitDayDifference(startDate, endDate) + 1;
+    const dateDifference = dateUnitDayDifference(clampedStartDate, clampedEndDate) + 1;
     
     const parentCellWidth = parentCellDimensions.width;
     const parentCellHeight = parentCellDimensions.height;

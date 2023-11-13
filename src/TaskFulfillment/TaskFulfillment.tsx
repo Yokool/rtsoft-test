@@ -147,7 +147,7 @@ export function getAssociatedFulfillmentsToStartDate(task: Task, date: Date, tas
 
 export function filterParamFulfillmentsByClampedStartDate(taskFulfillmentList: TaskFulfillmentParametrized[], date: Date)
 {
-    return taskFulfillmentList.filter((fulfillment) => fulfillment.clampedStartDate === date);
+    return taskFulfillmentList.filter((fulfillment) => fulfillment.clampedStartDate.getTime() === date.getTime());
 }
 
 export function safeCastToParameterizedFulfillmentListVersion(taskFulfillmentList: TaskFulfillment[])
