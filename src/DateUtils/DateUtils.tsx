@@ -1,5 +1,4 @@
 
-
 export function getToday()
 {
     return new Date();
@@ -38,10 +37,9 @@ export function getImmediateNextMonth(date: Date, shiftDirection: SurroundingDat
 export function getShiftedDateByMonth(date: Date, shiftDirection: SurroundingDatesShift, shiftCount: number)
 {
     const shiftValue = shiftDirection === 'backward' ? -shiftCount : shiftCount;
-    const newDate = new Date();
-    newDate.setDate(1);
+    const newDate = new Date(date);
     newDate.setMonth(date.getMonth() + shiftValue);
-    console.log(date, newDate);
+    
     return newDate;
 }
 
@@ -53,7 +51,7 @@ export function turnDateToInputValue(date: Date | undefined)
 export function getShiftedDate(date: Date, shiftDirection: SurroundingDatesShift, shiftCount: number)
 {
     const shiftValue = shiftDirection === 'backward' ? -shiftCount : shiftCount;
-    const newDate = new Date();
+    const newDate = new Date(date);
     newDate.setDate(date.getDate() + shiftValue);
     return newDate;
 }
