@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
-import { Task } from "../TaskTypes/Task";
-import { dateToTableText, getSurroundingDates, getToday, isDateToday, normalizeDate } from "../DateUtils/DateUtils";
-import { AddTaskDateModal } from "../Modals/AddTaskDateModal/AddTaskDateModal";
-import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskFulfillment";
-import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
+import { Task } from "../../TaskTypes/Task";
+import { dateToTableText, getSurroundingDates, getToday, isDateToday, normalizeDate } from "../../DateUtils/DateUtils";
+import { AddTaskDateModal } from "../../Modals/AddTaskDateModal/AddTaskDateModal";
+import { TaskFulfillment, TaskFulfillmentStatus } from "../../TaskFulfillment/TaskFulfillment";
+import { EditTaskDateModal } from "../../Modals/AddTaskDateModal/EditTaskDateModal";
 import { CompleteTaskRow } from "./CompleteTaskRow/CompleteTaskRow";
 import { CellSpacerTH, TaskTable, TaskTableCodeCellTH, TaskTableNameCellTH, TaskTableTH, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
 import { TaskDateListSwitcher } from "./TaskDateListSwitcher";

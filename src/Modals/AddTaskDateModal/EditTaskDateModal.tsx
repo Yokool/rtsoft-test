@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import { TaskFulfillment, TaskFulfillmentDispatchContext } from "../../TaskFulfillment/TaskFulfillment";
 import { TaskDateModalValues, TaskDateModalBase } from "./TaskDateModalBase";
-import { GeneralModalData } from "../../TaskDateList/TaskDateList";
+import { GeneralModalData } from "../../TaskCalendar/TaskDateList/TaskDateList";
 
 
 type EditTaskDateModalProps = {

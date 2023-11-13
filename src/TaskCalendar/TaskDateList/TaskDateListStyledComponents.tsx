@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { isDateWeekday } from "../DateUtils/DateUtils";
+import { isDateWeekday } from "../../DateUtils/DateUtils";
 
 export const DefaultCellHeight = 64;
 

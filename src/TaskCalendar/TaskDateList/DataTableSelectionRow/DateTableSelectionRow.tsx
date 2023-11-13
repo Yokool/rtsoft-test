@@ -1,7 +1,7 @@
 import React, {  } from "react";
-import { dateToTableText } from "../../DateUtils/DateUtils";
-import { Task } from "../../TaskTypes/Task";
-import { TaskFulfillmentParametrized } from "../../TaskFulfillment/TaskFulfillment";
+import { dateToTableText } from "../../../DateUtils/DateUtils";
+import { Task } from "../../../TaskTypes/Task";
+import { TaskFulfillmentParametrized } from "../../../TaskFulfillment/TaskFulfillment";
 import './DateTableSelectionRow.css';
 import { CommonTaskRowCellStyle } from "../CompleteTaskRow/CompleteTaskRow";
 import { DateTableSelectionCell } from "./DataTableSelectionCell";

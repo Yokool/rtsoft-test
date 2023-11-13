@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './AddTaskModal.css';
 import { Task } from "../../TaskTypes/Task";
-import { taskListContainsCode } from "../../TaskCalendar";
+import { taskListContainsCode } from "../../TaskCalendar/TaskCalendar";
 import { ErrorModalBase } from "../ErrorModal/ErrorModal";
 import { ModalHeaderInput } from "../ModalElements/ModalHeaderInput";
 import { ModalSubmit } from "../ModalElements/ModalSubmit";

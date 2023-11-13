@@ -4,7 +4,7 @@ import { dateUnitDayDifference } from "../DateUtils/DateUtils";
 import './FulfillmentRow.css';
 import { ElementDimensions } from "../GeneralTypes/GeneralTypes";
 import styled from "styled-components";
-import { DateModalContext } from "../TaskDateList/TaskDateList";
+import { DateModalContext } from "../TaskCalendar/TaskDateList/TaskDateList";
 
 export type FulfillmentRowProps = {
     taskFulfillment: TaskFulfillmentParametrized

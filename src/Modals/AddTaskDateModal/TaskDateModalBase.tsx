@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { TaskFulfillmentStatus, TaskFulfillmentValues, TaskFulfillmentValuesDisplay } from "../../TaskFulfillment/TaskFulfillment"
 import { ErrorModalBase } from "../ErrorModal/ErrorModal"
-import { GeneralModalData } from "../../TaskDateList/TaskDateList"
+import { GeneralModalData } from "../../TaskCalendar/TaskDateList/TaskDateList"
 import { getKeysTyped } from "../../GeneralUtils/GeneralUtils"
 import { isDate2LargerThanDate1ByDays } from "../../DateUtils/DateUtils"
 import { ModalHeaderDate } from "../ModalElements/ModalHeaderDate"
