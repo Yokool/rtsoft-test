@@ -7,6 +7,7 @@ import { TaskFulfillment, TaskFulfillmentStatus } from "../TaskFulfillment/TaskF
 import { EditTaskDateModal } from "../Modals/AddTaskDateModal/EditTaskDateModal";
 import { CompleteTaskRow } from "./CompleteTaskRow";
 import { CellSpacerTH, TaskTableCodeCellTD, TaskTableCodeCellTH, TaskTableNameCellTH, TaskTableTH, WeekendColor, getWeekendColorOnWeekend } from "./TaskDateListStyledComponents";
+import { TaskDateListSwitcher } from "./TaskDateListSwitcher";
 
 type TaskDateListProps = {
     taskList: Task[]
@@ -106,6 +107,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
             setGeneralModalData: setModalData
         }}>
             {modalJSX}
+            <TaskDateListSwitcher />
             <table className="taskTable" cellSpacing={0} cellPadding={0}>
                 <tbody>
                     <tr>
