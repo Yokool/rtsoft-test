@@ -37,6 +37,7 @@ const FulfillmentRowOuter = styled.div< {
     &:hover {
         background-color: ${props => props.$hoverBgColor};
         color: ${props => props.$foregroundHoverColor};
+        cursor: pointer;
     }
 
     div svg {
