@@ -79,6 +79,27 @@ export function getSurroundingDatesSingleDirArray(
 
 }
 
+export function clampDate(date: Date, start: Date, end: Date)
+{
+    const dateTime = date.getTime();
+    const startTime = start.getTime();
+    const endTime = end.getTime();
+
+    if(dateTime < startTime)
+    {
+        return start;
+    }
+    else if(dateTime > endTime)
+    {
+        return end;
+    }
+    else
+    {
+        return date;
+    }
+}
+
+/*
 export function getSurroundingDatesToday(datesLeftCount: number, datesRightCount: number)
 {
     const todayStart = getToday();
@@ -86,6 +107,7 @@ export function getSurroundingDatesToday(datesLeftCount: number, datesRightCount
 
     return getSurroundingDates(todayStart, datesLeftCount, datesRightCount);
 }
+*/
 
 export function dateToTableText(date: Date) {
     // hard-coded to czech locale for now
