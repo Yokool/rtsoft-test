@@ -80,7 +80,7 @@ export function CompleteTaskRow({
     }
 
     const depth = getTaskDepth(task, taskList);
-    console.log(depth);
+    
 
     const iconStyles = {
         cursor: 'pointer'

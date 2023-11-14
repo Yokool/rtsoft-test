@@ -15,6 +15,7 @@ export function taskHasChildren(task: Task)
 export function orderTaskListByChildren(taskList: Task[])
 {
 
+    
     // contains an array of tasks that we have not
     // yet MARKED for processing
     // that is the elements in this array are not scheduled
@@ -34,16 +35,19 @@ export function orderTaskListByChildren(taskList: Task[])
         return [];
     }
 
+
     // the list has the same order as taskList
     // the only difference is that we can take items
     // out by their code
     const tasksByCode = createTaskCodeMap(taskList);
     
     // start at the first element
-    const orderedList: Task[] = [firstElement];
+    let orderedList: Task[] = [firstElement];
 
     for (let i = 0; i < orderedList.length; i++) {
+        
         const task = orderedList[i];
+        
 
         // true if we finish processing this child and we would
         // exit this loop and finish processing
@@ -74,11 +78,21 @@ export function orderTaskListByChildren(taskList: Task[])
         
         for (let j = 0; j < childrenCodes.length; j++) {
             const childCode = childrenCodes[j];
+            
             const childTask = tasksByCode[childCode];
 
             unmarkedUnprocessedTasks = unmarkedUnprocessedTasks.filter((val) => val.taskCode !== childTask.taskCode);
 
-            orderedList.push(childTask);
+            const sliceIndex = i + j + 1;
+            orderedList = [
+                ...orderedList.slice(0, sliceIndex),
+                childTask,
+                ...orderedList.slice(sliceIndex)
+            ];
+            
+            // don't push the children but
+            // put them immediately after our element
+            //orderedList.push(childTask);
         }
         
     }

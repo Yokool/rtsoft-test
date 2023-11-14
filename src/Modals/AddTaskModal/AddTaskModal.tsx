@@ -61,7 +61,6 @@ export function AddTaskModal({
 
     function handleTaskSubmit() {
 
-        console.log(taskCode === '');
         if(taskCode === '')
         {
             setErrorMessage("Vyplňte prosím kód zakázky.");
