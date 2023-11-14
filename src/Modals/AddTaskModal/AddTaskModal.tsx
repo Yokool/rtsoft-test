@@ -72,7 +72,8 @@ export function AddTaskModal({
         const newlyCreatedTask: Task = {
             taskCode: taskCode,
             taskName: taskName,
-            childrenTaskCodes: [] // a task starts out without children
+            childrenTaskCodes: [], // a task starts out without children
+            expanded: false
         };
 
         let taskListCopy = [...taskList, newlyCreatedTask];
