@@ -102,3 +102,23 @@ export function createTaskCodeMap(taskList: Task[])
 
     return taskCodeMap;
 }
+
+export function getParentTask(task: Task, taskList: Task[]): Task | undefined
+{
+
+    const parent = taskList.find((taskFromList) => {
+
+        // we are at the parameter task
+        if(taskFromList.taskCode === task.taskCode)
+        {
+            return false;
+        }
+
+        const children = taskFromList.childrenTaskCodes;
+        const matchingTask = children.find((childCode) => childCode === task.taskCode);
+        return matchingTask !== undefined;
+    });
+
+    return parent;
+
+}
