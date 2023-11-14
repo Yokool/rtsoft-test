@@ -1,8 +1,8 @@
 import React, { useReducer, useState } from "react";
 import "./TaskCalendar.css";
-import { Task } from '../TaskTypes/Task';
+import { Task, orderTaskListByChildren } from '../TaskTypes/Task';
 import { TaskAddButton } from "./TaskDateList/TaskAdd/TaskAdd";
-import { TaskDateList, orderTaskListByChildren } from "./TaskDateList/TaskDateList";
+import { TaskDateList } from "./TaskDateList/TaskDateList";
 import { TaskFulfillmentContext, TaskFulfillmentDispatchContext, taskFulfillmentReducer } from "../TaskFulfillment/TaskFulfillment";
 
 
