@@ -5,7 +5,7 @@ import './ModalElements.css';
 export type ModalHeaderSelectProps = {
     headerText: string
     options: ModalHeaderSelectOption[]
-    defaultValue: string,
+    defaultValue: string | undefined,
     onChange: (newValue: string) => void
 }
 
@@ -37,10 +37,11 @@ export function ModalHeaderSelect(
     return (
         <>
             <h1>{headerText}</h1>
-            <select defaultValue={defaultValue} onChange={(event) => {
+            <select defaultValue={defaultValue ?? ''} onChange={(event) => {
                 const value = event.currentTarget.value;
                 onChange(value);
             }} className="modalMultiSelect">
+                <option value="" disabled>---</option>
                 {optionsJSX}
             </select>
         </>

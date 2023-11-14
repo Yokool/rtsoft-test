@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { DateTableSelectionRow } from "../DataTableSelectionRow/DateTableSelectionRow";
-import { Task } from "../../../TaskTypes/Task";
+import { Task, taskHasChildren } from "../../../TaskTypes/Task";
 import { TaskFulfillmentContext, addRowParameterToEachFulfillment, clampTaskfulfillmentsToDates, getAssociatedFulfillmentsToTask } from "../../../TaskFulfillment/TaskFulfillment";
 import { CellSpacerTD, DefaultCellHeight, TaskTableCodeCellTD, TaskTableNameCellTD } from "../TaskDateListStyledComponents";
+import { MinusFrameIcon } from "../../../Icons/MinusFrameIcon";
 
 export type CompleteTaskRowProps = {
     task: Task
@@ -34,6 +35,8 @@ export function CompleteTaskRow({
         height: commonHeight
     }
 
+    console.log(task);
+
     return (<tr key={task.taskCode}>
         <CellSpacerTD style={commonHeightStyle}></CellSpacerTD>
         <TaskTableCodeCellTD
@@ -42,6 +45,8 @@ export function CompleteTaskRow({
             </TaskTableCodeCellTD>
         <TaskTableNameCellTD
             style={commonHeightStyle}>
+                {taskHasChildren(task) && <MinusFrameIcon />}
+                
                 {task.taskName}
         </TaskTableNameCellTD>
         <DateTableSelectionRow
