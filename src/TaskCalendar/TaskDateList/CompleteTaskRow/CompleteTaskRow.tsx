@@ -83,7 +83,8 @@ export function CompleteTaskRow({
     
 
     const iconStyles = {
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginLeft: 8,
     };
 
     const ExpandIconJSX = (
@@ -99,6 +100,9 @@ export function CompleteTaskRow({
         />
     )
 
+    const marginBase = 8;
+
+
     return (<tr key={task.taskCode}>
         <CellSpacerTD style={commonHeightStyle}></CellSpacerTD>
         <TaskTableCodeCellTD
@@ -107,22 +111,26 @@ export function CompleteTaskRow({
             </TaskTableCodeCellTD>
         <TaskTableNameCellTD
             style={commonHeightStyle}>
-                {<NameSpacer $width={8 * (depth + 1)} />}
+                
+                {<NameSpacer $width={marginBase * (depth)} />}
+
                 {taskHasChildrenCheck && ExpandIconJSX}
+                
                 {!taskHasChildrenCheck && depth > 0 && <div style={{
                     width: 24,
                     height: 24,
                     textAlign: 'center',
                     display: 'flex',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    marginLeft: marginBase,
                 }}>*</div>}
                 
                 <TaskName>
                     {task.taskName}
                 </TaskName>
 
-                {taskHasChildrenCheck && <NameSpacer $width={24} $marginRight={8} />}
+                {(taskHasChildrenCheck || (depth > 0)) && <NameSpacer $width={24} $marginRight={marginBase} />}
         </TaskTableNameCellTD>
         <DateTableSelectionRow
             completeDateList={surroundingDates}
