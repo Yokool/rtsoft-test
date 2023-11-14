@@ -73,31 +73,36 @@ export function TaskDateList({taskList, setTaskList}: TaskDateListProps): React.
         );
     })
 
-    const taskListJSX = taskList.map(
-        (task, index) => {
+    
+    const taskListFiltered = taskList.filter(
+        (task) => {
 
             const expansionFromTree = getExpandedFromTree(task, taskList);
 
             // only if there is an unexpanded parent do you not render
             if(!expansionFromTree)
             {
-                return null;
+                return false;
             }
 
-            return (
-                <CompleteTaskRow
-                    dateListStart={dateListLeftmostDate}
-                    dateListEnd={dateListRightmostDate}
-                    key={task.taskCode}
-                    task={task}
-                    surroundingDates={surroundingDates}
-                    isLastRow={index === (taskList.length - 1)}
-                    taskList={taskList}
-                    setTaskList={setTaskList}
-                />
-            );
+            return true;
         }
-    );
+    )
+    
+    const taskListJSX = taskListFiltered.map((task, index) => {
+        return (
+            <CompleteTaskRow
+                dateListStart={dateListLeftmostDate}
+                dateListEnd={dateListRightmostDate}
+                key={task.taskCode}
+                task={task}
+                surroundingDates={surroundingDates}
+                isLastRow={index === (taskListFiltered.length - 1)}
+                taskList={taskList}
+                setTaskList={setTaskList}
+            />
+        );
+    });
 
 
     const modalJSX = (modalData !== undefined && (
