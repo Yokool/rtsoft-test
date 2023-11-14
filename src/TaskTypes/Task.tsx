@@ -123,6 +123,29 @@ export function getParentTask(task: Task, taskList: Task[]): Task | undefined
 
 }
 
+/**
+ * Returns false if there is a parent in the hierarchy that is not expanded,
+ * otherwise returns true.
+ * 
+ * Also returns true on root elements (those without parents).
+ */
+export function getExpandedFromTree(task: Task, taskList: Task[])
+{
+    let usedTask: Task | undefined = task;
+    
+    
+    while((usedTask = getParentTask(usedTask, taskList)) !== undefined)
+    {
+        const parentExpanded = usedTask.expanded;
+        if(!parentExpanded)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 export function getTaskDepth(task: Task, taskList: Task[]): number
 {
 

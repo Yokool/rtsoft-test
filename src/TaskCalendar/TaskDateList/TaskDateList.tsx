@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { Task, getParentTask, taskHasChildren } from "../../TaskTypes/Task";
+import { Task, getExpandedFromTree, getParentTask, taskHasChildren } from "../../TaskTypes/Task";
 import { dateToTableText, getSurroundingDates, getToday, isDateToday, normalizeDate } from "../../DateUtils/DateUtils";
 import { AddTaskDateModal } from "../../Modals/AddTaskDateModal/AddTaskDateModal";
 import { TaskFulfillment, TaskFulfillmentStatus } from "../../TaskFulfillment/TaskFulfillment";
@@ -76,10 +76,10 @@ export function TaskDateList({taskList, setTaskList}: TaskDateListProps): React.
     const taskListJSX = taskList.map(
         (task, index) => {
 
-            const parent = getParentTask(task, taskList);
+            const expansionFromTree = getExpandedFromTree(task, taskList);
 
             // only if there is an unexpanded parent do you not render
-            if(parent !== undefined && !parent.expanded)
+            if(!expansionFromTree)
             {
                 return null;
             }
