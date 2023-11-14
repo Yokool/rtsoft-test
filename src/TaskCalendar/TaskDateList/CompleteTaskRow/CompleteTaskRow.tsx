@@ -24,6 +24,11 @@ export type CommonTaskRowCellStyle = {
 const TaskName = styled.p`
     margin: 0;
     flex: 1;
+
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 const NameSpacer = styled.div`

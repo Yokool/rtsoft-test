@@ -29,7 +29,7 @@ export const TaskTable = styled.table`
 `
 
 export const CodeCellCommon = css`
-    width: 64px;
+    width: 96px;
 `
 
 export const NameCellCommon = css`
@@ -85,6 +85,9 @@ export const TaskTableCodeCellTH = styled(TaskTableTH)`
 
 export const TaskTableCodeCellTD = styled(TaskTableTD)`
     ${CodeCellCommon}
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `
 
 export const TaskTableNameCellTH = styled(TaskTableTH)`
@@ -97,4 +100,6 @@ export const TaskTableNameCellTD = styled(TaskTableTD)`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+
 `

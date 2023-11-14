@@ -79,6 +79,11 @@ const FulfillmentText = styled.p< {
     font-weight: bold;
     flex: 1;
     text-align: start;
+
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;
 
 export function FulfillmentRow({taskFulfillment, parentCellDimensions, subRowCount} : FulfillmentRowProps): React.JSX.Element {
