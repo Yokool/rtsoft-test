@@ -93,4 +93,8 @@ export const TaskTableNameCellTH = styled(TaskTableTH)`
 
 export const TaskTableNameCellTD = styled(TaskTableTD)`
     ${NameCellCommon}
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 `
