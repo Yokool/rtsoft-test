@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { DateTableSelectionRow } from "../DataTableSelectionRow/DateTableSelectionRow";
-import { Task, taskHasChildren } from "../../../TaskTypes/Task";
+import { Task, getTaskDepth, taskHasChildren } from "../../../TaskTypes/Task";
 import { TaskFulfillmentContext, addRowParameterToEachFulfillment, clampTaskfulfillmentsToDates, getAssociatedFulfillmentsToTask } from "../../../TaskFulfillment/TaskFulfillment";
 import { CellSpacerTD, DefaultCellHeight, TaskTableCodeCellTD, TaskTableNameCellTD } from "../TaskDateListStyledComponents";
 import { MinusFrameIcon } from "../../../Icons/MinusFrameIcon";
@@ -31,10 +31,10 @@ const TaskName = styled.p`
     text-overflow: ellipsis;
 `;
 
-const NameSpacer = styled.div`
+const NameSpacer = styled.div < { $width: number, $marginRight?: number } > `
     height: 100%;
-    width: 24px;
-    margin-right: 8px;
+    width: ${props => props.$width + 'px'};
+    margin-right: ${props => props.$marginRight + 'px'};
 `
 
 export function CompleteTaskRow({
@@ -79,8 +79,10 @@ export function CompleteTaskRow({
         setTaskList(newList);
     }
 
+    const depth = getTaskDepth(task, taskList);
+    console.log(depth);
+
     const iconStyles = {
-        marginLeft: 8,
         cursor: 'pointer'
     };
 
@@ -105,13 +107,22 @@ export function CompleteTaskRow({
             </TaskTableCodeCellTD>
         <TaskTableNameCellTD
             style={commonHeightStyle}>
+                {<NameSpacer $width={8 * (depth + 1)} />}
                 {taskHasChildrenCheck && ExpandIconJSX}
+                {!taskHasChildrenCheck && depth > 0 && <div style={{
+                    width: 24,
+                    height: 24,
+                    textAlign: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>+</div>}
                 
                 <TaskName>
                     {task.taskName}
                 </TaskName>
 
-                {taskHasChildrenCheck && <NameSpacer />}
+                {taskHasChildrenCheck && <NameSpacer $width={24} $marginRight={8} />}
         </TaskTableNameCellTD>
         <DateTableSelectionRow
             completeDateList={surroundingDates}

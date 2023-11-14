@@ -122,3 +122,18 @@ export function getParentTask(task: Task, taskList: Task[]): Task | undefined
     return parent;
 
 }
+
+export function getTaskDepth(task: Task, taskList: Task[]): number
+{
+
+    let usedTask: Task | undefined = task;
+    let count = 0;
+
+    while((usedTask = getParentTask(usedTask, taskList)) !== undefined)
+    {
+        ++count;
+    }
+
+    return count;
+
+}
