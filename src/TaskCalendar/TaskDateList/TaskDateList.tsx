@@ -161,8 +161,7 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
         );
     })
 
-    const orderedTaskList = orderTaskListByChildren(taskList);
-    const taskListJSX = orderedTaskList.map(
+    const taskListJSX = taskList.map(
         (task, index) => {
             return (
                 <CompleteTaskRow
