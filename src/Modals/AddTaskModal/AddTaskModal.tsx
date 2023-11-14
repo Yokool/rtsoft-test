@@ -61,6 +61,19 @@ export function AddTaskModal({
 
     function handleTaskSubmit() {
 
+        console.log(taskCode === '');
+        if(taskCode === '')
+        {
+            setErrorMessage("Vyplňte prosím kód zakázky.");
+            return;
+        }
+
+        if(taskName === '')
+        {
+            setErrorMessage("Vyplňte prosím jméno zakázky.");
+            return;
+        }
+
         // We can't add in new tasks, whose code matches an
         // already existing task -> all task codes are unique
         if(taskListContainsCode(taskList, taskCode))
