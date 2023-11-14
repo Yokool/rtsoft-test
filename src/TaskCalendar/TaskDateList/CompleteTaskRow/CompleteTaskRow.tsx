@@ -11,8 +11,10 @@ export type CompleteTaskRowProps = {
     task: Task
     surroundingDates: Date[]
     isLastRow: boolean
-    dateListStart: Date,
+    dateListStart: Date
     dateListEnd: Date
+    taskList: Task[]
+    setTaskList: (newList: Task[]) => void
 }
 
 export type CommonTaskRowCellStyle = {
@@ -31,11 +33,11 @@ const NameSpacer = styled.div`
 `
 
 export function CompleteTaskRow({
-    task, surroundingDates, isLastRow, dateListStart, dateListEnd
+    task, surroundingDates, isLastRow, dateListStart, dateListEnd, setTaskList, taskList
 }: CompleteTaskRowProps): JSX.Element
 {
 
-    const [expanded, setExpanded] = useState(false);
+    const expanded = task.expanded;
 
     const taskFulfillmentList = useContext(TaskFulfillmentContext);
     const fulfillmentsInThisRow = getAssociatedFulfillmentsToTask(task, taskFulfillmentList);
@@ -55,7 +57,21 @@ export function CompleteTaskRow({
 
     function handlePlusMinusIconClick()
     {
-        setExpanded(!expanded);
+        const newList = taskList.map((taskVal) => {
+
+            if(taskVal.taskCode !== task.taskCode)
+            {
+                return taskVal;
+            }
+
+            return {
+                ...taskVal,
+                expanded: !expanded
+            }
+
+        });
+        
+        setTaskList(newList);
     }
 
     const iconStyles = {

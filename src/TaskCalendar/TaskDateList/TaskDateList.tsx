@@ -10,6 +10,7 @@ import { TaskDateListSwitcher } from "./TaskDateListSwitcher";
 
 type TaskDateListProps = {
     taskList: Task[]
+    setTaskList: (newList: Task[]) => void
 }
 
 
@@ -35,7 +36,7 @@ export type GeneralModalData = {
     editedTaskFulfillment?: TaskFulfillment
 }
 
-export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
+export function TaskDateList({taskList, setTaskList}: TaskDateListProps): React.JSX.Element {
 
     // Counted from the example
     const dateShiftBackwards = 8;
@@ -91,6 +92,8 @@ export function TaskDateList({taskList}: TaskDateListProps): React.JSX.Element {
                     task={task}
                     surroundingDates={surroundingDates}
                     isLastRow={index === (taskList.length - 1)}
+                    taskList={taskList}
+                    setTaskList={setTaskList}
                 />
             );
         }

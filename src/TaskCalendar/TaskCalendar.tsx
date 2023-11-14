@@ -23,6 +23,7 @@ export function TaskCalendar(): React.JSX.Element {
                     />
                     <TaskDateList
                         taskList={orderedTaskList}
+                        setTaskList={setTaskList}
                     />
                 </div>
             </TaskFulfillmentDispatchContext.Provider>
