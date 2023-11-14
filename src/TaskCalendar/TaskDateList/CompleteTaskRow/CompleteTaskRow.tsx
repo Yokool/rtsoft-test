@@ -116,7 +116,7 @@ export function CompleteTaskRow({
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center'
-                }}>+</div>}
+                }}>*</div>}
                 
                 <TaskName>
                     {task.taskName}
